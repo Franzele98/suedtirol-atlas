@@ -618,7 +618,7 @@ function styleShapes() {
 // ---- pins, list and card: only the children of the place in view -------------
 const pinsEl = $('pins');
 let current = root, visible = [], shownBox = null;
-const listOpen = { root: true, district: false };      // which lists are unfolded
+const listOpen = { root: false, district: false };      // which lists are unfolded
 const container = (n) => (n.children?.length ? n : n.parent);
 const countLabel = (n) => (n.count ? `<em>${n.count}</em>` : '');
 
@@ -650,7 +650,7 @@ function showChildren(box) {
   }));
   const list = $('list');
   list.replaceChildren();
-  // each list folds: its heading is the toggle (valleys start open, towns closed)
+  // each list folds: its heading is the toggle; both start closed
   const group = (title, nodes, key) => {
     const toggle = document.createElement('button'), wrap = Object.assign(document.createElement('div'), { className: 'list' });
     const paint = () => { toggle.textContent = `${title} ${listOpen[key] ? '▾' : '▸'}`; wrap.hidden = !listOpen[key]; };
