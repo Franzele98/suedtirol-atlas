@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Südtirol Atlas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@400;500&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=UnifrakturCook:wght@700&family=Special+Elite&family=Caveat:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -49,7 +49,7 @@
   }
 
   * { box-sizing: border-box; margin: 0; }
-  html, body { height: 100%; overflow: hidden; background: var(--paper); color: var(--ink); font-family: var(--f-body); }
+  html, body { height: 100%; overflow: hidden; background: var(--paper); color: var(--ink); font-family: var(--f-body); touch-action: none; }
   canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; }
   button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; text-align: left; }
   .logo span, .switch, .up-btn, nav, .card .kicker, .card dt, .card .step, .pin, footer, .loading {
@@ -75,7 +75,7 @@
   nav .crumbs button:hover { color: inherit; }
   nav .crumbs i { font-style: normal; color: var(--ink-soft); margin: 0 5px; }
   nav h2 { font: inherit; color: var(--ink-soft); margin: 16px 0 6px; }
-  nav .list { max-height: calc(100vh - 230px - var(--top)); overflow-y: auto; scrollbar-width: thin; }
+  nav .list { max-height: calc(100vh - 230px - var(--top)); overflow-y: auto; scrollbar-width: thin; touch-action: pan-y; }
   nav .list button { display: flex; justify-content: space-between; gap: 10px; width: 100%; padding: 3px 0; text-transform: inherit;
     letter-spacing: inherit; opacity: 0.85; transition: transform 0.2s, opacity 0.2s; }
   nav .list button span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -182,7 +182,7 @@
     nav { display: block; top: calc(118px + var(--top)); left: 12px; right: 12px; width: auto; }
     nav .crumbs button { padding: 4px 0; }
     nav h2 { display: none; }
-    nav .list { display: flex; gap: 6px; max-height: none; margin-top: 6px; padding-bottom: 6px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+    nav .list { touch-action: pan-x; display: flex; gap: 6px; max-height: none; margin-top: 6px; padding-bottom: 6px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
     nav .list button { flex: none; width: auto; gap: 6px; padding: 6px 9px; background: var(--tag-bg); color: var(--tag-fg); opacity: 1; text-shadow: none; }
     nav .list button:hover { transform: none; }
     nav .list button.on { background: var(--on-bg); color: var(--on-fg); }
@@ -923,6 +923,9 @@ const touchInput = () => { lastInput = lastHands = performance.now(); };
 canvas.addEventListener('wheel', (e) => { e.preventDefault(); touchInput(); zoomBy(Math.exp(Math.sign(e.deltaY) * Math.min(Math.abs(e.deltaY), 60) * 0.0022)); }, { passive: false });
 // Dragging turns the view around the selected place (mouse or one finger); two fingers zoom.
 canvas.addEventListener('pointerdown', (e) => {
+  // A primary pointer is the first finger down: anything still on the list is a finger whose lift
+  // was never reported (it would turn this one-finger drag into a pinch).
+  if (e.isPrimary) { touches.clear(); pinch = 0; }
   touches.set(e.pointerId, { x: e.clientX, y: e.clientY, moved: 0 });
   try { canvas.setPointerCapture(e.pointerId); } catch {}
   touchInput();
@@ -955,7 +958,7 @@ canvas.addEventListener('pointermove', (e) => {
     pinch = d;
   }
 });
-for (const type of ['pointerup', 'pointercancel']) canvas.addEventListener(type, (e) => {
+for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) canvas.addEventListener(type, (e) => {
   const t = touches.get(e.pointerId);
   touches.delete(e.pointerId);
   pinch = 0;
