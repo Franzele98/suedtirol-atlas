@@ -1,0 +1,2933 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-11-13T15:04:03Z",
+    "timestamp_areas_base": "2026-11-13T10:08:29Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "relation",
+  "id": 47045,
+  "center": {
+    "lat": 46.2527925,
+    "lon": 11.2440819
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Salorno sulla Strada del Vino - Salurn an der Weinstraße",
+    "name:de": "Salurn an der Weinstraße",
+    "name:it": "Salorno sulla Strada del Vino",
+    "population": "3833",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021076",
+    "ref:catasto": "H719",
+    "type": "boundary",
+    "wikidata": "Q258810",
+    "wikipedia": "it:Salorno"
+  }
+},
+{
+  "type": "relation",
+  "id": 47072,
+  "center": {
+    "lat": 46.2765264,
+    "lon": 11.1952405
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Margreid an der Weinstraße - Magrè sulla Strada del Vino",
+    "name:de": "Margreid an der Weinstraße",
+    "name:it": "Magrè sulla Strada del Vino",
+    "population": "1300",
+    "population:date": "2026-08-27",
+    "ref:ISTAT": "021045",
+    "ref:catasto": "E829",
+    "type": "boundary",
+    "wikidata": "Q420734",
+    "wikipedia": "it:Magrè sulla Strada del Vino"
+  }
+},
+{
+  "type": "relation",
+  "id": 47074,
+  "center": {
+    "lat": 46.2659040,
+    "lon": 11.2234832
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Kurtinig an der Weinstraße - Cortina sulla Strada del Vino",
+    "name:de": "Kurtinig an der Weinstraße",
+    "name:it": "Cortina sulla Strada del Vino",
+    "population": "698",
+    "population:date": "2026-08-27",
+    "ref:ISTAT": "021025",
+    "ref:catasto": "D075",
+    "type": "boundary",
+    "wikidata": "Q380020",
+    "wikipedia": "it:Cortina sulla Strada del Vino"
+  }
+},
+{
+  "type": "relation",
+  "id": 47075,
+  "center": {
+    "lat": 46.2796752,
+    "lon": 11.3664494
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Anterivo - Altrei",
+    "name:de": "Altrei",
+    "name:it": "Anterivo",
+    "population": "387",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021003",
+    "ref:catasto": "A306",
+    "type": "boundary",
+    "wikidata": "Q374108",
+    "wikipedia": "it:Anterivo"
+  }
+},
+{
+  "type": "relation",
+  "id": 47080,
+  "center": {
+    "lat": 46.2942817,
+    "lon": 11.2672626
+  },
+  "tags": {
+    "admin_centre:postal_code": "39044",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Neumarkt - Egna",
+    "name:de": "Neumarkt",
+    "name:it": "Egna",
+    "population": "5508",
+    "population:date": "2026-08-27",
+    "ref:ISTAT": "021029",
+    "ref:catasto": "D392",
+    "type": "boundary",
+    "wikidata": "Q380287",
+    "wikipedia": "it:Egna"
+  }
+},
+{
+  "type": "relation",
+  "id": 47089,
+  "center": {
+    "lat": 46.3133249,
+    "lon": 11.3355875
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Montan an der Weinstraße - Montagna sulla Strada del Vino",
+    "name:de": "Montan an der Weinstraße",
+    "name:it": "Montagna sulla Strada del Vino",
+    "population": "1788",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021053",
+    "ref:catasto": "F392",
+    "type": "boundary",
+    "wikidata": "Q432997",
+    "wikipedia": "it:Montagna (Italia)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47090,
+  "center": {
+    "lat": 46.3104620,
+    "lon": 11.1943760
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Kurtatsch an der Weinstraße - Cortaccia sulla Strada del Vino",
+    "name:de": "Kurtatsch an der Weinstraße",
+    "name:it": "Cortaccia sulla Strada del Vino",
+    "population": "2264",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021024",
+    "ref:catasto": "D048",
+    "type": "boundary",
+    "wikidata": "Q264549",
+    "wikipedia": "it:Cortaccia sulla Strada del Vino"
+  }
+},
+{
+  "type": "relation",
+  "id": 47102,
+  "center": {
+    "lat": 46.3159072,
+    "lon": 11.3613953
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Truden im Naturpark - Trodena nel Parco Naturale",
+    "name:de": "Truden im Naturpark",
+    "name:it": "Trodena nel Parco Naturale",
+    "population": "1074",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021102",
+    "ref:catasto": "L444",
+    "type": "boundary",
+    "wikidata": "Q504524",
+    "wikipedia": "it:Trodena nel parco naturale"
+  }
+},
+{
+  "type": "relation",
+  "id": 47119,
+  "center": {
+    "lat": 46.3380950,
+    "lon": 11.2361142
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Tramin an der Weinstraße - Termeno sulla Strada del Vino",
+    "name:de": "Tramin an der Weinstraße",
+    "name:it": "Termeno sulla Strada del Vino",
+    "population": "3347",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021098",
+    "ref:catasto": "L111",
+    "type": "boundary",
+    "wikidata": "Q499114",
+    "wikipedia": "it:Termeno sulla Strada del Vino"
+  }
+},
+{
+  "type": "relation",
+  "id": 47121,
+  "center": {
+    "lat": 46.3839007,
+    "lon": 11.2464605
+  },
+  "tags": {
+    "admin_centre:postal_code": "39052",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Kaltern an der Weinstraße - Caldaro sulla Strada del Vino",
+    "name:de": "Kaltern an der Weinstraße",
+    "name:it": "Caldaro sulla Strada del Vino",
+    "population": "8327",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021015",
+    "ref:catasto": "B397",
+    "short_name": "Kaltern - Caldaro",
+    "short_name:de": "Kaltern",
+    "short_name:it": "Caldaro",
+    "type": "boundary",
+    "wikidata": "Q278942",
+    "wikipedia": "it:Caldaro sulla Strada del Vino"
+  }
+},
+{
+  "type": "relation",
+  "id": 47122,
+  "center": {
+    "lat": 46.3610860,
+    "lon": 11.3965121
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Aldein - Aldino",
+    "name:de": "Aldein",
+    "name:it": "Aldino",
+    "population": "1600",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021001",
+    "ref:catasto": "A179",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q373680",
+    "wikipedia": "it:Aldino"
+  }
+},
+{
+  "type": "relation",
+  "id": 47139,
+  "center": {
+    "lat": 46.3640812,
+    "lon": 11.3011633
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Auer - Ora",
+    "name:de": "Auer",
+    "name:it": "Ora",
+    "population": "3880",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021060",
+    "ref:catasto": "G083",
+    "type": "boundary",
+    "wikidata": "Q433413",
+    "wikipedia": "it:Ora (Italia)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47141,
+  "center": {
+    "lat": 46.3976836,
+    "lon": 11.2924843
+  },
+  "tags": {
+    "admin_centre:postal_code": "39051",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Vadena - Pfatten",
+    "name:de": "Pfatten",
+    "name:it": "Vadena",
+    "population": "1086",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021105",
+    "ref:catasto": "L527",
+    "type": "boundary",
+    "wikidata": "Q499700",
+    "wikipedia": "it:Vadena"
+  }
+},
+{
+  "type": "relation",
+  "id": 47145,
+  "center": {
+    "lat": 46.4022254,
+    "lon": 11.4522512
+  },
+  "tags": {
+    "admin_centre:postal_code": "39050",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Deutschnofen - Nova Ponente",
+    "name:de": "Deutschnofen",
+    "name:it": "Nova Ponente",
+    "population": "4115",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021059",
+    "ref:catasto": "F950",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q433365",
+    "wikipedia": "it:Nova Ponente"
+  }
+},
+{
+  "type": "relation",
+  "id": 47164,
+  "center": {
+    "lat": 46.4219503,
+    "lon": 11.5482666
+  },
+  "tags": {
+    "admin_centre:postal_code": "39056",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Welschnofen - Nova Levante",
+    "name:de": "Welschnofen",
+    "name:it": "Nova Levante",
+    "population": "2112",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021058",
+    "ref:catasto": "F949",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q433287",
+    "wikipedia": "it:Nova Levante"
+  }
+},
+{
+  "type": "relation",
+  "id": 47173,
+  "center": {
+    "lat": 46.3951084,
+    "lon": 11.3193144
+  },
+  "tags": {
+    "admin_centre:postal_code": "39051",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Bronzolo - Branzoll",
+    "name:de": "Branzoll",
+    "name:it": "Bronzolo",
+    "population": "2808",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021012",
+    "ref:catasto": "B203",
+    "type": "boundary",
+    "wikidata": "Q376275",
+    "wikipedia": "it:Bronzolo"
+  }
+},
+{
+  "type": "relation",
+  "id": 47187,
+  "center": {
+    "lat": 46.4389037,
+    "lon": 11.3429790
+  },
+  "tags": {
+    "admin_centre:postal_code": "39055",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Laives - Leifers",
+    "name:de": "Leifers",
+    "name:it": "Laives",
+    "population": "18768",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021040",
+    "ref:catasto": "E421",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q244607",
+    "wikipedia": "it:Laives (Italia)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47203,
+  "center": {
+    "lat": 46.4618483,
+    "lon": 11.2453324
+  },
+  "tags": {
+    "admin_centre:postal_code": "39057",
+    "admin_level": "8",
+    "alt_name": "Eppan - Appiano",
+    "alt_name:de": "Eppan",
+    "alt_name:it": "Appiano",
+    "boundary": "administrative",
+    "name": "Eppan an der Weinstraße - Appiano sulla Strada del Vino",
+    "name:de": "Eppan an der Weinstraße",
+    "name:it": "Appiano sulla Strada del Vino",
+    "place": "municipality",
+    "population": "15083",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021004",
+    "ref:catasto": "A332",
+    "short_name": "Eppan - Appiano",
+    "short_name:de": "Eppan",
+    "short_name:it": "Appiano",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q252343",
+    "wikipedia": "it:Appiano sulla Strada del Vino"
+  }
+},
+{
+  "type": "relation",
+  "id": 47206,
+  "center": {
+    "lat": 46.4795357,
+    "lon": 11.0501556
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Laurein - Lauregno",
+    "name:de": "Laurein",
+    "name:it": "Lauregno",
+    "population": "309",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021043",
+    "ref:catasto": "E481",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q420432",
+    "wikipedia": "it:Lauregno"
+  }
+},
+{
+  "type": "relation",
+  "id": 47207,
+  "center": {
+    "lat": 46.4876488,
+    "lon": 11.3539834
+  },
+  "tags": {
+    "admin_centre:postal_code": "39100",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "coat_of_arms": "File:ITA Bolzano COA.svg",
+    "flag": "File:Flag of Bozen.svg",
+    "name": "Bolzano - Bozen",
+    "name:de": "Bozen",
+    "name:it": "Bolzano",
+    "name:ko": "볼차노 (보첸)",
+    "population": "107303",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021008",
+    "ref:catasto": "A952",
+    "type": "boundary",
+    "wikidata": "Q6526",
+    "wikipedia": "it:Bolzano"
+  }
+},
+{
+  "type": "relation",
+  "id": 47208,
+  "center": {
+    "lat": 46.4804965,
+    "lon": 11.0143891
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Proveis - Proves",
+    "name:de": "Proveis",
+    "name:it": "Proves",
+    "population": "244",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021069",
+    "ref:catasto": "H081",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q474309",
+    "wikipedia": "it:Proves"
+  }
+},
+{
+  "type": "relation",
+  "id": 47212,
+  "center": {
+    "lat": 46.4645136,
+    "lon": 11.4589010
+  },
+  "tags": {
+    "admin_centre:postal_code": "39053",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Karneid - Cornedo all'Isarco",
+    "name:de": "Karneid",
+    "name:it": "Cornedo all'Isarco",
+    "population": "3468",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021023",
+    "ref:catasto": "B799",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q377980",
+    "wikipedia": "it:Cornedo all'Isarco"
+  }
+},
+{
+  "type": "relation",
+  "id": 47213,
+  "center": {
+    "lat": 46.5120450,
+    "lon": 10.9026807
+  },
+  "tags": {
+    "admin_centre:postal_code": "39016",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Ulten - Ultimo",
+    "name:de": "Ulten",
+    "name:it": "Ultimo",
+    "population": "2933",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021104",
+    "ref:catasto": "L490",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q494050",
+    "wikipedia": "it:Ultimo (Italia)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47214,
+  "center": {
+    "lat": 46.5152191,
+    "lon": 10.7200599
+  },
+  "tags": {
+    "admin_centre:postal_code": "39020",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Martell - Martello",
+    "name:de": "Martell",
+    "name:it": "Martello",
+    "population": "848",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021049",
+    "ref:catasto": "E981",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "website": "https://www.martell.it/",
+    "wikidata": "Q427850",
+    "wikipedia": "it:Martello (Italia)",
+    "wikipedia:de": "Martell (Südtirol)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47218,
+  "center": {
+    "lat": 46.4709493,
+    "lon": 11.5724640
+  },
+  "tags": {
+    "admin_centre:postal_code": "39050",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Tiers - Tires",
+    "name:de": "Tiers",
+    "name:it": "Tires",
+    "population": "1044",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021100",
+    "ref:catasto": "L176",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q504491",
+    "wikipedia": "it:Tires"
+  }
+},
+{
+  "type": "relation",
+  "id": 47231,
+  "center": {
+    "lat": 46.5425470,
+    "lon": 10.5517515
+  },
+  "tags": {
+    "admin_centre:postal_code": "39029",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Stilfs - Stelvio",
+    "name:de": "Stilfs",
+    "name:it": "Stelvio",
+    "name:rm": "Stielva",
+    "population": "1156",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021095",
+    "ref:catasto": "I948",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q493831",
+    "wikipedia": "it:Stelvio"
+  }
+},
+{
+  "type": "relation",
+  "id": 47232,
+  "center": {
+    "lat": 46.5117935,
+    "lon": 11.5318960
+  },
+  "tags": {
+    "admin_centre:postal_code": "39050",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Völs am Schlern - Fiè allo Sciliar",
+    "name:de": "Völs am Schlern",
+    "name:it": "Fiè allo Sciliar",
+    "population": "3755",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021031",
+    "ref:catasto": "D571",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q381366",
+    "wikipedia": "it:Fiè allo Sciliar"
+  }
+},
+{
+  "type": "relation",
+  "id": 47233,
+  "center": {
+    "lat": 46.5629138,
+    "lon": 11.4386301
+  },
+  "tags": {
+    "admin_centre:postal_code": "39054",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Ritten - Renon",
+    "name:de": "Ritten",
+    "name:it": "Renon",
+    "population": "8418",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021072",
+    "ref:catasto": "H236",
+    "type": "boundary",
+    "wikidata": "Q474441",
+    "wikipedia": "it:Renon"
+  }
+},
+{
+  "type": "relation",
+  "id": 47234,
+  "center": {
+    "lat": 46.5475469,
+    "lon": 11.6139923
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Kastelruth - Castelrotto",
+    "name:de": "Kastelruth",
+    "name:it": "Castelrotto",
+    "name:lld": "Ciastel",
+    "population": "7075",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021019",
+    "ref:catasto": "C254",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q377319",
+    "wikimedia_commons": "Category:Kastelruth",
+    "wikipedia": "it:Castelrotto"
+  }
+},
+{
+  "type": "relation",
+  "id": 47237,
+  "center": {
+    "lat": 46.5358429,
+    "lon": 11.2470071
+  },
+  "tags": {
+    "admin_centre:postal_code": "39018",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Terlan - Terlano",
+    "name:de": "Terlan",
+    "name:it": "Terlano",
+    "population": "5007",
+    "population:date": "2026-08-27",
+    "ref:ISTAT": "021097",
+    "ref:catasto": "L108",
+    "type": "boundary",
+    "wikidata": "Q494814",
+    "wikipedia": "it:Terlano"
+  }
+},
+{
+  "type": "relation",
+  "id": 47241,
+  "center": {
+    "lat": 46.5095478,
+    "lon": 11.1344831
+  },
+  "tags": {
+    "admin_centre:postal_code": "39010",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "gfoss_id": "2867",
+    "name": "Unsere Liebe Frau im Walde-St. Felix - Senale-San Felice",
+    "name:de": "Unsere Liebe Frau im Walde-St. Felix",
+    "name:it": "Senale-San Felice",
+    "population": "813",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021118",
+    "ref:catasto": "I603",
+    "source": "geodati.gfoss.it",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q493810",
+    "wikipedia": "it:Senale-San Felice"
+  }
+},
+{
+  "type": "relation",
+  "id": 47242,
+  "center": {
+    "lat": 46.5531490,
+    "lon": 11.7808640
+  },
+  "tags": {
+    "admin_centre:postal_code": "39048",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "loc_name": "Sëlva",
+    "name": "Sëlva - Wolkenstein - Selva di Val Gardena",
+    "name:de": "Wolkenstein",
+    "name:it": "Selva di Val Gardena",
+    "population": "2548",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021089",
+    "ref:catasto": "I591",
+    "type": "boundary",
+    "wikidata": "Q499129",
+    "wikimedia_commons": "Category:Sëlva",
+    "wikipedia": "it:Selva di Val Gardena"
+  }
+},
+{
+  "type": "relation",
+  "id": 47244,
+  "center": {
+    "lat": 46.5630814,
+    "lon": 11.7411886
+  },
+  "tags": {
+    "admin_centre:postal_code": "39047",
+    "admin_level": "8",
+    "alt_name:it": "Santa Cristina Val Gardena",
+    "boundary": "administrative",
+    "loc_name": "Santa Cristina Gherdëina",
+    "name": "Santa Cristina Gherdëina - St. Christina in Gröden - Santa Cristina Valgardena",
+    "name:de": "St. Christina in Gröden",
+    "name:it": "Santa Cristina Valgardena",
+    "population": "2037",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021085",
+    "ref:catasto": "I173",
+    "type": "boundary",
+    "wikidata": "Q504253",
+    "wikimedia_commons": "Category:Santa Cristina Gherdëina",
+    "wikipedia": "it:Santa Cristina Valgardena"
+  }
+},
+{
+  "type": "relation",
+  "id": 47245,
+  "center": {
+    "lat": 46.5381905,
+    "lon": 11.1985085
+  },
+  "tags": {
+    "admin_centre:postal_code": "39010",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Nals - Nalles",
+    "name:de": "Nals",
+    "name:it": "Nalles",
+    "population": "2102",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021055",
+    "ref:catasto": "F836",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q433114",
+    "wikipedia": "it:Nalles"
+  }
+},
+{
+  "type": "relation",
+  "id": 47246,
+  "center": {
+    "lat": 46.5683195,
+    "lon": 11.0624734
+  },
+  "tags": {
+    "admin_centre:postal_code": "39010",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Sankt Pankraz - San Pancrazio",
+    "name:de": "Sankt Pankraz",
+    "name:it": "San Pancrazio",
+    "population": "1564",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021084",
+    "ref:catasto": "I065",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q504234",
+    "wikipedia": "it:San Pancrazio (Italia)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47247,
+  "center": {
+    "lat": 46.5170776,
+    "lon": 11.2280207
+  },
+  "tags": {
+    "admin_centre:postal_code": "39010",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Andrian - Andriano",
+    "name:de": "Andrian",
+    "name:it": "Andriano",
+    "population": "1042",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021002",
+    "ref:catasto": "A286",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q373802",
+    "wikipedia": "it:Andriano"
+  }
+},
+{
+  "type": "relation",
+  "id": 47251,
+  "center": {
+    "lat": 46.5670604,
+    "lon": 11.3252938
+  },
+  "tags": {
+    "admin_centre:postal_code": "39050",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Jenesien - San Genesio Atesino",
+    "name:de": "Jenesien",
+    "name:it": "San Genesio Atesino",
+    "population": "3077",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021079",
+    "ref:catasto": "H858",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q474811",
+    "wikipedia": "it:San Genesio Atesino"
+  }
+},
+{
+  "type": "relation",
+  "id": 47252,
+  "center": {
+    "lat": 46.5531396,
+    "lon": 11.8591446
+  },
+  "tags": {
+    "admin_centre:postal_code": "39033",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "loc_name": "Corvara",
+    "name": "Corvara in Badia - Corvara",
+    "name:de": "Corvara",
+    "name:it": "Corvara in Badia",
+    "population": "1358",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021026",
+    "ref:catasto": "D079",
+    "type": "boundary",
+    "wikidata": "Q380043",
+    "wikipedia": "it:Corvara in Badia"
+  }
+},
+{
+  "type": "relation",
+  "id": 47254,
+  "center": {
+    "lat": 46.5534670,
+    "lon": 11.1499593
+  },
+  "tags": {
+    "admin_centre:postal_code": "39010",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Tisens - Tesimo",
+    "name:de": "Tisens",
+    "name:it": "Tesimo",
+    "population": "2138",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021099",
+    "ref:catasto": "L149",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q504459",
+    "wikipedia": "it:Tesimo"
+  }
+},
+{
+  "type": "relation",
+  "id": 47255,
+  "center": {
+    "lat": 46.5845022,
+    "lon": 11.9305429
+  },
+  "tags": {
+    "admin_centre:postal_code": "39036",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Badia - Abtei",
+    "name:de": "Abtei",
+    "name:it": "Badia",
+    "name:lld": "Badia",
+    "population": "3502",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021006",
+    "ref:catasto": "A537",
+    "type": "boundary",
+    "wikidata": "Q333816",
+    "wikipedia": "it:Badia (Italia)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47258,
+  "center": {
+    "lat": 46.6042808,
+    "lon": 10.6662952
+  },
+  "tags": {
+    "admin_centre:postal_code": "39023",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Laas - Lasa",
+    "name:de": "Laas",
+    "name:it": "Lasa",
+    "population": "4198",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021042",
+    "ref:catasto": "E457",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q420306",
+    "wikipedia": "it:Lasa (Italia)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47260,
+  "center": {
+    "lat": 46.5765241,
+    "lon": 11.2042960
+  },
+  "tags": {
+    "admin_centre:postal_code": "39010",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Gargazon - Gargazzone",
+    "name:de": "Gargazon",
+    "name:it": "Gargazzone",
+    "population": "1793",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021035",
+    "ref:catasto": "D923",
+    "type": "boundary",
+    "wikidata": "Q419249",
+    "wikipedia": "it:Gargazzone"
+  }
+},
+{
+  "type": "relation",
+  "id": 47262,
+  "center": {
+    "lat": 46.6039430,
+    "lon": 10.8586511
+  },
+  "tags": {
+    "admin_centre:postal_code": "39021",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Latsch - Laces",
+    "name:de": "Latsch",
+    "name:it": "Laces",
+    "population": "5301",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021037",
+    "ref:catasto": "E398",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q419816",
+    "wikipedia": "it:Laces"
+  }
+},
+{
+  "type": "relation",
+  "id": 47263,
+  "center": {
+    "lat": 46.5929550,
+    "lon": 11.2645899
+  },
+  "tags": {
+    "admin_centre:postal_code": "39010",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Mölten - Meltina",
+    "name:de": "Mölten",
+    "name:it": "Meltina",
+    "population": "1728",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021050",
+    "ref:catasto": "F118",
+    "type": "boundary",
+    "wikidata": "Q428018",
+    "wikipedia": "it:Meltina"
+  }
+},
+{
+  "type": "relation",
+  "id": 47265,
+  "center": {
+    "lat": 46.5907919,
+    "lon": 11.6845793
+  },
+  "tags": {
+    "admin_centre:postal_code": "39046",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "loc_name": "Urtijëi",
+    "name": "Urtijëi - St. Ulrich in Gröden - Ortisei",
+    "name:de": "St. Ulrich in Gröden",
+    "name:it": "Ortisei",
+    "population": "4683",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021061",
+    "ref:catasto": "G140",
+    "type": "boundary",
+    "wikidata": "Q255568",
+    "wikipedia": "it:Ortisei"
+  }
+},
+{
+  "type": "relation",
+  "id": 47266,
+  "center": {
+    "lat": 46.6065281,
+    "lon": 11.4934775
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Barbian - Barbiano",
+    "name:de": "Barbian",
+    "name:it": "Barbiano",
+    "population": "1802",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021007",
+    "ref:catasto": "A635",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q375322",
+    "wikipedia": "it:Barbiano"
+  }
+},
+{
+  "type": "relation",
+  "id": 47268,
+  "center": {
+    "lat": 46.6010517,
+    "lon": 11.1360857
+  },
+  "tags": {
+    "admin_centre:postal_code": "39011",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Lana",
+    "name:de": "Lana",
+    "name:it": "Lana",
+    "population": "12690",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021041",
+    "ref:catasto": "E434",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q420235",
+    "wikipedia": "it:Lana (Italia)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47269,
+  "center": {
+    "lat": 46.6221660,
+    "lon": 10.9212540
+  },
+  "tags": {
+    "admin_centre:postal_code": "39020",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Kastelbell-Tschars - Castelbello-Ciardes",
+    "name:de": "Kastelbell-Tschars",
+    "name:it": "Castelbello-Ciardes",
+    "population": "2397",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021018",
+    "ref:catasto": "C062",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q377177",
+    "wikipedia": "it:Castelbello-Ciardes"
+  }
+},
+{
+  "type": "relation",
+  "id": 47270,
+  "center": {
+    "lat": 46.6453854,
+    "lon": 10.7632056
+  },
+  "tags": {
+    "admin_centre:postal_code": "39028",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Schlanders - Silandro",
+    "name:de": "Schlanders",
+    "name:it": "Silandro",
+    "population": "6447",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021093",
+    "ref:catasto": "I729",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q494313",
+    "wikipedia": "it:Silandro"
+  }
+},
+{
+  "type": "relation",
+  "id": 47271,
+  "center": {
+    "lat": 46.6400820,
+    "lon": 11.0083696
+  },
+  "tags": {
+    "admin_centre:postal_code": "39025",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Naturns - Naturno",
+    "name:de": "Naturns",
+    "name:it": "Naturno",
+    "population": "6118",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021056",
+    "ref:catasto": "F849",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q263900",
+    "wikipedia": "it:Naturno"
+  }
+},
+{
+  "type": "relation",
+  "id": 47272,
+  "center": {
+    "lat": 46.6050614,
+    "lon": 11.1966275
+  },
+  "tags": {
+    "admin_centre:postal_code": "39014",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Burgstall - Postal",
+    "name:de": "Burgstall",
+    "name:it": "Postal",
+    "population": "2066",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021066",
+    "ref:catasto": "G936",
+    "type": "boundary",
+    "wikidata": "Q474165",
+    "wikipedia": "it:Postal"
+  }
+},
+{
+  "type": "relation",
+  "id": 47274,
+  "center": {
+    "lat": 46.5896845,
+    "lon": 11.5422592
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Waidbruck - Ponte Gardena",
+    "name:de": "Waidbruck",
+    "name:it": "Ponte Gardena",
+    "name:lld": "Pruca",
+    "population": "278",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021065",
+    "ref:catasto": "G830",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q474145",
+    "wikipedia": "it:Ponte Gardena"
+  }
+},
+{
+  "type": "relation",
+  "id": 47275,
+  "center": {
+    "lat": 46.6103320,
+    "lon": 11.5980130
+  },
+  "tags": {
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Lajen - Laion",
+    "name:de": "Lajen",
+    "name:it": "Laion",
+    "population": "2891",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021039",
+    "ref:catasto": "E420",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q420006",
+    "wikipedia": "it:Laion"
+  }
+},
+{
+  "type": "relation",
+  "id": 47276,
+  "center": {
+    "lat": 46.6510112,
+    "lon": 11.8541101
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "San Martin de Tor - San Martino in Badia - St. Martin in Thurn",
+    "name:de": "St. Martin in Thurn",
+    "name:it": "San Martino in Badia",
+    "name:lld": "San Martin de Tor",
+    "population": "1794",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021082",
+    "ref:catasto": "H988",
+    "type": "boundary",
+    "wikidata": "Q494793",
+    "wikimedia_commons": "Category:San Martin de Tor",
+    "wikipedia": "it:San Martino in Badia"
+  }
+},
+{
+  "type": "relation",
+  "id": 47277,
+  "center": {
+    "lat": 46.6377313,
+    "lon": 11.7018535
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Villnöß - Funes",
+    "name:de": "Villnöß",
+    "name:it": "Funes",
+    "population": "2567",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021033",
+    "ref:catasto": "D821",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q261187",
+    "wikipedia": "it:Funes (Italia)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47278,
+  "center": {
+    "lat": 46.6486248,
+    "lon": 11.9465741
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Marèo - Enneberg - Marebbe",
+    "name:de": "Enneberg",
+    "name:it": "Marebbe",
+    "name:lld": "Marèo",
+    "population": "3201",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021047",
+    "ref:catasto": "E938",
+    "type": "boundary",
+    "wikidata": "Q427253",
+    "wikipedia": "it:Marebbe"
+  }
+},
+{
+  "type": "relation",
+  "id": 47279,
+  "center": {
+    "lat": 46.6602964,
+    "lon": 10.4473406
+  },
+  "tags": {
+    "admin_centre:postal_code": "39020",
+    "admin_level": "8",
+    "alt_name:de": "Taufers",
+    "alt_name:rm": "Tuer",
+    "boundary": "administrative",
+    "name": "Taufers im Münstertal - Tubre",
+    "name:de": "Taufers im Münstertal",
+    "name:it": "Tubre",
+    "name:lld": "Tuor te Val Müstair",
+    "name:rm": "Tuor",
+    "population": "961",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021103",
+    "ref:catasto": "L455",
+    "type": "boundary",
+    "wikidata": "Q504554",
+    "wikipedia": "it:Tubre",
+    "wikipedia:de": "Taufers im Münstertal"
+  }
+},
+{
+  "type": "relation",
+  "id": 47280,
+  "center": {
+    "lat": 46.6038834,
+    "lon": 10.5700799
+  },
+  "tags": {
+    "admin_centre:postal_code": "39026",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Prad am Stilfserjoch - Prato allo Stelvio",
+    "name:de": "Prad am Stilfserjoch",
+    "name:it": "Prato allo Stelvio",
+    "population": "3862",
+    "population:date": "2026-08-27",
+    "ref:ISTAT": "021067",
+    "ref:catasto": "H004",
+    "type": "boundary",
+    "wikidata": "Q474174",
+    "wikipedia": "it:Prato allo Stelvio"
+  }
+},
+{
+  "type": "relation",
+  "id": 47281,
+  "center": {
+    "lat": 46.6224099,
+    "lon": 11.2483166
+  },
+  "tags": {
+    "admin_centre:postal_code": "39010",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Vöran - Verano",
+    "name:de": "Vöran",
+    "name:it": "Verano",
+    "population": "1005",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021112",
+    "ref:catasto": "L745",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q374771",
+    "wikipedia": "it:Verano"
+  }
+},
+{
+  "type": "relation",
+  "id": 47282,
+  "center": {
+    "lat": 46.6952768,
+    "lon": 11.3925981
+  },
+  "tags": {
+    "admin_centre:postal_code": "39058",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Sarntal - Sarentino",
+    "name:de": "Sarntal",
+    "name:it": "Sarentino",
+    "population": "7283",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021086",
+    "ref:catasto": "I431",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q256173",
+    "wikipedia": "it:Sarentino"
+  }
+},
+{
+  "type": "relation",
+  "id": 47283,
+  "center": {
+    "lat": 46.6556440,
+    "lon": 11.1880720
+  },
+  "tags": {
+    "admin_centre:postal_code": "39012",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Meran - Merano",
+    "name:de": "Meran",
+    "name:it": "Merano",
+    "population": "42292",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021051",
+    "ref:catasto": "F132",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q131605",
+    "wikipedia": "it:Merano"
+  }
+},
+{
+  "type": "relation",
+  "id": 47284,
+  "center": {
+    "lat": 46.6704496,
+    "lon": 11.0986731
+  },
+  "tags": {
+    "admin_centre:postal_code": "39022",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Algund - Lagundo",
+    "name:de": "Algund",
+    "name:it": "Lagundo",
+    "population": "5024",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021038",
+    "ref:catasto": "E412",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q419942",
+    "wikipedia": "it:Lagundo"
+  }
+},
+{
+  "type": "relation",
+  "id": 47285,
+  "center": {
+    "lat": 46.6933714,
+    "lon": 12.2359489
+  },
+  "tags": {
+    "admin_centre:postal_code": "39034",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Toblach - Dobbiaco",
+    "name:de": "Toblach",
+    "name:it": "Dobbiaco",
+    "name:uk": "Тоблях",
+    "population": "3472",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021028",
+    "ref:catasto": "D311",
+    "type": "boundary",
+    "wikidata": "Q380189",
+    "wikipedia": "it:Dobbiaco"
+  }
+},
+{
+  "type": "relation",
+  "id": 47286,
+  "center": {
+    "lat": 46.6719813,
+    "lon": 12.3930147
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Sexten - Sesto",
+    "name:de": "Sexten",
+    "name:it": "Sesto",
+    "name:lld": "Sest",
+    "population": "1770",
+    "population:date": "2026-08-27",
+    "ref:ISTAT": "021092",
+    "ref:catasto": "I687",
+    "type": "boundary",
+    "wikidata": "Q256337",
+    "wikipedia": "it:Sesto (Italia)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47287,
+  "center": {
+    "lat": 46.6451646,
+    "lon": 11.4847431
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Villanders - Villandro",
+    "name:de": "Villanders",
+    "name:it": "Villandro",
+    "population": "1883",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021114",
+    "ref:catasto": "L971",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q504736",
+    "wikipedia": "it:Villandro"
+  }
+},
+{
+  "type": "relation",
+  "id": 47288,
+  "center": {
+    "lat": 46.6325980,
+    "lon": 11.1334784
+  },
+  "tags": {
+    "admin_centre:postal_code": "39010",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Tscherms - Cermes",
+    "name:de": "Tscherms",
+    "name:it": "Cermes",
+    "population": "1636",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021020",
+    "ref:catasto": "A022",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q377608",
+    "wikipedia": "it:Cermes"
+  }
+},
+{
+  "type": "relation",
+  "id": 47289,
+  "center": {
+    "lat": 46.6520507,
+    "lon": 11.9427829
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "La Val - Wengen - La Valle",
+    "name:de": "Wengen",
+    "name:it": "La Valle",
+    "name:lld": "La Val",
+    "population": "1434",
+    "population:date": "2026-08-27",
+    "ref:ISTAT": "021117",
+    "ref:catasto": "E491",
+    "type": "boundary",
+    "wikidata": "Q419733",
+    "wikipedia": "it:La Valle"
+  }
+},
+{
+  "type": "relation",
+  "id": 47290,
+  "center": {
+    "lat": 46.6578307,
+    "lon": 10.5415236
+  },
+  "tags": {
+    "admin_centre:postal_code": "39020",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Glurns - Glorenza",
+    "name:de": "Glurns",
+    "name:it": "Glorenza",
+    "population": "943",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021036",
+    "ref:catasto": "E069",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q419357",
+    "wikipedia": "it:Glorenza"
+  }
+},
+{
+  "type": "relation",
+  "id": 47291,
+  "center": {
+    "lat": 46.6564526,
+    "lon": 11.1333855
+  },
+  "tags": {
+    "admin_centre:postal_code": "39020",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Marling - Marlengo",
+    "name:de": "Marling",
+    "name:it": "Marlengo",
+    "population": "2882",
+    "population:date": "2026-08-27",
+    "ref:ISTAT": "021048",
+    "ref:catasto": "E959",
+    "type": "boundary",
+    "wikidata": "Q427354",
+    "wikipedia": "it:Marlengo"
+  }
+},
+{
+  "type": "relation",
+  "id": 47292,
+  "center": {
+    "lat": 46.6720052,
+    "lon": 11.5509194
+  },
+  "tags": {
+    "admin_centre:postal_code": "39043",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Klausen - Chiusa",
+    "name:de": "Klausen",
+    "name:it": "Chiusa",
+    "population": "5213",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021022",
+    "ref:catasto": "C652",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q378095",
+    "wikipedia": "it:Chiusa (Italia)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47294,
+  "center": {
+    "lat": 46.6540662,
+    "lon": 10.6106161
+  },
+  "tags": {
+    "admin_centre:postal_code": "39020",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Schluderns - Sluderno",
+    "name:de": "Schluderns",
+    "name:it": "Sluderno",
+    "population": "1904",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021094",
+    "ref:catasto": "I771",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q493790",
+    "wikipedia": "it:Sluderno"
+  }
+},
+{
+  "type": "relation",
+  "id": 47295,
+  "center": {
+    "lat": 46.6625667,
+    "lon": 11.2477540
+  },
+  "tags": {
+    "admin_centre:postal_code": "39010",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Hafling - Avelengo",
+    "name:de": "Hafling",
+    "name:it": "Avelengo",
+    "population": "836",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021005",
+    "ref:catasto": "A507",
+    "type": "boundary",
+    "wikidata": "Q374659",
+    "wikipedia": "it:Avelengo",
+    "wikipedia:de": "de:Hafling"
+  }
+},
+{
+  "type": "relation",
+  "id": 47296,
+  "center": {
+    "lat": 46.6405209,
+    "lon": 11.0491793
+  },
+  "tags": {
+    "admin_centre:postal_code": "39025",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Plaus",
+    "name:de": "Plaus",
+    "name:it": "Plaus",
+    "population": "760",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021064",
+    "ref:catasto": "G299",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q474118",
+    "wikipedia": "it:Plaus"
+  }
+},
+{
+  "type": "relation",
+  "id": 47297,
+  "center": {
+    "lat": 46.6937239,
+    "lon": 11.0415454
+  },
+  "tags": {
+    "admin_centre:postal_code": "39020",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Partschins - Parcines",
+    "name:de": "Partschins",
+    "name:it": "Parcines",
+    "population": "4003",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021062",
+    "ref:catasto": "G328",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q266982",
+    "wikipedia": "it:Parcines"
+  }
+},
+{
+  "type": "relation",
+  "id": 47298,
+  "center": {
+    "lat": 46.6829553,
+    "lon": 11.5844152
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Feldthurns - Velturno",
+    "name:de": "Feldthurns",
+    "name:it": "Velturno",
+    "population": "3103",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021116",
+    "ref:catasto": "L724",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q499695",
+    "wikipedia": "it:Velturno"
+  }
+},
+{
+  "type": "relation",
+  "id": 47299,
+  "center": {
+    "lat": 46.7277265,
+    "lon": 10.8836024
+  },
+  "tags": {
+    "admin_centre:postal_code": "39020",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Schnals - Senales",
+    "name:de": "Schnals",
+    "name:it": "Senales",
+    "population": "1234",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021091",
+    "ref:catasto": "I604",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q499688",
+    "wikipedia": "it:Senales"
+  }
+},
+{
+  "type": "relation",
+  "id": 47300,
+  "center": {
+    "lat": 46.7034826,
+    "lon": 11.6889511
+  },
+  "tags": {
+    "admin_centre:postal_code": "39042",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Brixen - Bressanone",
+    "name:de": "Brixen",
+    "name:it": "Bressanone",
+    "name:sk": "Brixen",
+    "population": "23476",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021011",
+    "ref:catasto": "B160",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "website": "https://www.gemeinde.brixen.bz.it/",
+    "wikidata": "Q185541",
+    "wikipedia": "it:Bressanone"
+  }
+},
+{
+  "type": "relation",
+  "id": 47301,
+  "center": {
+    "lat": 46.6886299,
+    "lon": 12.1111615
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Prags - Braies",
+    "name:de": "Prags",
+    "name:it": "Braies",
+    "population": "699",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021009",
+    "ref:catasto": "B116",
+    "type": "boundary",
+    "wikidata": "Q375618",
+    "wikipedia": "it:Braies"
+  }
+},
+{
+  "type": "relation",
+  "id": 47302,
+  "center": {
+    "lat": 46.7228561,
+    "lon": 10.5684512
+  },
+  "tags": {
+    "admin_centre:postal_code": "39024",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Mals - Malles Venosta",
+    "name:de": "Mals",
+    "name:it": "Malles Venosta",
+    "population": "5275",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021046",
+    "ref:catasto": "E862",
+    "type": "boundary",
+    "wikidata": "Q427187",
+    "wikipedia": "it:Malles Venosta"
+  }
+},
+{
+  "type": "relation",
+  "id": 47303,
+  "center": {
+    "lat": 46.7138230,
+    "lon": 11.2318013
+  },
+  "tags": {
+    "admin_centre:postal_code": "39017",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Schenna - Scena",
+    "name:de": "Schenna",
+    "name:it": "Scena",
+    "population": "3050",
+    "population:date": "2026-08-27",
+    "ref:ISTAT": "021087",
+    "ref:catasto": "I519",
+    "type": "boundary",
+    "wikidata": "Q504293",
+    "wikipedia": "it:Scena (Italia)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47304,
+  "center": {
+    "lat": 46.7085216,
+    "lon": 11.1193261
+  },
+  "tags": {
+    "admin_centre:postal_code": "39019",
+    "admin_level": "8",
+    "alt_name:de": "Dorf Tirol",
+    "boundary": "administrative",
+    "name": "Tirol - Tirolo",
+    "name:de": "Tirol",
+    "name:it": "Tirolo",
+    "population": "2468",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021101",
+    "ref:catasto": "L178",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q504179",
+    "wikipedia": "it:Tirolo (comune)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47305,
+  "center": {
+    "lat": 46.7022875,
+    "lon": 11.1711082
+  },
+  "tags": {
+    "admin_centre:postal_code": "39010",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Kuens - Caines",
+    "name:de": "Kuens",
+    "name:it": "Caines",
+    "population": "375",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021014",
+    "ref:catasto": "B364",
+    "type": "boundary",
+    "wikidata": "Q376618",
+    "wikipedia": "it:Caines"
+  }
+},
+{
+  "type": "relation",
+  "id": 47306,
+  "center": {
+    "lat": 46.7265977,
+    "lon": 11.7626516
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Lüsen - Luson",
+    "name:de": "Lüsen",
+    "name:it": "Luson",
+    "name:lld": "Lujon",
+    "population": "1581",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021044",
+    "ref:catasto": "E764",
+    "type": "boundary",
+    "wikidata": "Q420503",
+    "wikipedia": "it:Luson"
+  }
+},
+{
+  "type": "relation",
+  "id": 47307,
+  "center": {
+    "lat": 46.7441993,
+    "lon": 11.5715781
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Vahrn - Varna",
+    "name:de": "Vahrn",
+    "name:it": "Varna",
+    "population": "5087",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021111",
+    "ref:catasto": "L687",
+    "type": "boundary",
+    "wikidata": "Q504684",
+    "wikipedia": "it:Varna (Italia)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47308,
+  "center": {
+    "lat": 46.7464832,
+    "lon": 11.1499694
+  },
+  "tags": {
+    "admin_centre:postal_code": "39010",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Riffian - Rifiano",
+    "name:de": "Riffian",
+    "name:it": "Rifiano",
+    "population": "1404",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021073",
+    "ref:catasto": "H284",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q474654",
+    "wikipedia": "it:Rifiano"
+  }
+},
+{
+  "type": "relation",
+  "id": 47309,
+  "center": {
+    "lat": 46.7096406,
+    "lon": 12.3137311
+  },
+  "tags": {
+    "admin_centre:postal_code": "39038",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Innichen - San Candido",
+    "name:de": "Innichen",
+    "name:it": "San Candido",
+    "name:lld": "Sanciana",
+    "name:uk": "Інніхен",
+    "population": "3310",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021077",
+    "ref:catasto": "H786",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q474782",
+    "wikipedia": "it:San Candido"
+  }
+},
+{
+  "type": "relation",
+  "id": 47310,
+  "center": {
+    "lat": 46.7876507,
+    "lon": 11.2817199
+  },
+  "tags": {
+    "admin_centre:postal_code": "39015",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "St. Leonhard in Passeier - San Leonardo in Passiria",
+    "name:de": "St. Leonhard in Passeier",
+    "name:it": "San Leonardo in Passiria",
+    "population": "3688",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021080",
+    "ref:catasto": "H952",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q504149",
+    "wikipedia": "it:San Leonardo in Passiria"
+  }
+},
+{
+  "type": "relation",
+  "id": 47311,
+  "center": {
+    "lat": 46.7399138,
+    "lon": 12.0214540
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Olang - Valdaora",
+    "name:de": "Olang",
+    "name:it": "Valdaora",
+    "name:lld": "Valdàora",
+    "population": "3281",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021106",
+    "ref:catasto": "L552",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q493802",
+    "wikipedia": "it:Valdaora"
+  }
+},
+{
+  "type": "relation",
+  "id": 47312,
+  "center": {
+    "lat": 46.7811412,
+    "lon": 12.1220711
+  },
+  "tags": {
+    "admin_centre:postal_code": "39035",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Welsberg-Taisten - Monguelfo-Tesido",
+    "name:de": "Welsberg-Taisten",
+    "name:it": "Monguelfo-Tesido",
+    "name:lld": "Valsperch-Taisten",
+    "name:uk": "Вельсберґ",
+    "population": "2914",
+    "population:date": "2026-08-27",
+    "ref:ISTAT": "021052",
+    "ref:catasto": "F371",
+    "type": "boundary",
+    "wikidata": "Q431389",
+    "wikipedia": "it:Monguelfo-Tesido"
+  }
+},
+{
+  "type": "relation",
+  "id": 47313,
+  "center": {
+    "lat": 46.7287359,
+    "lon": 12.1619263
+  },
+  "tags": {
+    "admin_centre:postal_code": "39039",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Niederdorf - Villabassa",
+    "name:de": "Niederdorf",
+    "name:it": "Villabassa",
+    "population": "1617",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021113",
+    "ref:catasto": "L915",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q504724",
+    "wikipedia": "it:Villabassa"
+  }
+},
+{
+  "type": "relation",
+  "id": 47314,
+  "center": {
+    "lat": 46.7631016,
+    "lon": 11.6616203
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Natz-Schabs - Naz-Sciaves",
+    "name:de": "Natz - Schabs",
+    "name:it": "Naz - Sciaves",
+    "population": "3520",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021057",
+    "ref:catasto": "F856",
+    "type": "boundary",
+    "wikidata": "Q259455",
+    "wikipedia": "it:Naz-Sciaves"
+  }
+},
+{
+  "type": "relation",
+  "id": 47315,
+  "center": {
+    "lat": 46.8325199,
+    "lon": 11.1208379
+  },
+  "tags": {
+    "admin_centre:postal_code": "39013",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Moos in Passeier - Moso in Passiria",
+    "name:de": "Moos in Passeier",
+    "name:it": "Moso in Passiria",
+    "population": "2032",
+    "population:date": "2026-08-27",
+    "ref:ISTAT": "021054",
+    "ref:catasto": "F766",
+    "type": "boundary",
+    "wikidata": "Q433066",
+    "wikipedia": "it:Moso in Passiria"
+  }
+},
+{
+  "type": "relation",
+  "id": 47316,
+  "center": {
+    "lat": 46.7656848,
+    "lon": 11.8674079
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "St. Lorenzen - San Lorenzo di Sebato",
+    "name:de": "St. Lorenzen",
+    "name:it": "San Lorenzo di Sebato",
+    "name:lld": "San Laurënz",
+    "population": "3990",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021081",
+    "ref:catasto": "H956",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q504178",
+    "wikipedia": "it:San Lorenzo di Sebato"
+  }
+},
+{
+  "type": "relation",
+  "id": 47317,
+  "center": {
+    "lat": 46.7929504,
+    "lon": 11.9481670
+  },
+  "tags": {
+    "admin_centre:postal_code": "39031",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Bruneck - Brunico",
+    "name:de": "Bruneck",
+    "name:it": "Brunico",
+    "name:lld": "Burnech-Bornech",
+    "population": "17265",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021013",
+    "ref:catasto": "B220",
+    "type": "boundary",
+    "wikidata": "Q256765",
+    "wikipedia": "it:Brunico"
+  }
+},
+{
+  "type": "relation",
+  "id": 47318,
+  "center": {
+    "lat": 46.8240689,
+    "lon": 12.2255871
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Gsies - Valle di Casies",
+    "name:de": "Gsies",
+    "name:it": "Valle di Casies",
+    "population": "2354",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021109",
+    "ref:catasto": "L601",
+    "type": "boundary",
+    "wikidata": "Q504650",
+    "wikipedia": "it:Valle di Casies"
+  }
+},
+{
+  "type": "relation",
+  "id": 47319,
+  "center": {
+    "lat": 46.7739339,
+    "lon": 11.1947993
+  },
+  "tags": {
+    "admin_centre:postal_code": "39010",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "St. Martin in Passeier - San Martino in Passiria",
+    "name:de": "St. Martin in Passeier",
+    "name:it": "San Martino in Passiria",
+    "population": "3336",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021083",
+    "ref:catasto": "H989",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q504216",
+    "wikipedia": "it:San Martino in Passiria"
+  }
+},
+{
+  "type": "relation",
+  "id": 47320,
+  "center": {
+    "lat": 46.8390501,
+    "lon": 12.0996814
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Rasen-Antholz - Rasun-Anterselva",
+    "name:de": "Rasen-Antholz",
+    "name:it": "Rasun-Anterselva",
+    "population": "2909",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021071",
+    "ref:catasto": "H189",
+    "type": "boundary",
+    "wikidata": "Q193711",
+    "wikipedia": "it:Rasun Anterselva"
+  }
+},
+{
+  "type": "relation",
+  "id": 47321,
+  "center": {
+    "lat": 46.7879617,
+    "lon": 11.7374553
+  },
+  "tags": {
+    "admin_centre:postal_code": "39037",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Rodeneck - Rodengo",
+    "name:de": "Rodeneck",
+    "name:it": "Rodengo",
+    "population": "1297",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021075",
+    "ref:catasto": "H475",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q474724",
+    "wikipedia": "it:Rodengo"
+  }
+},
+{
+  "type": "relation",
+  "id": 47322,
+  "center": {
+    "lat": 46.7974613,
+    "lon": 11.5568383
+  },
+  "tags": {
+    "admin_centre:postal_code": "39045",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Franzensfeste - Fortezza",
+    "name:de": "Franzensfeste",
+    "name:it": "Fortezza",
+    "population": "1167",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021032",
+    "ref:catasto": "D731",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q381499",
+    "wikipedia": "it:Fortezza (Italia)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47323,
+  "center": {
+    "lat": 46.8525865,
+    "lon": 11.6341120
+  },
+  "tags": {
+    "admin_centre:postal_code": "39037",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Mühlbach - Rio di Pusteria",
+    "name:de": "Mühlbach",
+    "name:it": "Rio di Pusteria",
+    "population": "3296",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021074",
+    "ref:catasto": "H299",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q474670",
+    "wikipedia": "it:Rio di Pusteria"
+  }
+},
+{
+  "type": "relation",
+  "id": 47324,
+  "center": {
+    "lat": 46.8227109,
+    "lon": 11.8156473
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Kiens - Chienes",
+    "name:de": "Kiens",
+    "name:it": "Chienes",
+    "population": "3082",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021021",
+    "ref:catasto": "C625",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q377751",
+    "wikipedia": "it:Chienes"
+  }
+},
+{
+  "type": "relation",
+  "id": 47325,
+  "center": {
+    "lat": 46.8037004,
+    "lon": 10.5932908
+  },
+  "tags": {
+    "admin_centre:postal_code": "39027",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Graun - Curon Venosta",
+    "name:de": "Graun",
+    "name:it": "Curon Venosta",
+    "population": "2405",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021027",
+    "ref:catasto": "D222",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q380146",
+    "wikipedia": "it:Curon Venosta"
+  }
+},
+{
+  "type": "relation",
+  "id": 47326,
+  "center": {
+    "lat": 46.8321632,
+    "lon": 11.8771502
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Pfalzen - Falzes",
+    "name:de": "Pfalzen",
+    "name:it": "Falzes",
+    "name:lld": "Falzes",
+    "population": "3222",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021030",
+    "ref:catasto": "D484",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q380334",
+    "wikipedia": "it:Falzes"
+  }
+},
+{
+  "type": "relation",
+  "id": 47327,
+  "center": {
+    "lat": 46.8758700,
+    "lon": 11.6974018
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Vintl - Vandoies",
+    "name:de": "Vintl",
+    "name:it": "Vandoies",
+    "population": "3387",
+    "population:date": "2026-08-27",
+    "ref:ISTAT": "021110",
+    "ref:catasto": "L660",
+    "type": "boundary",
+    "wikidata": "Q282382",
+    "wikipedia": "it:Vandoies"
+  }
+},
+{
+  "type": "relation",
+  "id": 47328,
+  "center": {
+    "lat": 46.8342281,
+    "lon": 12.0191252
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Percha - Perca",
+    "name:de": "Percha",
+    "name:it": "Perca",
+    "population": "1787",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021063",
+    "ref:catasto": "G443",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q427475",
+    "wikipedia": "it:Perca (Italia)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47329,
+  "center": {
+    "lat": 46.8855712,
+    "lon": 11.3029721
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Ratschings - Racines",
+    "name:de": "Ratschings",
+    "name:it": "Racines",
+    "population": "4704",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021070",
+    "ref:catasto": "H152",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q474345",
+    "wikipedia": "it:Racines (Italia)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47330,
+  "center": {
+    "lat": 46.8570541,
+    "lon": 11.5075671
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Freienfeld - Campo di Trens",
+    "name:de": "Freienfeld",
+    "name:it": "Campo di Trens",
+    "population": "2771",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021016",
+    "ref:catasto": "B529",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q377057",
+    "wikipedia": "it:Campo di Trens"
+  }
+},
+{
+  "type": "relation",
+  "id": 47331,
+  "center": {
+    "lat": 46.8558719,
+    "lon": 11.9841287
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Gais",
+    "name:de": "Gais",
+    "name:it": "Gais",
+    "population": "3317",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021034",
+    "ref:catasto": "D860",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q419157",
+    "wikipedia": "it:Gais (Italia)"
+  }
+},
+{
+  "type": "relation",
+  "id": 47332,
+  "center": {
+    "lat": 46.9276069,
+    "lon": 11.8311574
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Mühlwald - Selva dei Molini",
+    "name:de": "Mühlwald",
+    "name:it": "Selva dei Molini",
+    "population": "1350",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021088",
+    "ref:catasto": "I593",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q504310",
+    "wikipedia": "it:Selva dei Molini"
+  }
+},
+{
+  "type": "relation",
+  "id": 47333,
+  "center": {
+    "lat": 46.8515298,
+    "lon": 11.7828028
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Terenten - Terento",
+    "name:de": "Terenten",
+    "name:it": "Terento",
+    "population": "1833",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021096",
+    "ref:catasto": "L106",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q499667",
+    "wikipedia": "it:Terento"
+  }
+},
+{
+  "type": "relation",
+  "id": 47334,
+  "center": {
+    "lat": 46.9090901,
+    "lon": 11.4288835
+  },
+  "tags": {
+    "admin_centre:postal_code": "39049",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Sterzing - Vipiteno",
+    "name:de": "Sterzing",
+    "name:it": "Vipiteno",
+    "name:lld": "Sterzing",
+    "population": "7093",
+    "population:date": "2026-08-27",
+    "ref:ISTAT": "021115",
+    "ref:catasto": "M067",
+    "type": "boundary",
+    "wikidata": "Q263305",
+    "wikipedia": "de:Sterzing"
+  }
+},
+{
+  "type": "relation",
+  "id": 47335,
+  "center": {
+    "lat": 46.9405374,
+    "lon": 12.0268042
+  },
+  "tags": {
+    "admin_centre:postal_code": "39032",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Sand in Taufers - Campo Tures",
+    "name:de": "Sand in Taufers",
+    "name:it": "Campo Tures",
+    "population": "5914",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021017",
+    "ref:catasto": "B570",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q376944",
+    "wikipedia": "it:Campo Tures"
+  }
+},
+{
+  "type": "relation",
+  "id": 47336,
+  "center": {
+    "lat": 46.9488500,
+    "lon": 11.5886635
+  },
+  "tags": {
+    "admin_centre:postal_code": "39049",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Pfitsch - Val di Vizze",
+    "name:de": "Pfitsch",
+    "name:it": "Val di Vizze",
+    "population": "3144",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021107",
+    "ref:catasto": "L564",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q504607",
+    "wikipedia": "de:Pfitsch"
+  }
+},
+{
+  "type": "relation",
+  "id": 47337,
+  "center": {
+    "lat": 46.9659599,
+    "lon": 11.3895618
+  },
+  "tags": {
+    "admin_centre:postal_code": "39041",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Brenner - Brennero",
+    "name:de": "Brenner",
+    "name:it": "Brennero",
+    "population": "2446",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021010",
+    "ref:catasto": "B145",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q375769",
+    "wikipedia": "it:Brennero"
+  }
+},
+{
+  "type": "relation",
+  "id": 47338,
+  "center": {
+    "lat": 46.9884035,
+    "lon": 11.9422382
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Ahrntal - Valle Aurina",
+    "name:de": "Ahrntal",
+    "name:it": "Valle Aurina",
+    "population": "6029",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021108",
+    "ref:catasto": "L595",
+    "type": "boundary",
+    "wikidata": "Q402903",
+    "wikipedia": "it:Valle Aurina"
+  }
+},
+{
+  "type": "relation",
+  "id": 47339,
+  "center": {
+    "lat": 47.0397406,
+    "lon": 12.1500559
+  },
+  "tags": {
+    "admin_centre:postal_code": "39030",
+    "admin_level": "8",
+    "boundary": "administrative",
+    "name": "Prettau - Predoi",
+    "name:de": "Prettau",
+    "name:it": "Predoi",
+    "population": "509",
+    "population:date": "2026-08-28",
+    "ref:ISTAT": "021068",
+    "ref:catasto": "H019",
+    "source:population": "ANPR 2026",
+    "type": "boundary",
+    "wikidata": "Q474195",
+    "wikipedia": "it:Predoi"
+  }
+},
+{
+  "type": "relation",
+  "id": 6536148,
+  "center": {
+    "lat": 46.6596977,
+    "lon": 10.7104138
+  },
+  "tags": {
+    "admin_level": "7",
+    "boundary": "administrative",
+    "name": "Vinschgau - Val Venosta",
+    "name:de": "Vinschgau",
+    "name:it": "Val Venosta",
+    "name:lld": "Val Venuesta",
+    "name:rm": "Vnuost",
+    "type": "boundary"
+  }
+},
+{
+  "type": "relation",
+  "id": 6536521,
+  "center": {
+    "lat": 46.6906897,
+    "lon": 11.0683177
+  },
+  "tags": {
+    "admin_level": "7",
+    "boundary": "administrative",
+    "name": "Burggrafenamt - Burgraviato",
+    "name:de": "Burggrafenamt",
+    "name:it": "Burgraviato",
+    "type": "boundary"
+  }
+},
+{
+  "type": "relation",
+  "id": 6536736,
+  "center": {
+    "lat": 46.3968124,
+    "lon": 11.3091831
+  },
+  "tags": {
+    "admin_centre:postal_code": "39040",
+    "admin_level": "7",
+    "boundary": "administrative",
+    "name": "Überetsch-Unterland - Oltradige-Bassa Atesina",
+    "name:de": "Überetsch-Unterland",
+    "name:it": "Oltradige-Bassa Atesina",
+    "type": "boundary",
+    "wikidata": "Q331679"
+  }
+},
+{
+  "type": "relation",
+  "id": 6536748,
+  "center": {
+    "lat": 46.8872529,
+    "lon": 11.4548721
+  },
+  "tags": {
+    "admin_level": "7",
+    "boundary": "administrative",
+    "name": "Wipptal - Alta Vall'Isarco",
+    "name:de": "Wipptal",
+    "name:it": "Alta Vall'Isarco",
+    "type": "boundary"
+  }
+},
+{
+  "type": "relation",
+  "id": 6536796,
+  "center": {
+    "lat": 46.7528200,
+    "lon": 11.6228196
+  },
+  "tags": {
+    "admin_centre:postal_code": "39053",
+    "admin_level": "7",
+    "boundary": "administrative",
+    "name": "Eisacktal - Valle Isarco",
+    "name:de": "Eisacktal",
+    "name:it": "Valle Isarco",
+    "type": "boundary",
+    "wikidata": "Q1310733"
+  }
+},
+{
+  "type": "relation",
+  "id": 6537706,
+  "center": {
+    "lat": 46.5825906,
+    "lon": 11.5222382
+  },
+  "tags": {
+    "admin_centre:postal_code": "39100",
+    "admin_level": "7",
+    "boundary": "administrative",
+    "name": "Salten-Schlern - Salto-Sciliar",
+    "name:de": "Salten-Schlern",
+    "name:it": "Salto-Sciliar",
+    "type": "boundary",
+    "wikidata": "Q2143713",
+    "wikimedia_commons": "Category:Salten-Schlern",
+    "wikipedia": "de:Salten-Schlern"
+  }
+},
+{
+  "type": "relation",
+  "id": 6537725,
+  "center": {
+    "lat": 46.8005424,
+    "lon": 12.0454185
+  },
+  "tags": {
+    "admin_level": "7",
+    "alt_name": "Pustertal - Valle Pusteria",
+    "alt_name:it": "Valle Pusteria",
+    "boundary": "administrative",
+    "name": "Pustertal - Val Pusteria",
+    "name:de": "Pustertal",
+    "name:it": "Val Pusteria",
+    "name:lld": "Val de Puster",
+    "official_name:de": "Bezirksgemeinschaft Pustertal",
+    "official_name:it": "Comunità Comprensoriale Valle Pusteria",
+    "type": "boundary",
+    "website": "https://www.bezirksgemeinschaftpustertal.it",
+    "wikidata": "Q1515073",
+    "wikimedia_commons": "Category:Pustertal",
+    "wikipedia": "de:Pustertal (Bezirksgemeinschaft)"
+  }
+}
+
+  ]
+}

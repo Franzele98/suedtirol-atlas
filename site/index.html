@@ -1,0 +1,1082 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Südtirol Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@400;500&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=UnifrakturCook:wght@700&family=Special+Elite&family=Caveat:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* Five selectable looks share one layout. Each look only sets the tokens below (on the root
+     element, via data-ui) plus a few rules of its own at the end of this sheet. */
+  :root {                       /* "Modern": the first design */
+    --paper: #e4e0d2; --ink: #1d2a22; --ink-soft: rgba(29, 42, 34, 0.62);
+    --card-bg: #1d2a22; --card-fg: #e9e6d8; --card-soft: rgba(233, 230, 216, 0.6); --card-line: rgba(233, 230, 216, 0.2);
+    --accent: #d9f26e;          /* titles and highlights on the card */
+    --on-bg: #1d2a22; --on-fg: #d9f26e;      /* a selected button or label */
+    --tag-bg: rgba(228, 224, 210, 0.85); --tag-fg: #1d2a22;
+    --mark: #1d2a22;            /* the dot of a place */
+    --f-display: 'Anton', 'Arial Narrow', Impact, sans-serif; --f-body: 'DM Mono', ui-monospace, Menlo, monospace;
+    --display-weight: 400; --display-case: uppercase; --logo-size: 34px;
+    --label-size: 10px; --label-track: 0.14em; --label-case: uppercase;
+    --top: env(safe-area-inset-top, 0px); --bottom: env(safe-area-inset-bottom, 0px);
+  }
+  :root[data-ui='chronicle'] {  /* quiet period feel: textbook serif, paper, ink, one red */
+    --paper: #e6dfcc; --ink: #2a221b; --ink-soft: rgba(42, 34, 27, 0.6);
+    --card-bg: #f4eedd; --card-fg: #2a221b; --card-soft: rgba(42, 34, 27, 0.6); --card-line: rgba(42, 34, 27, 0.3);
+    --accent: #b5351f; --on-bg: #2a221b; --on-fg: #f4eedd; --tag-bg: rgba(244, 238, 221, 0.9); --tag-fg: #2a221b; --mark: #2a221b;
+    --f-display: 'Old Standard TT', 'Times New Roman', Georgia, serif; --display-weight: 700; --display-case: none; --logo-size: 36px;
+  }
+  :root[data-ui='register'] {   /* the full school register: Fraktur, typewriter, ruled index card */
+    --paper: #e6dcc3; --ink: #2b2118; --ink-soft: rgba(43, 33, 24, 0.62);
+    --card-bg: #f3ead3; --card-fg: #2b2118; --card-soft: rgba(43, 33, 24, 0.62); --card-line: rgba(43, 33, 24, 0.5);
+    --accent: #b5351f; --on-bg: #2b2118; --on-fg: #f3ead3; --tag-bg: #f3ead3; --tag-fg: #2b2118; --mark: #b5351f;
+    --f-display: 'Old Standard TT', 'Times New Roman', Georgia, serif; --f-body: 'Special Elite', 'Courier New', monospace;
+    --display-weight: 700; --display-case: none; --logo-size: 46px; --label-size: 12px; --label-track: 0; --label-case: none;
+  }
+  :root[data-ui='chalk'] {      /* the blackboard: slate, chalk white, chalk yellow, handwriting */
+    --paper: #22302b; --ink: #ece6d4; --ink-soft: rgba(236, 230, 212, 0.62);
+    --card-bg: #17211e; --card-fg: #ece6d4; --card-soft: rgba(236, 230, 212, 0.6); --card-line: rgba(236, 230, 212, 0.25);
+    --accent: #f0cf6a; --on-bg: #ece6d4; --on-fg: #22302b; --tag-bg: rgba(23, 33, 30, 0.88); --tag-fg: #ece6d4; --mark: #f0cf6a;
+    --f-display: 'Caveat', 'Segoe Script', cursive; --display-weight: 700; --display-case: none; --logo-size: 46px;
+  }
+  :root[data-ui='museum'] {     /* museum label: white, hairlines, one blue */
+    --paper: #f2f2ef; --ink: #141414; --ink-soft: rgba(20, 20, 20, 0.55);
+    --card-bg: #ffffff; --card-fg: #141414; --card-soft: rgba(20, 20, 20, 0.55); --card-line: rgba(20, 20, 20, 0.15);
+    --accent: #1f4fd1; --on-bg: #141414; --on-fg: #ffffff; --tag-bg: rgba(255, 255, 255, 0.92); --tag-fg: #141414; --mark: #1f4fd1;
+    --f-display: 'Inter', 'Helvetica Neue', Arial, sans-serif; --f-body: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    --display-weight: 600; --display-case: none; --logo-size: 28px; --label-size: 11px; --label-track: 0.02em; --label-case: none;
+  }
+
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; overflow: hidden; background: var(--paper); color: var(--ink); font-family: var(--f-body); }
+  canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; text-align: left; }
+  .logo span, .switch, .up-btn, nav, .card .kicker, .card dt, .card .step, .pin, footer, .loading {
+    font-size: var(--label-size); letter-spacing: var(--label-track); text-transform: var(--label-case); }
+
+  .logo { position: fixed; top: calc(18px + var(--top)); left: 24px; z-index: 5; pointer-events: none; }
+  .logo b { display: block; font: var(--display-weight) var(--logo-size)/1 var(--f-display); text-transform: var(--display-case); }
+  .logo span { display: block; margin-top: 4px; color: var(--ink-soft); }
+
+  .switches { position: fixed; top: calc(22px + var(--top)); right: 24px; z-index: 5; display: grid; gap: 6px; justify-items: end; }
+  .switch { display: flex; align-items: center; }
+  .switch span { margin-right: 10px; color: var(--ink-soft); }
+  .switch button { padding: 7px 10px; background: var(--tag-bg); color: var(--tag-fg); text-transform: inherit; letter-spacing: inherit; }
+  .switch button.on { background: var(--on-bg); color: var(--on-fg); }
+  .switch button.busy { opacity: 0.6; }
+
+  .up-btn { position: fixed; top: calc(132px + var(--top)); right: 24px; z-index: 5; padding: 9px 13px; background: var(--accent); color: var(--on-bg);
+    clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 0 100%); transition: opacity 0.4s; }
+  body[data-mode='overview'] .up-btn { opacity: 0; pointer-events: none; }
+
+  nav { position: fixed; top: calc(96px + var(--top)); left: 24px; z-index: 5; width: 230px; }
+  nav .crumbs button { display: inline; padding: 0; color: var(--ink-soft); text-transform: inherit; letter-spacing: inherit; }
+  nav .crumbs button:hover { color: inherit; }
+  nav .crumbs i { font-style: normal; color: var(--ink-soft); margin: 0 5px; }
+  nav h2 { font: inherit; color: var(--ink-soft); margin: 16px 0 6px; }
+  nav .list { max-height: calc(100vh - 230px - var(--top)); overflow-y: auto; scrollbar-width: thin; }
+  nav .list button { display: flex; justify-content: space-between; gap: 10px; width: 100%; padding: 3px 0; text-transform: inherit;
+    letter-spacing: inherit; opacity: 0.85; transition: transform 0.2s, opacity 0.2s; }
+  nav .list button span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  nav .list button em { font-style: normal; color: var(--ink-soft); }
+  nav .list button:hover { transform: translateX(5px); opacity: 1; }
+  nav .list button.on { opacity: 1; }
+  nav .list button.on span:first-child::before { content: '— '; }
+
+  .card { position: fixed; right: 24px; bottom: calc(54px + var(--bottom)); z-index: 6; width: min(340px, calc(100vw - 48px)); padding: 18px 18px 16px;
+    background: var(--card-bg); color: var(--card-fg); clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+    transition: opacity 0.4s, transform 0.4s; }
+  body[data-mode='overview'] .card { opacity: 0; transform: translateY(18px); pointer-events: none; }
+  .card .kicker { color: var(--accent); }
+  .card h1 { margin: 8px 0 10px; font: var(--display-weight) clamp(24px, 2.8vw, 36px)/1.02 var(--f-display); text-transform: var(--display-case);
+    color: var(--accent); overflow-wrap: anywhere; }
+  .card p { font-size: 12px; line-height: 1.55; opacity: 0.88; }
+  .card #c-link { margin-top: 6px; font-size: 11px; }
+  .card a { color: var(--accent); overflow-wrap: anywhere; }
+  .card dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--card-line); }
+  .card dt { font-size: calc(var(--label-size) - 1px); color: var(--card-soft); }
+  .card dd { margin-top: 3px; font-size: 12px; }
+  .card .step { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+  .card .step button { padding: 7px 11px; border: 1px solid var(--card-line); text-transform: inherit; letter-spacing: inherit; }
+  .card .step button:hover { background: var(--accent); color: var(--card-bg); }
+
+  .pins { position: fixed; inset: 0; z-index: 3; pointer-events: none; }
+  .pin { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 7px; padding: 4px 6px 4px 0; pointer-events: auto;
+    color: var(--tag-fg); white-space: nowrap; will-change: transform; }
+  .pin i { flex: none; width: 9px; height: 9px; margin-left: -4.5px; background: var(--mark); border-radius: 50%; box-shadow: 0 0 0 3px var(--tag-bg); transition: transform 0.2s; }
+  .pin span { padding: 2px 5px; background: var(--tag-bg); }
+  .pin em { font-style: normal; opacity: 0.6; margin-left: 6px; }
+  .pin:hover i { transform: scale(1.5); }
+  .pin.on span, .pin:hover span { background: var(--on-bg); color: var(--on-fg); }
+  /* a valley is a name set across the land, not a point */
+  .pin[data-kind='district'] { gap: 0; padding: 0; }
+  .pin[data-kind='district'] i { display: none; }
+  .pin[data-kind='district'] span { padding: 5px 9px 4px; font: var(--display-weight) clamp(15px, 1.7vw, 22px)/1.05 var(--f-display); letter-spacing: 0.02em;
+    text-transform: var(--display-case); transform: translateX(-50%); }
+  .pin[data-kind='district'] em { font: 400 10px var(--f-body); letter-spacing: 0.1em; }
+  .pin[data-kind='school'] i { width: 8px; height: 8px; margin-left: -4px; background: var(--accent); box-shadow: 0 0 0 2px var(--on-bg); }
+  .pin.sib { opacity: 0.8; }
+  .pin.sib[data-kind='district'] span { font-size: clamp(12px, 1.2vw, 15px); }
+  .pins.many .pin[data-kind='school']:not(.on):not(:hover) span { display: none; }
+
+  footer { position: fixed; left: 24px; right: 24px; bottom: calc(16px + var(--bottom)); z-index: 5; display: flex; justify-content: space-between; gap: 16px;
+    font-size: 9px; color: var(--ink-soft); pointer-events: none; }
+  .loading { position: fixed; inset: 0; z-index: 9; display: grid; place-items: center; background: var(--paper); transition: opacity 0.8s; }
+  .loading.done { opacity: 0; pointer-events: none; }
+
+  /* over a photo the page's ink is unreadable: the loose lettering turns paper white */
+  body[data-style='real'][data-mode='focus'] :is(.logo, nav, footer) { color: #f6f1e2; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.75); }
+  body[data-style='real'][data-mode='focus'] :is(.logo span, nav h2, nav em, nav .crumbs button, nav .crumbs i, footer, .switch span) { color: rgba(246, 241, 226, 0.8); }
+
+  /* ---- per-look rules ---- */
+  :root:is([data-ui='chronicle'], [data-ui='register'], [data-ui='museum']) :is(.card, .up-btn) { clip-path: none; }
+  :root:is([data-ui='chronicle'], [data-ui='register']) :is(.card, .up-btn, .switch button) { border: 1px solid var(--ink); }
+  :root:is([data-ui='chronicle'], [data-ui='register']) .switch button + button { border-left: 0; }
+  :root:is([data-ui='chronicle'], [data-ui='register'], [data-ui='museum']) .up-btn { background: var(--card-bg); color: var(--card-fg); }
+  :root:is([data-ui='chronicle'], [data-ui='register'], [data-ui='museum']) .card h1 { color: var(--card-fg); }
+  :root:is([data-ui='chronicle'], [data-ui='register'], [data-ui='museum']) nav .list button.on { color: var(--accent); }
+  :root:is([data-ui='chronicle'], [data-ui='register'], [data-ui='museum']) .pin[data-kind='school'] i { box-shadow: 0 0 0 2px var(--card-bg); }
+
+  :root[data-ui='register'] :is(.logo b, .pin[data-kind='district'] span) { font-family: 'UnifrakturCook', var(--f-display); }
+  :root[data-ui='register'] .logo span { display: inline-block; padding-top: 5px; border-top: 3px double currentColor; }
+  :root[data-ui='register'] .card { border-top: 4px solid var(--accent); box-shadow: 3px 4px 0 rgba(43, 33, 24, 0.28); transform: rotate(-0.6deg);
+    background: var(--card-bg) repeating-linear-gradient(to bottom, transparent 0 23px, rgba(72, 104, 140, 0.28) 23px 24px); }
+  :root[data-ui='register'] body[data-mode='overview'] .card { transform: translateY(18px); }
+  :root[data-ui='register'] .card p { line-height: 24px; }
+  :root[data-ui='register'] .card dl { border-top: 3px double var(--ink); }
+  :root[data-ui='register'] nav h2 { color: inherit; padding-bottom: 3px; border-bottom: 3px double currentColor; font: 700 15px var(--f-display); }
+  :root[data-ui='register'] .pin span { border: 1px solid rgba(43, 33, 24, 0.45); box-shadow: 1px 2px 0 rgba(43, 33, 24, 0.25); }
+  :root[data-ui='register'] body::after { content: ''; position: fixed; inset: 0; z-index: 2; pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 55%, rgba(92, 62, 28, 0.2) 100%); }
+
+  :root[data-ui='chalk'] .card { clip-path: none; border: 7px solid #6b4a2b; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4); }
+  :root[data-ui='chalk'] .up-btn { clip-path: none; }
+  :root[data-ui='chalk'] :is(.card h1, .logo b) { letter-spacing: 0.01em; }
+  :root[data-ui='chalk'] .card h1 { font-size: clamp(30px, 3.2vw, 42px); line-height: 0.95; }
+  :root[data-ui='chalk'] .pin[data-kind='district'] span { font-size: clamp(20px, 2.2vw, 30px); background: none; color: #ece6d4; text-shadow: 0 1px 5px rgba(0, 0, 0, 0.85); }
+  :root[data-ui='chalk'] .pin[data-kind='district']:hover span, :root[data-ui='chalk'] .pin[data-kind='district'].on span { background: none; color: var(--accent); }
+
+  :root[data-ui='museum'] .card { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.14); }
+  :root[data-ui='museum'] .card .kicker { font-weight: 600; }
+  :root[data-ui='museum'] :is(.switch button, .pin span) { border-radius: 2px; }
+  :root[data-ui='museum'] .pin span { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18); }
+
+  @media (max-width: 1100px) { footer span:first-child { display: none; } }
+  @media (max-width: 720px) {
+    nav { display: none; }
+    .logo b { font-size: calc(var(--logo-size) * 0.78); }
+    .logo { left: 16px; }
+    .card { right: 16px; left: 16px; width: auto; bottom: calc(44px + var(--bottom)); }
+    .up-btn, .switches { right: 16px; }
+    .switch span { display: none; }
+    .switch button { padding: 6px 7px; }
+    footer { left: 16px; right: 16px; }
+  }
+</style>
+</head>
+<body>
+<script>document.body.dataset.mode = "overview";</script>
+<canvas id="scene"></canvas>
+<div class="pins" id="pins"></div>
+
+<div class="logo"><b data-t="title"></b><span data-t="sub"></span></div>
+<div class="switches">
+  <div class="switch" id="lang"><span data-t="language"></span><button data-lang="de">DE</button><button data-lang="it">IT</button><button data-lang="lld">LAD</button><button data-lang="en">EN</button></div>
+  <div class="switch" id="style"><span data-t="map"></span><button data-style="vintage" class="on" data-t="drawn"></button><button data-style="real" data-t="aerial"></button></div>
+  <div class="switch" id="look"><span data-t="look"></span><button data-look="modern" class="on" data-t="lookModern"></button><button data-look="chronicle" data-t="lookChronicle"></button><button data-look="register" data-t="lookRegister"></button><button data-look="chalk" data-t="lookChalk"></button><button data-look="museum" data-t="lookMuseum"></button></div>
+</div>
+<button class="up-btn" id="up"></button>
+<nav><div class="crumbs" id="crumbs"></div><div id="list"></div></nav>
+
+<aside class="card" aria-live="polite">
+  <div class="kicker" id="c-kicker"></div>
+  <h1 id="c-title"></h1>
+  <p id="c-text"></p>
+  <p id="c-link"></p>
+  <dl id="c-facts"></dl>
+  <div class="step"><button id="prev" data-t="prev"></button><span id="c-count"></span><button id="next" data-t="next"></button></div>
+</aside>
+
+<footer><span data-t="hint"></span><span data-t="credits"></span></footer>
+<div class="loading" id="loading">…</div>
+
+<script src="data.js"></script>
+<script src="places.js"></script>
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { LineSegments2 } from 'three/addons/lines/LineSegments2.js';
+import { LineSegmentsGeometry } from 'three/addons/lines/LineSegmentsGeometry.js';
+import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
+
+const D = window.MAPDATA;
+const W = D.kmW;                 // world units are kilometres
+const DEPTH = (W * D.h) / D.w;
+const EX = 1.7;                  // vertical exaggeration
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (id) => document.getElementById(id);
+
+// ---- texts: German (default), Italian, Ladin, English ------------------------
+const T = {
+  de: { title: 'Südtirol', sub: 'Atlas seiner Schulen · einst und heute', language: 'Sprache', map: 'Karte', drawn: 'Gezeichnet', aerial: 'Luftbild', loading: 'Lädt…',
+    look: 'Stil', lookModern: 'Modern', lookChronicle: 'Chronik', lookRegister: 'Register', lookChalk: 'Tafel', lookMuseum: 'Museum',
+    valleys: 'Täler', towns: 'Gemeinden', schools: 'Schulen', valley: 'Tal', city: 'Stadt', town: 'Gemeinde',
+    districtText: '{n} Schulen in {t} Gemeinden. Wähle eine Gemeinde auf der Karte oder in der Liste.', cityText: '{n} Schulen in der Stadt. Wähle sie auf der Karte oder in der Liste.',
+    townText: '{n} Schulen. Umrisse zeigen das Schulgelände, durchscheinende Blöcke die Schulgebäude.', townText1: '1 Schule. Der Umriss zeigt das Schulgelände, der durchscheinende Block das Schulgebäude.',
+    fSchools: 'Schulen', fPrimary: 'Grundschulen', fMiddleUpper: 'Mittel- + Oberschulen', founded: 'Gegründet', notRecorded: 'Nicht erfasst', fTown: 'Gemeinde', fValley: 'Tal',
+    operator: 'Träger', langLabel: 'Sprache', phone: 'Telefon', email: 'E-Mail', prev: '← Zurück', next: 'Weiter →',
+    hint: 'Ziehen zum Verschieben, bei einer Schule zum Drehen · Scrollen zum Zoomen · Schule anklicken · Esc geht zurück', credits: 'Gelände: Mapzen · Luftbild: Sentinel-2 cloudless (EOX), Provinz Bozen 2023 (live) · Schulen: © OpenStreetMap',
+    drawing: 'Die Karte wird gezeichnet…', unnamed: 'Schule ohne Namen',
+    type_primary: 'Grundschule', type_middle: 'Mittelschule', type_upper: 'Oberschule / Berufsschule', type_music: 'Musikschule', type_university: 'Universität', type_college: 'Hochschule', type_school: 'Schule',
+    lang_de: 'Deutsch', lang_it: 'Italienisch', lang_lld: 'Ladinisch' },
+  it: { title: 'Alto Adige', sub: 'Atlante delle sue scuole · ieri e oggi', language: 'Lingua', map: 'Mappa', drawn: 'Disegnata', aerial: 'Foto aerea', loading: 'Carico…',
+    look: 'Stile', lookModern: 'Moderno', lookChronicle: 'Cronaca', lookRegister: 'Registro', lookChalk: 'Lavagna', lookMuseum: 'Museo',
+    valleys: 'Valli', towns: 'Comuni', schools: 'Scuole', valley: 'Valle', city: 'Città', town: 'Comune',
+    districtText: '{n} scuole in {t} comuni. Scegli un comune sulla mappa o nell’elenco.', cityText: '{n} scuole in città. Sceglila sulla mappa o nell’elenco.',
+    townText: '{n} scuole. I contorni indicano l’area scolastica, i blocchi trasparenti gli edifici.', townText1: '1 scuola. Il contorno indica l’area scolastica, il blocco trasparente l’edificio.',
+    fSchools: 'Scuole', fPrimary: 'Primarie', fMiddleUpper: 'Medie + superiori', founded: 'Fondata', notRecorded: 'Non registrato', fTown: 'Comune', fValley: 'Valle',
+    operator: 'Gestore', langLabel: 'Lingua', phone: 'Telefono', email: 'E-mail', prev: '← Indietro', next: 'Avanti →',
+    hint: 'Trascina per spostare, su una scuola per ruotare · scorri per lo zoom · clicca una scuola · Esc torna indietro', credits: 'Terreno: Mapzen · Foto aerea: Sentinel-2 cloudless (EOX), Provincia di Bolzano 2023 (live) · Scuole: © OpenStreetMap',
+    drawing: 'Disegno la mappa…', unnamed: 'Scuola senza nome',
+    type_primary: 'Scuola primaria', type_middle: 'Scuola media', type_upper: 'Scuola superiore / professionale', type_music: 'Scuola di musica', type_university: 'Università', type_college: 'Istituto superiore', type_school: 'Scuola',
+    lang_de: 'tedesco', lang_it: 'italiano', lang_lld: 'ladino' },
+  lld: { title: 'Südtirol', sub: 'Atlant de si scoles · da zacan y da ncuei', language: 'Rujeneda', map: 'Mapa', drawn: 'Dessenieda', aerial: 'Foto dal’aria', loading: 'Ciaria…',
+    look: 'Stil', lookModern: 'Modern', lookChronicle: 'Cronica', lookRegister: 'Register', lookChalk: 'Tofla', lookMuseum: 'Museum',
+    valleys: 'Valedes', towns: 'Chemuns', schools: 'Scoles', valley: 'Val', city: 'Zità', town: 'Chemun',
+    districtText: '{n} scoles te {t} chemuns. Crì ora n chemun sun la mapa o tla lista.', cityText: '{n} scoles tla zità. Crì ora una sun la mapa o tla lista.',
+    townText: '{n} scoles. I cunfins mostra l’area dla scola, i blocs trasparënc i frabicac.', townText1: '1 scola. L cunfin mostra l’area dla scola, l bloch trasparënt l frabicat.',
+    fSchools: 'Scoles', fPrimary: 'Elementeres', fMiddleUpper: 'Mesanes + autes', founded: 'Metuda su', notRecorded: 'Nia registrà', fTown: 'Chemun', fValley: 'Val',
+    operator: 'Gestëur', langLabel: 'Rujeneda', phone: 'Telefonn', email: 'E-mail', prev: '← Zeruch', next: 'Inant →',
+    hint: 'Tré per muever, pra na scola per raidé · scroll per l zoom · tlica sun na scola · Esc va zeruch', credits: 'Raion: Mapzen · Foto dal’aria: Sentinel-2 cloudless (EOX), Provinzia de Bulsan 2023 (live) · Scoles: © OpenStreetMap',
+    drawing: 'La mapa vën dessenieda…', unnamed: 'Scola zënza inuem',
+    type_primary: 'Scola elementera', type_middle: 'Scola mesana', type_upper: 'Scola auta / prufesciunela', type_music: 'Scola de mujiga', type_university: 'Università', type_college: 'Scola auta', type_school: 'Scola',
+    lang_de: 'tudësch', lang_it: 'talian', lang_lld: 'ladin' },
+  en: { title: 'South Tyrol', sub: 'Atlas of its schools · past and present', language: 'Language', map: 'Map', drawn: 'Drawn', aerial: 'Aerial photo', loading: 'Loading…',
+    look: 'Look', lookModern: 'Modern', lookChronicle: 'Chronicle', lookRegister: 'Register', lookChalk: 'Blackboard', lookMuseum: 'Museum',
+    valleys: 'Valleys', towns: 'Towns', schools: 'Schools', valley: 'Valley', city: 'City', town: 'Town',
+    districtText: '{n} schools in {t} towns. Pick a town on the map or in the list.', cityText: '{n} schools in the city. Pick it on the map or in the list.',
+    townText: '{n} schools. Outlines mark school grounds, see-through blocks the school buildings.', townText1: '1 school. The outline marks its grounds, the see-through block its building.',
+    fSchools: 'Schools', fPrimary: 'Primary', fMiddleUpper: 'Middle + upper', founded: 'Founded', notRecorded: 'Not recorded', fTown: 'Town', fValley: 'Valley',
+    operator: 'Operator', langLabel: 'Language', phone: 'Phone', email: 'Email', prev: '← Prev', next: 'Next →',
+    hint: 'Drag to move, at a school to turn · scroll to zoom · click a school · Esc goes back', credits: 'Terrain: Mapzen · Imagery: Sentinel-2 cloudless (EOX), Province of Bozen 2023 (live) · Schools: © OpenStreetMap',
+    drawing: 'Drawing the map…', unnamed: 'Unnamed school',
+    type_primary: 'Primary school', type_middle: 'Middle school', type_upper: 'Upper secondary / vocational', type_music: 'Music school', type_university: 'University', type_college: 'College', type_school: 'School',
+    lang_de: 'German', lang_it: 'Italian', lang_lld: 'Ladin' },
+};
+let lang = 'de';
+try { lang = localStorage.getItem('lang') in T ? localStorage.getItem('lang') : 'de'; } catch {}
+const tr = (key, vars = {}) => (T[lang][key] ?? T.en[key]).replace(/\{(\w+)\}/g, (_, k) => vars[k]);
+// a place's name in the chosen language where the data has one, else the name as recorded
+const nameOf = (n) => n.names?.[lang] || n.name || n.names?.de || tr('unnamed');
+function applyTexts() {
+  document.documentElement.lang = lang === 'lld' ? 'lld' : lang;
+  for (const el of document.querySelectorAll('[data-t]')) el.textContent = tr(el.dataset.t);
+  for (const b of document.querySelectorAll('#lang button')) b.classList.toggle('on', b.dataset.lang === lang);
+}
+applyTexts();
+$('loading').textContent = tr('drawing');
+
+// ---- the place tree: Südtirol → valley → town → school ---------------------
+const root = { kind: 'root', names: { de: 'Südtirol', it: 'Alto Adige', lld: 'Südtirol', en: 'South Tyrol' }, parent: null, children: [], pose: { dist: 150, pitch: 0.82 } };
+for (const d of window.PLACES) {
+  const district = { kind: 'district', name: d.name, names: d.names, parent: root, box: d.box, children: [] };
+  for (const t of d.towns) {
+    const town = { kind: 'town', name: t.name, names: t.names, parent: district, uv: t.c, ext: t.ext, children: [] };
+    town.children = t.schools.map((s) => ({ kind: 'school', parent: town, ...s }));
+    town.count = town.children.length;
+    district.children.push(town);
+  }
+  district.count = district.children.reduce((n, t) => n + t.count, 0);
+  root.children.push(district);
+}
+const allNodes = [];
+(function walk(n) { allNodes.push(n); n.children?.forEach(walk); })(root);
+
+// ---- elevation: a small image first, the full one replaces it when loaded ---
+let HW = 0, HH = 0, heights = null;
+async function loadHeights(files) {
+  const imgs = await Promise.all(files.map(async (src) => { const i = new Image(); i.src = src; await i.decode(); return i; }));
+  const w = imgs.reduce((n, i) => n + i.naturalWidth, 0), h = imgs[0].naturalHeight;
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  const cx = c.getContext('2d', { willReadFrequently: true });
+  let x = 0;
+  for (const i of imgs) { cx.drawImage(i, x, 0); x += i.naturalWidth; }
+  const px = cx.getImageData(0, 0, w, h).data, data = new Float32Array(w * h);
+  for (let i = 0; i < data.length; i++) data[i] = (px[i * 4] * 256 + px[i * 4 + 1]) / 10000;   // decimetres → km
+  return { w, h, data };
+}
+function heightAt(u, v) {
+  const x = Math.min(Math.max(u, 0), 1) * (HW - 1), y = Math.min(Math.max(v, 0), 1) * (HH - 1);
+  const x0 = Math.floor(x), y0 = Math.floor(y), x1 = Math.min(x0 + 1, HW - 1), y1 = Math.min(y0 + 1, HH - 1);
+  const fx = x - x0, fy = y - y0;
+  const a = heights[y0 * HW + x0], b = heights[y0 * HW + x1], c = heights[y1 * HW + x0], d = heights[y1 * HW + x1];
+  return (a * (1 - fx) + b * fx) * (1 - fy) + (c * (1 - fx) + d * fx) * fy;
+}
+// Height of the drawn surface: the mesh is coarser than the data, and everything standing on
+// the map (pins, outlines, buildings, the camera) has to follow the mesh's own triangles.
+const SEGX = innerWidth < 720 ? 640 : 1280, SEGY = Math.round((SEGX * DEPTH) / W);
+function surfaceAt(u, v) {
+  const gx = Math.min(Math.max(u, 0), 0.999999) * SEGX, gy = Math.min(Math.max(v, 0), 0.999999) * SEGY;
+  const ix = Math.floor(gx), iy = Math.floor(gy), fx = gx - ix, fy = gy - iy;
+  const h = (i, j) => heightAt(i / SEGX, j / SEGY);
+  const hb = h(ix, iy + 1), hd = h(ix + 1, iy);
+  if (fx + fy <= 1) { const ha = h(ix, iy); return ha + (hd - ha) * fx + (hb - ha) * fy; }
+  const hc = h(ix + 1, iy + 1);
+  return hc + (hb - hc) * (1 - fx) + (hd - hc) * (1 - fy);
+}
+const toWorld = (u, v, lift = 0) => new THREE.Vector3((u - 0.5) * W, surfaceAt(u, v) * EX + lift, (v - 0.5) * DEPTH);
+
+// ---- renderer ----------------------------------------------------------------
+const canvas = $('scene');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(34, 1, 0.05, 2000);
+
+// province mask: white inside the border, soft edge
+const mc = document.createElement('canvas');
+mc.width = 2048; mc.height = Math.round((2048 * D.h) / D.w);
+const mctx = mc.getContext('2d');
+mctx.fillStyle = '#000'; mctx.fillRect(0, 0, mc.width, mc.height);
+mctx.filter = 'blur(5px)';
+mctx.fillStyle = '#fff';
+mctx.beginPath();
+D.border.forEach(([u, v], i) => mctx[i ? 'lineTo' : 'moveTo'](u * mc.width, v * mc.height));
+mctx.closePath(); mctx.fill();
+const mask = new THREE.CanvasTexture(mc);
+mask.flipY = false;
+
+const rgb = (hex) => new THREE.Vector3(((hex >> 16) & 255) / 255, ((hex >> 8) & 255) / 255, (hex & 255) / 255);
+const terrainMat = new THREE.ShaderMaterial({
+  transparent: true,
+  uniforms: {
+    hmap: { value: null }, mask: { value: mask }, size: { value: new THREE.Vector2(W, DEPTH) }, ex: { value: EX },
+    texel: { value: new THREE.Vector2() }, cell: { value: 1 }, bg: { value: rgb(0xe4e0d2) },
+    camPos: { value: new THREE.Vector3() }, fogNear: { value: 100 }, fogFar: { value: 400 },
+    sat: { value: null }, real: { value: 0 },
+    pa: { value: null }, pb: { value: null }, ra: { value: new THREE.Vector4() }, rb: { value: new THREE.Vector4() }, pOnA: { value: 0 }, pOnB: { value: 0 }, ga: { value: new THREE.Vector3(1, 1, 1) }, gb: { value: new THREE.Vector3(1, 1, 1) }, gc: { value: new THREE.Vector3(1, 1, 1) },
+    pc: { value: null }, rc: { value: new THREE.Vector4() }, pOnC: { value: 0 },
+  },
+  vertexShader: /* glsl */ `
+    uniform sampler2D hmap; uniform vec2 size; uniform float ex;
+    varying vec2 vUv; varying vec3 vW;
+    void main() {
+      vUv = vec2(position.x / size.x + 0.5, position.z / size.y + 0.5);
+      vW = vec3(position.x, texture2D(hmap, vUv).r * ex, position.z);
+      gl_Position = projectionMatrix * viewMatrix * vec4(vW, 1.0);
+    }`,
+  fragmentShader: /* glsl */ `
+    uniform sampler2D hmap, mask, sat, pa, pb, pc; uniform vec2 texel; uniform float ex, cell, fogNear, fogFar, real, pOnA, pOnB, pOnC; uniform vec3 bg, camPos;
+    uniform vec4 ra, rb, rc; uniform vec3 ga, gb, gc;
+    varying vec2 vUv; varying vec3 vW;
+    float rim(vec2 q) { return smoothstep(0.0, 0.2, min(min(q.x, 1.0 - q.x), min(q.y, 1.0 - q.y))); }
+    vec3 ortho(vec3 c) { return pow(c, vec3(0.92)) * 1.06; }
+    float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+    float contour(float m, float every, float width) {
+      float f = m / every, w = fwidth(f);
+      float line = 1.0 - smoothstep(0.0, width, abs(fract(f - 0.5) - 0.5) / w);
+      return line * (1.0 - smoothstep(0.25, 0.7, w));   // fade out before the lines turn into moiré
+    }
+    void main() {
+      float h = texture2D(hmap, vUv).r;
+      float hl = texture2D(hmap, vUv - vec2(texel.x, 0.0)).r, hr = texture2D(hmap, vUv + vec2(texel.x, 0.0)).r;
+      float hu = texture2D(hmap, vUv - vec2(0.0, texel.y)).r, hd = texture2D(hmap, vUv + vec2(0.0, texel.y)).r;
+      vec3 n = normalize(vec3((hl - hr) * ex / (2.0 * cell), 1.0, (hu - hd) * ex / (2.0 * cell)));
+      float m = h * 1000.0;
+      float k = texture2D(mask, vUv).r;
+
+      // vintage: hypsometric tints of an old printed map
+      vec3 col = vec3(0.71, 0.76, 0.62);
+      col = mix(col, vec3(0.83, 0.82, 0.67), smoothstep(250.0, 1000.0, m));
+      col = mix(col, vec3(0.88, 0.81, 0.66), smoothstep(1000.0, 1800.0, m));
+      col = mix(col, vec3(0.82, 0.77, 0.71), smoothstep(1800.0, 2500.0, m));
+      col = mix(col, vec3(0.96, 0.95, 0.93), smoothstep(2600.0, 3300.0, m));
+      float shade = clamp(dot(n, normalize(vec3(-0.62, 0.62, -0.48))), 0.0, 1.0);
+      col *= mix(vec3(0.6, 0.58, 0.63), vec3(1.07, 1.05, 1.0), smoothstep(0.2, 0.95, shade));
+      vec3 sepia = vec3(0.4, 0.27, 0.16);
+      col = mix(col, sepia, contour(m, 100.0, 1.0) * 0.28);
+      col = mix(col, sepia, contour(m, 500.0, 1.6) * 0.5);
+
+      if (real > 0.0) {         // realistic: satellite photo, replaced by live aerial photos around the place in view
+        vec3 photo = pow(texture2D(sat, vUv).rgb, vec3(0.62)) * 1.12;
+        photo = mix(vec3(dot(photo, vec3(0.3, 0.59, 0.11))), photo, 0.72) * 0.9;
+        float own = smoothstep(0.42, 0.58, k);   // the aerial photos are blank beyond the border
+        vec2 qa = (vUv - ra.xy) / (ra.zw - ra.xy), qb = (vUv - rb.xy) / (rb.zw - rb.xy), qc = (vUv - rc.xy) / (rc.zw - rc.xy);
+        photo = mix(photo, ortho(texture2D(pa, qa).rgb) * ga, rim(qa) * own * pOnA);
+        photo = mix(photo, ortho(texture2D(pc, qc).rgb) * gc, rim(qc) * own * pOnC);
+        photo = mix(photo, ortho(texture2D(pb, qb).rgb) * gb, rim(qb) * own * pOnB);
+        photo *= mix(0.8, 1.08, smoothstep(0.2, 0.95, shade));
+        col = mix(col, photo, real);
+      }
+
+      col = mix(mix(bg, col, 0.3), col, smoothstep(0.42, 0.58, k));          // neighbours are ghosted
+      col = mix(col, vec3(0.55, 0.2, 0.12), (1.0 - smoothstep(0.0, mix(0.22, 0.07, real), abs(k - 0.5))) * mix(0.6, 0.45, real));
+      float edge = min(min(vUv.x, 1.0 - vUv.x), min(vUv.y, 1.0 - vUv.y));
+      col = mix(col, bg, smoothstep(fogNear, fogFar, distance(vW, camPos)) * 0.9);
+      col += (hash(gl_FragCoord.xy) - 0.5) * 0.035;                           // paper grain
+      gl_FragColor = vec4(col, smoothstep(0.0, 0.07, edge));
+    }`,
+});
+const terrain = new THREE.Mesh(new THREE.PlaneGeometry(W, DEPTH, SEGX, SEGY).rotateX(-Math.PI / 2), terrainMat);
+terrain.frustumCulled = false;
+terrain.renderOrder = -1;        // before the other see-through things standing on it
+scene.add(terrain);
+
+// The land around South Tyrol: coarse elevation on a coarse mesh, drawn faceted and pale.
+// OUTER is its extent in the detailed map's own coordinates (0..1 = the detailed map).
+const OUTER = [-9 / 7, -7 / 5, 15 / 7, 13 / 5];
+async function addSurroundings() {
+  const t = await loadHeights(['outer.png']);
+  const half = new Uint16Array(t.data.length);
+  for (let i = 0; i < half.length; i++) half[i] = THREE.DataUtils.toHalfFloat(t.data[i]);
+  const tex = new THREE.DataTexture(half, t.w, t.h, THREE.RedFormat, THREE.HalfFloatType);
+  tex.minFilter = tex.magFilter = THREE.LinearFilter;
+  tex.needsUpdate = true;
+  const w = (OUTER[2] - OUTER[0]) * W, d = (OUTER[3] - OUTER[1]) * DEPTH;
+  const u = terrainMat.uniforms;
+  const mat = new THREE.ShaderMaterial({
+    uniforms: { hmap: { value: tex }, size: u.size, ex: u.ex, bg: u.bg, camPos: u.camPos, fogNear: u.fogNear, fogFar: u.fogFar,
+      rect: { value: new THREE.Vector4(...OUTER) } },
+    vertexShader: /* glsl */ `
+      uniform sampler2D hmap; uniform vec2 size; uniform vec4 rect; uniform float ex;
+      varying vec2 vMain; varying vec2 vOut; varying vec3 vW; varying float vH;
+      void main() {
+        vMain = vec2(position.x / size.x + 0.5, position.z / size.y + 0.5);
+        vOut = (vMain - rect.xy) / (rect.zw - rect.xy);
+        vH = texture2D(hmap, vOut).r;
+        // under the detailed map's rim the surroundings sink a little, so they never poke through it
+        float inside = min(min(vMain.x, 1.0 - vMain.x), min(vMain.y, 1.0 - vMain.y));
+        vW = vec3(position.x, (vH - 0.5 * smoothstep(-0.03, 0.03, inside)) * ex, position.z);
+        gl_Position = projectionMatrix * viewMatrix * vec4(vW, 1.0);
+      }`,
+    fragmentShader: /* glsl */ `
+      uniform vec3 bg, camPos; uniform float fogNear, fogFar;
+      varying vec2 vMain; varying vec2 vOut; varying vec3 vW; varying float vH;
+      void main() {
+        if (min(min(vMain.x, 1.0 - vMain.x), min(vMain.y, 1.0 - vMain.y)) > 0.075) discard;   // the detailed map covers this
+        vec3 n = normalize(cross(dFdx(vW), dFdy(vW)));          // one normal per triangle: the low-poly look
+        if (n.y < 0.0) n = -n;
+        float m = vH * 1000.0;
+        vec3 col = mix(vec3(0.71, 0.76, 0.62), vec3(0.86, 0.81, 0.68), smoothstep(300.0, 1800.0, m));
+        col = mix(col, vec3(0.96, 0.95, 0.93), smoothstep(2300.0, 3200.0, m));
+        col *= mix(0.62, 1.06, smoothstep(0.25, 0.95, clamp(dot(n, normalize(vec3(-0.62, 0.62, -0.48))), 0.0, 1.0)));
+        col = mix(bg, col, 0.3);
+        float edge = min(min(vOut.x, 1.0 - vOut.x), min(vOut.y, 1.0 - vOut.y));
+        col = mix(bg, col, smoothstep(0.0, 0.14, edge));
+        col = mix(col, bg, smoothstep(fogNear, fogFar, distance(vW, camPos)) * 0.9);
+        gl_FragColor = vec4(col, 1.0);
+      }`,
+  });
+  const geo = new THREE.PlaneGeometry(w, d, 170, 150).rotateX(-Math.PI / 2).translate(((OUTER[0] + OUTER[2]) / 2 - 0.5) * W, 0, ((OUTER[1] + OUTER[3]) / 2 - 0.5) * DEPTH);
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.frustumCulled = false;
+  mesh.renderOrder = -2;
+  scene.add(mesh);
+}
+
+function setTerrain(t) {
+  HW = t.w; HH = t.h; heights = t.data;
+  const half = new Uint16Array(heights.length);
+  for (let i = 0; i < heights.length; i++) half[i] = THREE.DataUtils.toHalfFloat(heights[i]);
+  const tex = new THREE.DataTexture(half, HW, HH, THREE.RedFormat, THREE.HalfFloatType);
+  tex.minFilter = tex.magFilter = THREE.LinearFilter;
+  tex.needsUpdate = true;
+  const u = terrainMat.uniforms;
+  u.hmap.value?.dispose();
+  u.hmap.value = tex;
+  u.texel.value.set(1 / HW, 1 / HH);
+  u.cell.value = W / HW;
+}
+
+// ---- things standing on the map --------------------------------------------
+const shapeGroup = new THREE.Group();
+scene.add(shapeGroup);
+const pinLines = new THREE.LineSegments(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({ color: 0x1d2a22, transparent: true, opacity: 0.7 }));
+pinLines.frustumCulled = false;
+scene.add(pinLines);
+const fatLines = [];           // materials that need the viewport size
+
+function fatLine(positions, color, width, opacity = 1) {
+  const mat = new LineMaterial({ color, linewidth: width, transparent: opacity < 1, opacity });
+  mat.resolution.set(innerWidth, innerHeight);
+  fatLines.push(mat);
+  const line = new LineSegments2(new LineSegmentsGeometry().setPositions(positions), mat);
+  line.frustumCulled = false;
+  return line;
+}
+function disposeGroup(g) {
+  for (const o of [...g.children]) {
+    g.remove(o);
+    o.geometry.dispose();
+    const i = fatLines.indexOf(o.material);
+    if (i >= 0) fatLines.splice(i, 1);
+    o.material.dispose();
+  }
+}
+
+const PIN = { district: 0, town: 0.7, school: 0.07 };
+// positions and camera poses of every node; run again when the terrain changes
+function layout() {
+  for (const n of allNodes) {
+    if (n.kind === 'district') {
+      // a valley is centred on where its towns are, not on the middle of its territory, which is mostly mountain
+      const us = n.children.map((c) => c.uv[0]), vs = n.children.map((c) => c.uv[1]);
+      const u0 = Math.min(...us), u1 = Math.max(...us), v0 = Math.min(...vs), v1 = Math.max(...vs);
+      n.uv = [(u0 + u1) / 2, (v0 + v1) / 2];
+      n.pose = { dist: (v1 - v0) * DEPTH * 1.6 + 16, pitch: 0.85, span: (u1 - u0) * W * 1.25 + 14 };      // span: the width in km the view must show
+    } else if (n.kind === 'town') n.pose = { dist: Math.max(5, n.ext * 2.4 + 3.5), pitch: 0.82 };
+    else if (n.kind === 'school') n.pose = { dist: 1.4, pitch: 0.95 };
+    else if (n.kind === 'root') {
+      // the whole province: centred on the outline's own extent
+      const us = D.border.map((b) => b[0]), vs = D.border.map((b) => b[1]);
+      n.uv = [(Math.min(...us) + Math.max(...us)) / 2, (Math.min(...vs) + Math.max(...vs)) / 2 + 0.03];
+      n.pose.span = (Math.max(...us) - Math.min(...us)) * W * 1.1;
+    }
+    n.ground = toWorld(n.uv[0], n.uv[1]);
+    n.top = n.ground.clone().setY(n.ground.y + (PIN[n.kind] ?? 0));
+    n.pose.focus = n.ground;
+  }
+}
+
+// School grounds as outlines and school buildings as raised blocks, for the town in view.
+let shapesFor = null, MARK = 0xd9f26e;      // MARK: the colour schools are drawn in, set by the look
+function buildShapes(town) {
+  disposeGroup(shapeGroup);
+  shapesFor = town;
+  if (!town) return;
+  for (const s of town.children) {
+    s.meshes = [];
+    const xz = ([u, v]) => [(u - 0.5) * W, (v - 0.5) * DEPTH];
+    if (s.g) {
+      const pos = [];
+      for (let i = 0; i < s.g.length - 1; i++) {
+        const a = toWorld(s.g[i][0], s.g[i][1], 0.004), b = toWorld(s.g[i + 1][0], s.g[i + 1][1], 0.004);
+        pos.push(a.x, a.y, a.z, b.x, b.y, b.z);
+      }
+      const line = fatLine(pos, MARK, 2);
+      shapeGroup.add(line);
+      s.meshes.push(line);
+    }
+    for (const b of s.b ?? []) {
+      const shape = new THREE.Shape(b.r.map((p) => { const [x, z] = xz(p); return new THREE.Vector2(x, -z); }));
+      const hs = b.r.map(([u, v]) => surfaceAt(u, v) * EX), lo = Math.min(...hs), hi = Math.max(...hs);
+      const geo = new THREE.ExtrudeGeometry(shape, { depth: hi - lo + (b.h / 1000) * EX + 0.004, bevelEnabled: false }).rotateX(-Math.PI / 2).translate(0, lo - 0.004, 0);
+      const block = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color: MARK, transparent: true, opacity: 0.3, depthWrite: false }));
+      const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 30), new THREE.LineBasicMaterial({ color: MARK }));
+      block.userData.school = s;
+      shapeGroup.add(block, edges);
+      s.meshes.push(block);
+    }
+  }
+  styleShapes();
+}
+function styleShapes() {
+  if (!shapesFor) return;
+  for (const s of shapesFor.children) {
+    for (const m of s.meshes ?? []) {
+      const on = s === current;
+      if (m.isMesh && !m.isLineSegments2) m.material.opacity = on ? 0.34 : current.kind === 'school' ? 0.14 : 0.26;
+      else { m.material.linewidth = on ? 3.5 : 1.8; m.material.opacity = on || current.kind !== 'school' ? 1 : 0.5; m.material.transparent = true; }
+    }
+  }
+}
+
+// ---- pins, list and card: only the children of the place in view -------------
+const pinsEl = $('pins');
+let current = root, visible = [], shownBox = null;
+const container = (n) => (n.children?.length ? n : n.parent);
+const countLabel = (n) => (n.count ? `<em>${n.count}</em>` : '');
+
+function makePin(n) {
+  const el = document.createElement('button');
+  el.className = 'pin';
+  el.dataset.kind = n.kind;
+  el.innerHTML = `<i></i><span>${nameOf(n)}${countLabel(n)}</span>`;
+  el.addEventListener('click', () => select(n));
+  return el;
+}
+function showChildren(box) {
+  shownBox = box;
+  // the place's own children, plus its neighbours on the same level for a direct jump
+  visible = [...box.children, ...(box.parent ? box.parent.children.filter((n) => n !== box) : [])];
+  pinsEl.replaceChildren(...visible.map((n) => (n.el ??= makePin(n))));
+  for (const n of visible) n.el.classList.toggle('sib', n.parent !== box);
+  pinsEl.classList.toggle('many', box.children.length > 12);
+  pinLines.geometry.dispose();
+  pinLines.geometry = new THREE.BufferGeometry().setFromPoints(visible.flatMap((n) => [n.ground, n.top]));
+
+  const path = [];
+  for (let n = box; n; n = n.parent) path.unshift(n);
+  $('crumbs').replaceChildren(...path.flatMap((n, i) => {
+    const b = document.createElement('button');
+    b.textContent = nameOf(n);
+    b.addEventListener('click', () => select(n));
+    return i ? [Object.assign(document.createElement('i'), { textContent: '/' }), b] : [b];
+  }));
+  const list = $('list');
+  list.replaceChildren();
+  const group = (title, nodes) => {
+    list.insertAdjacentHTML('beforeend', `<h2>${title}</h2>`);
+    const wrap = Object.assign(document.createElement('div'), { className: 'list' });
+    for (const n of nodes) {
+      n.navEl = document.createElement('button');
+      n.navEl.innerHTML = `<span>${nameOf(n)}</span>${countLabel(n)}`;
+      n.navEl.addEventListener('click', () => select(n));
+      wrap.append(n.navEl);
+    }
+    list.append(wrap);
+  };
+  group(tr({ root: 'valleys', district: 'towns', town: 'schools' }[box.kind]), box.children);
+}
+
+function describe(n) {
+  const kinds = (list, ...types) => list.filter((s) => types.includes(s.type)).length;
+  if (n.kind === 'district') {
+    const schools = n.children.flatMap((c) => c.children), city = n.children.length === 1;
+    return { kicker: tr(city ? 'city' : 'valley'), text: tr(city ? 'cityText' : 'districtText', { n: n.count, t: n.children.length }),
+      facts: [[tr('fSchools'), n.count], [tr('fPrimary'), kinds(schools, 'primary')], [tr('fMiddleUpper'), kinds(schools, 'middle', 'upper')]] };
+  }
+  if (n.kind === 'town') {
+    return { kicker: `${tr('town')} · ${nameOf(n.parent)}`, text: tr(n.count === 1 ? 'townText1' : 'townText', { n: n.count }),
+      facts: [[tr('fSchools'), n.count], [tr('fPrimary'), kinds(n.children, 'primary')], [tr('fMiddleUpper'), kinds(n.children, 'middle', 'upper')]] };
+  }
+  return { kicker: tr(`type_${n.type}`), text: [n.addr, nameOf(n.parent)].filter(Boolean).join(', '), web: n.web,
+    more: [[tr('operator'), n.op], [tr('langLabel'), n.lang?.split(',').map((l) => T[lang][`lang_${l}`] ?? l).join(', ')], [tr('phone'), n.phone], [tr('email'), n.email]].filter(([, v]) => v),
+    facts: [[tr('founded'), n.founded || tr('notRecorded')], [tr('fTown'), nameOf(n.parent)], [tr('fValley'), nameOf(n.parent.parent)]] };
+}
+
+// keepView: the selection follows the camera (the user dragged into another place), so the camera stays put
+function select(n, keepView = false) {
+  if (keepView) {
+    const from = current.pose, x = from.focus.x + pan.x, z = from.focus.z + pan.z, dist = from.dist * zoom;
+    current = n;
+    pan.x = x - n.pose.focus.x;
+    pan.z = z - n.pose.focus.z;
+    zoom = dist / n.pose.dist;
+  } else {
+    current = n;
+    zoom = 1;
+    pan.x = pan.z = 0;
+    lastHands = 0;      // a flight to a new place always eases, even right after a drag
+  }
+  turn.pitch = 0;
+  // whole turns are dropped so the camera takes the short way; above school level it faces north again
+  const turns = Math.round(turn.az / (2 * Math.PI)) * 2 * Math.PI;
+  cam.az -= turns;
+  turn.az = n.kind === 'school' ? turn.az - turns : 0;
+  lastInput = performance.now();
+  document.body.dataset.mode = n === root ? 'overview' : 'focus';
+  const box = container(n);
+  if (shownBox !== box) showChildren(box);
+  const town = n.kind === 'town' ? n : n.kind === 'school' ? n.parent : null;
+  if (town !== shapesFor) buildShapes(town);
+  styleShapes();
+  renderSelection();
+}
+// the texts that depend on the selected place: highlighted pin and list entry, back button, card
+function renderSelection() {
+  const n = current;
+  for (const v of visible) {
+    v.el?.classList.toggle('on', v === n);
+    v.navEl?.classList.toggle('on', v === n);
+  }
+  if (n === root) return;
+  const d = describe(n), sib = n.parent.children;
+  $('up').textContent = `← ${nameOf(n.parent)}`;
+  $('c-kicker').textContent = d.kicker;
+  $('c-title').textContent = nameOf(n);
+  $('c-text').textContent = d.text;
+  $('c-link').replaceChildren(...(d.more ?? []).map(([k, v]) => Object.assign(document.createElement('div'), { textContent: `${k}: ${v}` })));
+  if (d.web && /^https?:\/\//.test(d.web)) $('c-link').append(Object.assign(document.createElement('a'), { href: d.web, target: '_blank', rel: 'noopener', textContent: d.web.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '') }));
+  $('c-facts').innerHTML = d.facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
+  $('c-count').textContent = `${sib.indexOf(n) + 1} / ${sib.length}`;
+}
+function setLang(next) {
+  lang = next;
+  try { localStorage.setItem('lang', lang); } catch {}
+  applyTexts();
+  for (const n of allNodes) n.el = null;        // labels carry names: build them again
+  showChildren(shownBox);
+  renderSelection();
+}
+$('lang').addEventListener('click', (e) => e.target.dataset.lang && setLang(e.target.dataset.lang));
+const goUp = () => current.parent && select(current.parent);
+function step(d) {
+  if (current === root) return select(root.children[0]);
+  const sib = current.parent.children;
+  select(sib[(sib.indexOf(current) + d + sib.length) % sib.length]);
+}
+$('next').addEventListener('click', () => step(1));
+$('prev').addEventListener('click', () => step(-1));
+$('up').addEventListener('click', goUp);
+addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') step(1);
+  if (e.key === 'ArrowLeft') step(-1);
+  if (e.key === 'Escape') goUp();
+});
+
+// ---- map types: Vintage is computed, Realistic loads imagery on demand -------
+const bitmaps = new THREE.ImageBitmapLoader().setOptions({ imageOrientation: 'none' });
+const loadPhoto = (url) => bitmaps.loadAsync(url).then((bmp) => {
+  const t = new THREE.Texture(bmp);
+  t.flipY = false;
+  t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  t.needsUpdate = true;
+  return t;
+});
+let realTarget = 0, satReady = null;
+// Live aerial imagery: three square photos around the place in view, each four times wider and
+// coarser than the next, fetched from the province's image server for exactly that area. They follow
+// the camera's destination and zoom, so every place is sharp at every zoom, down to the photo's
+// own resolution, and nothing is stored with the page.
+const MERC = 20037508.343, TILE = (2 * MERC) / 1024;
+const BB = { minX: -MERC + 541 * TILE, maxX: -MERC + 548 * TILE, minY: MERC - 364 * TILE, maxY: MERC - 359 * TILE };   // the map in Web Mercator
+const STRETCH = 1 / Math.cos((46.65 * Math.PI) / 180);        // Mercator metres per ground metre at this latitude
+const WMS = 'https://geoservices.buergernetz.bz.it/mapproxy/ows?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=p_bz-Orthoimagery:Aerial-2023-RGB' +
+  '&STYLES=&SRS=EPSG:3857&FORMAT=image/jpeg';
+const wmsUrl = (box, px) => `${WMS}&WIDTH=${px}&HEIGHT=${px}&BBOX=${box}`;
+// Colour matching: an aerial photo and the satellite image differ in tone, which shows as a tinted
+// square. Each photo is therefore scaled so its average colour equals the satellite image's average
+// over the same area. Wide photos are matched fully; close-ups keep more of their own colour.
+const probe = document.createElement('canvas');
+probe.width = probe.height = 24;
+const probeCtx = probe.getContext('2d', { willReadFrequently: true });
+let satSmall = null;                     // a small copy of the satellite image to read averages from
+function keepSatCopy(image) {
+  const c = document.createElement('canvas');
+  c.width = 512; c.height = Math.round((512 * image.height) / image.width);
+  const cx = c.getContext('2d', { willReadFrequently: true });
+  cx.drawImage(image, 0, 0, c.width, c.height);
+  satSmall = cx.getImageData(0, 0, c.width, c.height);
+}
+function average(data, w, x0, y0, x1, y1) {
+  const sum = [0, 0, 0];
+  let n = 0;
+  for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
+    const i = (y * w + x) * 4;
+    if (data[i] + data[i + 1] + data[i + 2] < 24) continue;       // blank: beyond the photo's coverage
+    sum[0] += data[i]; sum[1] += data[i + 1]; sum[2] += data[i + 2]; n++;
+  }
+  return n ? sum.map((v) => v / n / 255) : null;
+}
+function gainFor(tex, rect, km) {
+  if (!satSmall) return [1, 1, 1];
+  probeCtx.drawImage(tex.image, 0, 0, 24, 24);
+  const photo = average(probeCtx.getImageData(0, 0, 24, 24).data, 24, 0, 0, 24, 24);
+  const { width: w, height: h, data } = satSmall, clamp = (v, hi) => Math.min(hi, Math.max(0, Math.round(v)));
+  const sat = average(data, w, clamp(rect[0] * w, w - 1), clamp(rect[1] * h, h - 1), clamp(rect[2] * w, w), clamp(rect[3] * h, h));
+  if (!photo || !sat) return [1, 1, 1];
+  // the same grading the shader applies to each source
+  const s = sat.map((v) => Math.pow(v, 0.62) * 1.12), luma = s[0] * 0.3 + s[1] * 0.59 + s[2] * 0.11;
+  const satLook = s.map((v) => (luma + (v - luma) * 0.72) * 0.9), photoLook = photo.map((v) => Math.pow(v, 0.92) * 1.06);
+  const strength = Math.min(1, Math.max(0.35, (km - 0.5) / 6));
+  return satLook.map((v, i) => 1 + (Math.min(1.7, Math.max(0.55, v / photoLook[i])) - 1) * strength);
+}
+const rings = ['a', 'c', 'b'].map((k) => ({ gain: `g${k}`, tex: `p${k}`, rect: `r${k}`, on: `pOn${k.toUpperCase()}`, key: null, target: 0, timer: 0 }));
+function updateRings() {
+  const u = terrainMat.uniforms, p = current.pose;
+  // sizes come from a ladder (0.25, 0.5, 1 … km) and centres from a grid, so small moves reuse the same photo
+  const ladder = (km) => 0.25 * 2 ** Math.round(Math.log2(km / 0.25));
+  // the inner photo fits the view; the outer one never gets smaller than 16 km, so zooming in keeps
+  // the distant background sharp; the middle one sits halfway between them
+  const inner = ladder(p.dist * zoom * 0.9), outer = Math.min(32, Math.max(16, ladder(p.dist * zoom * 0.9 * 16)));
+  const sizes = [outer, ladder(Math.sqrt(inner * outer)), inner];
+  rings.forEach((r, i) => {
+    let key = null, box = null;
+    if (realTarget === 1 && current !== root) {
+      const km = sizes[i];
+      if (km <= 40) {
+        const size = km * 1000 * STRETCH, grid = size / 4;
+        const x = BB.minX + ((p.focus.x + pan.x) / W + 0.5) * (BB.maxX - BB.minX), y = BB.maxY - ((p.focus.z + pan.z) / DEPTH + 0.5) * (BB.maxY - BB.minY);
+        const cx = Math.round(x / grid) * grid, cy = Math.round(y / grid) * grid;
+        box = [cx - size / 2, cy - size / 2, cx + size / 2, cy + size / 2];
+        key = box.map(Math.round).join(',');
+      }
+    }
+    if (key === r.key) return;
+    r.key = key;
+    clearTimeout(r.timer);
+    if (!key) { r.target = 0; return; }
+    const show = (tex) => {
+      if (r.key !== key) { tex.dispose(); return false; }
+      u[r.tex].value?.dispose();
+      u[r.tex].value = tex;
+      const rect = [(box[0] - BB.minX) / (BB.maxX - BB.minX), (BB.maxY - box[3]) / (BB.maxY - BB.minY),
+        (box[2] - BB.minX) / (BB.maxX - BB.minX), (BB.maxY - box[1]) / (BB.maxY - BB.minY)];
+      u[r.rect].value.set(...rect);
+      u[r.gain].value.set(...gainFor(tex, rect, sizes[i]));
+      r.target = 1;
+      return true;
+    };
+    // A short wait, so a zoom gesture does not fire a request per step. Then a small photo, which the
+    // server returns in a fraction of the time, and the full one to replace it.
+    r.timer = setTimeout(() => loadPhoto(wmsUrl(key, 500)).then(show, () => true)
+      .then((ok) => ok && loadPhoto(wmsUrl(key, 2000)).then(show, () => {})), 120);
+  });
+}
+const styleEl = $('style');
+async function setStyle(style) {
+  const btn = styleEl.querySelector(`[data-style="${style}"]`);
+  if (style === 'real') {
+    btn.classList.add('busy');
+    btn.textContent = tr('loading');
+    try {
+      terrainMat.uniforms.sat.value = await (satReady ??= new THREE.TextureLoader().loadAsync('sat.jpg').then((t) => {
+        t.flipY = false;
+        t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        keepSatCopy(t.image);
+        return t;
+      }));
+    } catch { satReady = null; btn.textContent = tr('aerial'); btn.classList.remove('busy'); return; }
+    btn.textContent = tr('aerial');
+    btn.classList.remove('busy');
+  }
+  realTarget = style === 'real' ? 1 : 0;
+  document.body.dataset.style = style;
+  for (const b of styleEl.querySelectorAll('button')) b.classList.toggle('on', b === btn);
+  try { localStorage.setItem('mapStyle', style); history.replaceState(null, '', `#${style}`); } catch {}
+}
+styleEl.addEventListener('click', (e) => e.target.dataset.style && setStyle(e.target.dataset.style));
+
+// ---- looks: five interface designs over the same map -------------------------
+const LOOKS = { modern: 0xd9f26e, chronicle: 0xc23b22, register: 0xc23b22, chalk: 0xf0cf6a, museum: 0x1f4fd1 };   // school colour on the map
+const lookEl = $('look');
+function setLook(look) {
+  if (!(look in LOOKS)) return;
+  document.documentElement.dataset.ui = look;
+  MARK = LOOKS[look];
+  // the map fades into the page, so its paper colour follows the look
+  terrainMat.uniforms.bg.value.copy(rgb(parseInt(getComputedStyle(document.documentElement).getPropertyValue('--paper').trim().slice(1), 16)));
+  if (shapesFor) buildShapes(shapesFor);
+  for (const b of lookEl.querySelectorAll('button')) b.classList.toggle('on', b.dataset.look === look);
+  try { localStorage.setItem('uiLook', look); } catch {}
+}
+lookEl.addEventListener('click', (e) => e.target.dataset.look && setLook(e.target.dataset.look));
+
+// ---- the led camera ------------------------------------------------------------
+// The camera always chases a target: the pose of the selected place, shifted by the mouse
+// (look around) and the zoom. It is eased with a critically damped spring, so a new target
+// in the middle of a flight bends the path instead of cutting it.
+const cam = { x: -4, y: 0, z: 2, ld: Math.log(420), az: 0, pitch: 1.25 }, vel = { x: 0, y: 0, z: 0, ld: 0, az: 0, pitch: 0 };
+let zoom = 1, zoomOutAt = 0, navLock = 0;
+const turn = { az: 0, pitch: 0 }, pan = { x: 0, z: 0 }, touches = new Map();      // how far the user has turned (school views) or moved (all other views) the camera
+let pinch = 0, lastInput = performance.now(), lastHands = 0;      // lastHands: the last drag, pinch or scroll
+const IDLE = 6000;        // ms without input before the camera starts circling by itself
+
+function damp(key, target, smooth, dt) {
+  const omega = 2 / smooth, x = omega * dt, exp = 1 / (1 + x + 0.48 * x * x + 0.235 * x * x * x);
+  const change = cam[key] - target, temp = (vel[key] + omega * change) * dt;
+  vel[key] = (vel[key] - omega * temp) * exp;
+  cam[key] = target + (change + temp) * exp;
+}
+const ZOOM = { min: 0.2, max: 2.2 };
+function zoomBy(factor) {
+  const next = zoom * factor;
+  // scrolling out past the limit steps up one level; a short lock keeps one gesture from skipping two
+  if (next > ZOOM.max && factor > 1 && current.parent && performance.now() > navLock) {
+    if (++zoomOutAt > 6) { zoomOutAt = 0; navLock = performance.now() + 900; return goUp(); }
+  } else zoomOutAt = 0;
+  zoom = Math.min(current === root ? 1.25 : ZOOM.max, Math.max(ZOOM.min, next));
+}
+const touchInput = () => { lastInput = lastHands = performance.now(); };
+canvas.addEventListener('wheel', (e) => { e.preventDefault(); touchInput(); zoomBy(Math.exp(Math.sign(e.deltaY) * Math.min(Math.abs(e.deltaY), 60) * 0.0022)); }, { passive: false });
+// Dragging turns the view around the selected place (mouse or one finger); two fingers zoom.
+canvas.addEventListener('pointerdown', (e) => {
+  touches.set(e.pointerId, { x: e.clientX, y: e.clientY, moved: 0 });
+  try { canvas.setPointerCapture(e.pointerId); } catch {}
+  touchInput();
+});
+canvas.addEventListener('pointermove', (e) => {
+  const t = touches.get(e.pointerId);
+  if (!t) {
+    const g = !schoolAt(e.clientX, e.clientY) && (current === root || current.kind === 'district') && groundAt(e.clientX, e.clientY);
+    canvas.style.cursor = schoolAt(e.clientX, e.clientY) || (g && placeAt(g)) ? 'pointer' : 'grab';
+    return;
+  }
+  touchInput();
+  const dx = e.clientX - t.x, dy = e.clientY - t.y;
+  t.moved += Math.abs(dx) + Math.abs(dy);
+  t.x = e.clientX; t.y = e.clientY;
+  if (touches.size === 1) {
+    canvas.style.cursor = 'grabbing';
+    if (current.kind === 'school') {        // around a school the drag turns the view
+      turn.az -= (dx / innerWidth) * 3.2;
+      turn.pitch = Math.min(0.7, Math.max(-0.7, turn.pitch + (dy / innerHeight) * 1.6));
+    } else {                                // on the levels above, north stays up and the drag moves the map
+      const dist = Math.exp(cam.ld), kmPerPx = (2 * dist * Math.tan((camera.fov * Math.PI) / 360)) / innerHeight, reach = current.pose.dist;
+      pan.x = Math.min(reach, Math.max(-reach, pan.x - dx * kmPerPx));
+      pan.z = Math.min(reach, Math.max(-reach, pan.z - (dy * kmPerPx) / Math.sin(cam.pitch)));
+      followView();
+    }
+  } else if (touches.size === 2) {
+    const [a, b] = [...touches.values()], d = Math.hypot(a.x - b.x, a.y - b.y);
+    if (pinch) zoomBy(pinch / d);
+    pinch = d;
+  }
+});
+for (const type of ['pointerup', 'pointercancel']) canvas.addEventListener(type, (e) => {
+  const t = touches.get(e.pointerId);
+  touches.delete(e.pointerId);
+  pinch = 0;
+  canvas.style.cursor = 'grab';
+  // a press without movement is a click: select the school whose building or grounds is under it
+  if (type !== 'pointerup' || !t || t.moved >= 6) return;
+  const s = schoolAt(e.clientX, e.clientY);
+  if (s) return select(s);
+  // an empty spot outside the focused place steps out one level, like Esc
+  const hit = groundAt(e.clientX, e.clientY);
+  if (!hit) return;
+  const place = placeAt(hit);
+  if (place) select(place);
+  else if (current.parent && !insideCurrent(hit)) goUp();
+});
+
+// Which school of the town in view is under this screen point? Buildings first, then grounds.
+const raycaster = new THREE.Raycaster(), ndc = new THREE.Vector2();
+function inRing(u, v, ring) {
+  let c = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [x1, y1] = ring[i], [x2, y2] = ring[j];
+    if ((y1 > v) !== (y2 > v) && u < ((x2 - x1) * (v - y1)) / (y2 - y1) + x1) c = !c;
+  }
+  return c;
+}
+// where a screen point meets the terrain, as map coordinates
+function groundAt(px, py) {
+  raycaster.setFromCamera(ndc.set((px / innerWidth) * 2 - 1, 1 - (py / innerHeight) * 2), camera);
+  const { origin, direction } = raycaster.ray, p = new THREE.Vector3();
+  for (let d = 0.05, stepLen = 0.02; d < 900; d += stepLen, stepLen *= 1.04) {
+    p.copy(origin).addScaledVector(direction, d);
+    const u = p.x / W + 0.5, v = p.z / DEPTH + 0.5;
+    if (u < 0 || u > 1 || v < 0 || v > 1) return null;
+    if (p.y <= surfaceAt(u, v) * EX) return [u, v];
+  }
+  return null;
+}
+function schoolAt(px, py) {
+  if (!shapesFor) return null;
+  raycaster.setFromCamera(ndc.set((px / innerWidth) * 2 - 1, 1 - (py / innerHeight) * 2), camera);
+  const hit = raycaster.intersectObjects(shapeGroup.children.filter((o) => o.userData.school))[0];
+  if (hit) return hit.object.userData.school;
+  const g = groundAt(px, py);
+  return (g && shapesFor.children.find((s) => (s.g && inRing(g[0], g[1], s.g)) || s.b?.some((b) => inRing(g[0], g[1], b.r)))) ?? null;
+}
+// Dragging the map into a neighbouring valley or town moves the selection there: its card, list
+// and pins replace the ones of the place left behind.
+function followView() {
+  if (current.kind !== 'district' && current.kind !== 'town') return;
+  const f = current.pose.focus, u = (f.x + pan.x) / W + 0.5, v = (f.z + pan.z) / DEPTH + 0.5;
+  let best = null, bestKm = Infinity;
+  for (const d of root.children) for (const c of d.children) {
+    const km = Math.hypot((u - c.uv[0]) * W, (v - c.uv[1]) * DEPTH);
+    if (km < bestKm) { bestKm = km; best = c; }
+  }
+  const next = current.kind === 'district' ? best.parent : best;
+  if (next !== current) select(next, true);
+}
+// What a click on open land means on the two upper levels: the valley (top level) or town (inside a
+// valley) nearest to that point; a point in another valley jumps to that valley.
+function placeAt([u, v]) {
+  if (current.kind !== 'root' && current.kind !== 'district') return null;
+  let best = null, bestKm = 12;
+  for (const d of root.children) for (const t of d.children) {
+    const km = Math.hypot((u - t.uv[0]) * W, (v - t.uv[1]) * DEPTH);
+    if (km < bestKm) { bestKm = km; best = t; }
+  }
+  if (!best) return null;
+  return current === root || best.parent !== current ? best.parent : best;
+}
+// does a map point lie within the place in focus? (valley: its box, town and school: a radius)
+function insideCurrent([u, v]) {
+  const n = current;
+  if (n.kind === 'district') return u >= n.box[0] && u <= n.box[2] && v >= n.box[1] && v <= n.box[3];
+  const km = Math.hypot((u - n.uv[0]) * W, (v - n.uv[1]) * DEPTH);
+  return km < (n.kind === 'town' ? Math.max(1.5, n.ext * 0.75) : 0.3);
+}
+
+function resize() {
+  renderer.setSize(innerWidth, innerHeight, false);
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  for (const m of fatLines) m.resolution.set(innerWidth, innerHeight);
+}
+addEventListener('resize', resize);
+
+const clock = new THREE.Clock();
+const v = new THREE.Vector3();
+function frame() {
+  const dt = Math.min(clock.getDelta(), 0.05), p = current.pose, f = p.focus;
+  // Seconds the camera lags behind its target: long for a flight to a new place, short while the
+  // user's hand is on it, so a drag or zoom is felt at once with only a trace of easing.
+  const direct = performance.now() - lastHands < 500;
+  const speed = reduced ? 0.02 : direct ? 0.07 : 0.5, turnSpeed = direct ? 0.07 : 0.3;
+  const northSpeed = reduced ? 0.02 : direct && current.kind === 'school' ? 0.07 : 0.6;      // swinging back to north is unhurried
+  // Wide views (province, valley) sit in the middle of the page, far enough away to show their whole width.
+  const kmPerPxAt1 = (2 * Math.tan((camera.fov * Math.PI) / 360)) / innerHeight;
+  const base = p.span ? Math.max(p.dist, p.span / (kmPerPxAt1 * innerWidth * 0.9)) : p.dist;
+  damp('x', f.x + pan.x, speed, dt);
+  damp('y', f.y, speed, dt);
+  damp('z', f.z + pan.z, speed, dt);
+  // while the focus is still travelling the camera stays higher, which makes the arc of a flight
+  const away = Math.hypot(cam.x - f.x - pan.x, cam.z - f.z - pan.z);
+  damp('ld', Math.log(base * zoom + away * 0.75), speed, dt);
+  if (!reduced && current.kind === 'school' && !touches.size && performance.now() - lastInput > IDLE) turn.az += dt * 0.05;   // nobody is steering a school view: circle slowly
+  damp('az', turn.az, northSpeed, dt);
+  damp('pitch', Math.min(1.5, Math.max(0.28, p.pitch + turn.pitch)), turnSpeed, dt);
+
+  const dist = Math.exp(cam.ld);
+  camera.position.set(cam.x + Math.sin(cam.az) * Math.cos(cam.pitch) * dist, cam.y + Math.sin(cam.pitch) * dist, cam.z + Math.cos(cam.az) * Math.cos(cam.pitch) * dist);
+  // ground collision: stay above the terrain, and above any ridge between the camera and its focus
+  const margin = Math.max(0.06, dist * 0.03);
+  let minY = surfaceAt(camera.position.x / W + 0.5, camera.position.z / DEPTH + 0.5) * EX + margin;
+  for (let t = 0.12; t < 0.9; t += 0.11) {
+    const h = surfaceAt((camera.position.x + (cam.x - camera.position.x) * t) / W + 0.5, (camera.position.z + (cam.z - camera.position.z) * t) / DEPTH + 0.5) * EX + margin * (1 - t);
+    minY = Math.max(minY, (h - cam.y * t) / (1 - t));
+  }
+  if (camera.position.y < minY) camera.position.y = minY;
+  camera.lookAt(cam.x, cam.y, cam.z);
+
+  const u = terrainMat.uniforms;
+  u.real.value += (realTarget - u.real.value) * Math.min(1, dt * 3.5);
+  if (Math.abs(realTarget - u.real.value) < 0.002) u.real.value = realTarget;
+  updateRings();
+  for (const r of rings) u[r.on].value += (r.target - u[r.on].value) * Math.min(1, dt * 3);
+  u.camPos.value.copy(camera.position);
+  u.fogNear.value = dist * 1.5;
+  u.fogFar.value = dist * 5 + 60;
+  renderer.render(scene, camera);
+
+  for (const n of visible) {
+    v.copy(n.top).project(camera);
+    const shown = v.z < 1 && Math.abs(v.x) < 1.15 && Math.abs(v.y) < 1.15;
+    n.el.style.display = shown ? '' : 'none';
+    if (shown) n.el.style.transform = `translate(${((v.x + 1) / 2) * innerWidth}px, ${((1 - v.y) / 2) * innerHeight}px) translateY(-50%)`;
+  }
+  requestAnimationFrame(frame);
+}
+
+// ---- start: coarse terrain at once, the full terrain as soon as it has loaded --
+setTerrain(await loadHeights(['height_lo.png']));
+layout();
+resize();
+showChildren(root);
+let saved = null, savedLook = null;
+try { saved = localStorage.getItem('mapStyle'); savedLook = localStorage.getItem('uiLook'); } catch {}
+setLook(savedLook in LOOKS ? savedLook : 'register');      // first visit: the Register look on the aerial photo
+if (({ '#real': 'real', '#vintage': 'vintage' }[location.hash] ?? saved ?? 'real') === 'real') setStyle('real');      // …#vintage opens the drawn map
+frame();
+$('loading').classList.add('done');
+addSurroundings().catch(() => {});
+loadHeights(['height_0.png', 'height_1.png']).then((t) => {
+  setTerrain(t);
+  layout();
+  pinLines.geometry.setFromPoints(visible.flatMap((n) => [n.ground, n.top]));
+  buildShapes(shapesFor);
+}, () => {});
+</script>
+</body>
+</html>

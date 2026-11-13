@@ -1,0 +1,33 @@
+{
+ "_about": "Hand-made corrections to OpenStreetMap school data. Key: OSM element as type/id. add_buildings: outlines [lon, lat] traced from the province's 2023 aerial photo, h = height in metres.",
+ "way/40347961": {
+  "note": "Freie Universität Bozen, Brixen campus: main building, missing in OpenStreetMap (traced 2026-11-13)",
+  "add_buildings": [
+   {
+    "ring": [
+     [
+      11.652903,
+      46.71542
+     ],
+     [
+      11.653894,
+      46.71542
+     ],
+     [
+      11.653894,
+      46.71474
+     ],
+     [
+      11.652903,
+      46.71474
+     ],
+     [
+      11.652903,
+      46.71542
+     ]
+    ],
+    "h": 15
+   }
+  ]
+ }
+}
