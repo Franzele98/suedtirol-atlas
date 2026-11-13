@@ -163,15 +163,40 @@
   :root[data-ui='museum'] .pin span { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18); }
 
   @media (max-width: 1100px) { footer span:first-child { display: none; } }
+  /* a switch shows only its current choice; a tap opens the other options */
+  .switch:not(.open) button:not(.on) { display: none; }
+  .switch:not(.open) button.on::after { content: ' ▾'; opacity: 0.7; }
+
   @media (max-width: 720px) {
-    nav { display: none; }
-    .logo b { font-size: calc(var(--logo-size) * 0.78); }
-    .logo { left: 16px; }
-    .card { right: 16px; left: 16px; width: auto; bottom: calc(44px + var(--bottom)); }
-    .up-btn, .switches { right: 16px; }
-    .switch span { display: none; }
-    .switch button { padding: 6px 7px; }
-    footer { left: 16px; right: 16px; }
+    .logo { top: calc(12px + var(--top)); left: 12px; }
+    .logo b { font-size: calc(var(--logo-size) * 0.7); }
+    .logo span, .switch span, .up-btn, footer span:first-child { display: none; }
+    :root[data-ui='register'] .logo span { display: none; }
+    .switches { top: calc(12px + var(--top)); right: 12px; gap: 4px; }
+    .switch button { padding: 7px 9px; }
+    .switch.open { flex-direction: column; align-items: stretch; }
+    :root:is([data-ui='chronicle'], [data-ui='register']) .switch.open button + button { border-left: 1px solid var(--ink); border-top: 0; }
+    /* the list becomes a row of chips to swipe through; the path above it is the way back */
+    nav { display: block; top: calc(118px + var(--top)); left: 12px; right: 12px; width: auto; }
+    nav .crumbs button { padding: 4px 0; }
+    nav h2 { display: none; }
+    nav .list { display: flex; gap: 6px; max-height: none; margin-top: 6px; padding-bottom: 6px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+    nav .list button { flex: none; width: auto; gap: 6px; padding: 6px 9px; background: var(--tag-bg); color: var(--tag-fg); opacity: 1; text-shadow: none; }
+    nav .list button:hover { transform: none; }
+    nav .list button.on { background: var(--on-bg); color: var(--on-fg); }
+    nav .list button.on span:first-child::before { content: none; }
+    nav .list button em { color: inherit; opacity: 0.6; }
+    .card { right: 12px; left: 12px; width: auto; bottom: calc(12px + var(--bottom)); padding: 14px 14px 12px; }
+    :root[data-ui='register'] .card { transform: none; }
+    .card h1 { margin: 6px 0 8px; font-size: 22px; }
+    :root[data-ui='chalk'] .card h1 { font-size: 28px; }
+    .card dl { margin-top: 10px; padding-top: 9px; }
+    .card .step { margin-top: 10px; }
+    .pin[data-kind='district'] span { padding: 3px 6px 2px; font-size: 13px; }
+    .pin.sib[data-kind='district'] span { font-size: 11px; }
+    .pin[data-kind='district'] em { display: none; }
+    footer { left: 12px; right: 12px; bottom: calc(8px + var(--bottom)); font-size: 8px; }
+    body[data-mode='focus'] footer { display: none; }
   }
 </style>
 </head>
@@ -181,7 +206,7 @@
 <div class="pins" id="pins"></div>
 
 <div class="logo"><b data-t="title"></b><span data-t="sub"></span></div>
-<div class="switches">
+<div class="switches" id="switches">
   <div class="switch" id="lang"><span data-t="language"></span><button data-lang="de">DE</button><button data-lang="it">IT</button><button data-lang="lld">LAD</button><button data-lang="en">EN</button></div>
   <div class="switch" id="style"><span data-t="map"></span><button data-style="vintage" class="on" data-t="drawn"></button><button data-style="real" data-t="aerial"></button></div>
   <div class="switch" id="look"><span data-t="look"></span><button data-look="modern" class="on" data-t="lookModern"></button><button data-look="chronicle" data-t="lookChronicle"></button><button data-look="register" data-t="lookRegister"></button><button data-look="chalk" data-t="lookChalk"></button><button data-look="museum" data-t="lookMuseum"></button></div>
@@ -818,6 +843,16 @@ function updateRings() {
       .then((ok) => ok && loadPhoto(wmsUrl(key, 2000)).then(show, () => {})), 120);
   });
 }
+// A switch is collapsed to its current choice: the first tap opens it, the next one chooses.
+$('switches').addEventListener('click', (e) => {
+  const sw = e.target.closest('.switch');
+  if (!sw || e.target.tagName !== 'BUTTON') return;
+  if (sw.classList.contains('open')) return sw.classList.remove('open');
+  for (const o of document.querySelectorAll('.switch.open')) o.classList.remove('open');
+  sw.classList.add('open');
+  e.stopPropagation();          // opening is not choosing
+}, true);
+addEventListener('pointerdown', (e) => { if (!e.target.closest('.switch')) for (const o of document.querySelectorAll('.switch.open')) o.classList.remove('open'); });
 const styleEl = $('style');
 async function setStyle(style) {
   const btn = styleEl.querySelector(`[data-style="${style}"]`);
@@ -1006,6 +1041,7 @@ function resize() {
 }
 addEventListener('resize', resize);
 
+let frameNo = 0;
 const clock = new THREE.Clock();
 const v = new THREE.Vector3();
 function frame() {
@@ -1017,7 +1053,7 @@ function frame() {
   const northSpeed = reduced ? 0.02 : direct && current.kind === 'school' ? 0.07 : 0.6;      // swinging back to north is unhurried
   // Wide views (province, valley) sit in the middle of the page, far enough away to show their whole width.
   const kmPerPxAt1 = (2 * Math.tan((camera.fov * Math.PI) / 360)) / innerHeight;
-  const base = p.span ? Math.max(p.dist, p.span / (kmPerPxAt1 * innerWidth * 0.9)) : p.dist;
+  const base = p.span ? Math.max(p.dist, p.span / (kmPerPxAt1 * innerWidth * (innerWidth < 720 ? 0.98 : 0.9))) : p.dist;
   damp('x', f.x + pan.x, speed, dt);
   damp('y', f.y, speed, dt);
   damp('z', f.z + pan.z, speed, dt);
@@ -1054,8 +1090,16 @@ function frame() {
     v.copy(n.top).project(camera);
     const shown = v.z < 1 && Math.abs(v.x) < 1.15 && Math.abs(v.y) < 1.15;
     n.el.style.display = shown ? '' : 'none';
-    if (shown) n.el.style.transform = `translate(${((v.x + 1) / 2) * innerWidth}px, ${((1 - v.y) / 2) * innerHeight}px) translateY(-50%)`;
+    n.sx = ((v.x + 1) / 2) * innerWidth; n.sy = ((1 - v.y) / 2) * innerHeight; n.shown = shown;
   }
+  // Valley names are wide: where two would cover each other, the lower one moves down just enough.
+  const names = visible.filter((n) => n.shown && n.kind === 'district').sort((a, b) => a.sy - b.sy);
+  if (frameNo++ % 30 === 0) for (const n of names) { n.w = n.el.offsetWidth; n.h = n.el.offsetHeight; }
+  for (let i = 0; i < names.length; i++) for (let k = 0; k < i; k++) {
+    const a = names[k], b = names[i];
+    if (Math.abs(a.sx - b.sx) < (a.w + b.w) / 2 && b.sy - a.sy < (a.h + b.h) / 2 + 3) b.sy = a.sy + (a.h + b.h) / 2 + 3;
+  }
+  for (const n of visible) if (n.shown) n.el.style.transform = `translate(${n.sx}px, ${n.sy}px) translateY(-50%)`;
   requestAnimationFrame(frame);
 }
 
