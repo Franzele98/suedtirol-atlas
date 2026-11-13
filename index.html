@@ -75,6 +75,8 @@
   nav .crumbs button:hover { color: inherit; }
   nav .crumbs i { font-style: normal; color: var(--ink-soft); margin: 0 5px; }
   nav h2 { font: inherit; color: var(--ink-soft); margin: 16px 0 6px; }
+  nav h2 button { display: block; width: 100%; padding: 0; font: inherit; letter-spacing: inherit; text-transform: inherit; }
+  nav .list[hidden] { display: none; }
   nav .list { max-height: calc(100vh - 230px - var(--top)); overflow-y: auto; scrollbar-width: thin; touch-action: pan-y; }
   nav .list button { display: flex; justify-content: space-between; gap: 10px; width: 100%; padding: 3px 0; text-transform: inherit;
     letter-spacing: inherit; opacity: 0.85; transition: transform 0.2s, opacity 0.2s; }
@@ -181,8 +183,9 @@
     /* the list becomes a row of chips to swipe through; the path above it is the way back */
     nav { display: block; top: calc(118px + var(--top)); left: 12px; right: 12px; width: auto; }
     nav .crumbs button { padding: 4px 0; }
-    nav h2 { display: none; }
-    nav .list { touch-action: pan-x; display: flex; gap: 6px; max-height: none; margin-top: 6px; padding-bottom: 6px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+    nav h2 { margin: 6px 0 0; padding: 0; border: 0; }
+    nav h2 button { display: inline-block; width: auto; padding: 5px 9px; background: var(--tag-bg); color: var(--tag-fg); text-shadow: none; }
+    nav .list:not([hidden]) { touch-action: pan-x; display: flex; gap: 6px; max-height: none; margin-top: 6px; padding-bottom: 6px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
     nav .list button { flex: none; width: auto; gap: 6px; padding: 6px 9px; background: var(--tag-bg); color: var(--tag-fg); opacity: 1; text-shadow: none; }
     nav .list button:hover { transform: none; }
     nav .list button.on { background: var(--on-bg); color: var(--on-fg); }
@@ -615,6 +618,7 @@ function styleShapes() {
 // ---- pins, list and card: only the children of the place in view -------------
 const pinsEl = $('pins');
 let current = root, visible = [], shownBox = null;
+const listOpen = { root: true, district: false };      // which lists are unfolded
 const container = (n) => (n.children?.length ? n : n.parent);
 const countLabel = (n) => (n.count ? `<em>${n.count}</em>` : '');
 
@@ -646,9 +650,15 @@ function showChildren(box) {
   }));
   const list = $('list');
   list.replaceChildren();
-  const group = (title, nodes) => {
-    list.insertAdjacentHTML('beforeend', `<h2>${title}</h2>`);
-    const wrap = Object.assign(document.createElement('div'), { className: 'list' });
+  // each list folds: its heading is the toggle (valleys start open, towns closed)
+  const group = (title, nodes, key) => {
+    const toggle = document.createElement('button'), wrap = Object.assign(document.createElement('div'), { className: 'list' });
+    const paint = () => { toggle.textContent = `${title} ${listOpen[key] ? '▾' : '▸'}`; wrap.hidden = !listOpen[key]; };
+    toggle.addEventListener('click', () => { listOpen[key] = !listOpen[key]; paint(); });
+    paint();
+    const head = document.createElement('h2');
+    head.append(toggle);
+    list.append(head);
     for (const n of nodes) {
       n.navEl = document.createElement('button');
       n.navEl.innerHTML = `<span>${nameOf(n)}</span>${countLabel(n)}`;
@@ -657,7 +667,7 @@ function showChildren(box) {
     }
     list.append(wrap);
   };
-  if (box.kind !== 'town') group(tr({ root: 'valleys', district: 'towns' }[box.kind]), box.children);      // a town's schools are on the map only: the list got too long
+  if (box.kind !== 'town') group(tr({ root: 'valleys', district: 'towns' }[box.kind]), box.children, box.kind);      // a town's schools are on the map only: the list got too long
 }
 
 function describe(n) {
@@ -915,12 +925,19 @@ function zoomBy(factor) {
   const next = zoom * factor;
   // scrolling out past the limit steps up one level; a short lock keeps one gesture from skipping two
   if (next > ZOOM.max && factor > 1 && current.parent && performance.now() > navLock) {
-    if (++zoomOutAt > 6) { zoomOutAt = 0; navLock = performance.now() + 900; return goUp(); }
+    if (++zoomOutAt > 6) { zoomOutAt = 0; navLock = performance.now() + 1300; return goUp(); }
   } else zoomOutAt = 0;
   zoom = Math.min(current === root ? 1.25 : ZOOM.max, Math.max(ZOOM.min, next));
 }
 const touchInput = () => { lastInput = lastHands = performance.now(); };
-canvas.addEventListener('wheel', (e) => { e.preventDefault(); touchInput(); zoomBy(Math.exp(Math.sign(e.deltaY) * Math.min(Math.abs(e.deltaY), 60) * 0.0022)); }, { passive: false });
+canvas.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  // Right after scrolling out to the next level the wheel is ignored for a moment: a trackpad keeps
+  // sending scroll events, and they would turn the eased flight outwards into an abrupt jump.
+  if (performance.now() < navLock) return;
+  touchInput();
+  zoomBy(Math.exp(Math.sign(e.deltaY) * Math.min(Math.abs(e.deltaY), 60) * 0.0022));
+}, { passive: false });
 // Dragging turns the view around the selected place (mouse or one finger); two fingers zoom.
 canvas.addEventListener('pointerdown', (e) => {
   // A primary pointer is the first finger down: anything still on the list is a finger whose lift
