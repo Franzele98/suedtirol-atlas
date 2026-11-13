@@ -66,7 +66,7 @@
   .switch button.on { background: var(--on-bg); color: var(--on-fg); }
   .switch button.busy { opacity: 0.6; }
 
-  .up-btn { position: fixed; top: calc(132px + var(--top)); right: 24px; z-index: 5; padding: 9px 13px; background: var(--accent); color: var(--on-bg);
+  .up-btn { position: fixed; top: calc(60px + var(--top)); right: 24px; z-index: 5; padding: 9px 13px; background: var(--accent); color: var(--on-bg);
     clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 0 100%); transition: opacity 0.4s; }
   body[data-mode='overview'] .up-btn { opacity: 0; pointer-events: none; }
 
@@ -163,6 +163,8 @@
   :root[data-ui='museum'] .pin span { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18); }
 
   @media (max-width: 1100px) { footer span:first-child { display: none; } }
+  /* map type and look are chosen on the top level only */
+  body[data-mode='focus'] :is(#style, #look) { display: none; }
   /* a switch shows only its current choice; a tap opens the other options */
   .switch:not(.open) button:not(.on) { display: none; }
   .switch:not(.open) button.on::after { content: ' ▾'; opacity: 0.7; }
@@ -655,7 +657,7 @@ function showChildren(box) {
     }
     list.append(wrap);
   };
-  group(tr({ root: 'valleys', district: 'towns', town: 'schools' }[box.kind]), box.children);
+  if (box.kind !== 'town') group(tr({ root: 'valleys', district: 'towns' }[box.kind]), box.children);      // a town's schools are on the map only: the list got too long
 }
 
 function describe(n) {
