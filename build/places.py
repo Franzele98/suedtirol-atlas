@@ -42,7 +42,7 @@ adm=json.load(open(f'{src}/admin_geom.json'))['elements']
 dist=[]; gem=[]
 for r in adm:
     rs=rings(r); xs=[p[0] for q in rs for p in q]; ys=[p[1] for q in rs for p in q]
-    e={'name':short(r['tags']['name']),'full':r['tags']['name'],'names':names(r['tags']),'rings':rs,'bbox':(min(xs),min(ys),max(xs),max(ys)),'c':((min(xs)+max(xs))/2,(min(ys)+max(ys))/2)}
+    e={'name':r['tags'].get('name:de') or short(r['tags']['name']),'full':r['tags']['name'],'names':names(r['tags']),'rings':rs,'bbox':(min(xs),min(ys),max(xs),max(ys)),'c':((min(xs)+max(xs))/2,(min(ys)+max(ys))/2)}
     (dist if r['tags']['admin_level']=='7' else gem).append(e)
 dist.append({'name':'Bozen','full':'Bozen - Bolzano','names':{'de':'Bozen','it':'Bolzano','lld':'Bulsan'},'rings':[],'bbox':None})
 for g in gem:
@@ -106,6 +106,59 @@ def extras(t):
     e={'founded':founded(t),'op':t.get('operator',''),'lang':','.join(x.strip() for x in t.get('school:language','').split(';') if x.strip()),
        'phone':t.get('phone') or t.get('contact:phone') or '','email':t.get('email') or t.get('contact:email') or ''}
     return {k:v for k,v in e.items() if v}
+# --- closed primary schools (list of the German school office, 1958-2007) ---
+import difflib
+def norm(x):
+    x=x.lower().replace('ß','ss').replace('sankt','st').replace('ä','ae').replace('ö','oe').replace('ü','ue')
+    return re.sub(r'[^a-z]','',x)
+PLACE_RANK={'village':0,'hamlet':1,'suburb':2,'quarter':2,'neighbourhood':2,'isolated_dwelling':3,'locality':4,'farm':5}
+PLACES=[]
+for e in load('places_named'):
+    lon=e.get('lon',e.get('center',{}).get('lon')); lat=e.get('lat',e.get('center',{}).get('lat'))
+    if lon is None: continue
+    for k in ('name:de','name'):
+        for part in re.split(r'\s+[-–/]\s+', e['tags'].get(k,'')):
+            if part: PLACES.append((norm(part),lon,lat,PLACE_RANK.get(e['tags']['place'],6)))
+def gem_for(name):
+    n=norm(name); exact=[g for g in gem if norm(g['name'])==n]
+    return exact or [g for g in gem if norm(g['name']).startswith(n)]
+def locate(gems,ort):
+    n=norm(ort); best=None
+    for g in gems:
+        local=[p for p in PLACES if g['bbox'][0]<=p[1]<=g['bbox'][2] and g['bbox'][1]<=p[2]<=g['bbox'][3] and inside((p[1],p[2]),g['rings'])]
+        for test,score in ((lambda p:p[0]==n,0),(lambda p:len(n)>4 and (p[0].startswith(n) or n.startswith(p[0]) and len(p[0])>4),1),(lambda p:len(n)>5 and n in p[0],2)):
+            hit=sorted((p for p in local if test(p)),key=lambda p:p[3])
+            if hit and (best is None or score<best[0]): best=(score,g,hit[0]); break
+        if best is None or best[0]>2:
+            close=difflib.get_close_matches(n,list({p[0] for p in local}),1,0.82)
+            if close and best is None:
+                p=sorted((p for p in local if p[0]==close[0]),key=lambda p:p[3])[0]; best=(3,g,p)
+    return best
+closed_rows=[]; founded_rows=[]; date=None
+for line in open(f'{src}/../closed/auflassungen.txt'):
+    line=line.strip(); m=re.match(r'^(\d{2})\.(\d{2})\.(\d{4})$',line)
+    if m: date=f'{m.group(3)}-{m.group(2)}-{m.group(1)}'; continue
+    if not line or date is None or '/' not in line or line.startswith('/'): continue
+    parts=[p.strip() for p in line.split('\t') if p.strip()]
+    gname,ort=parts[0].split('/',1); info=parts[1] if len(parts)>1 else ''
+    (founded_rows if info=='errichtet' else closed_rows).append((date,gname.strip(),ort.strip(),info))
+CLOSED={}; unplaced=[]; nogem=[]
+for date,gname,ort,info in closed_rows:
+    star=ort.endswith('*'); ort=ort.rstrip('*').strip(' "“”„')
+    gems=gem_for(gname)
+    if not gems: nogem.append(f'{gname}/{ort}'); continue
+    key=(norm(gname),norm(ort))
+    if key in CLOSED:                       # "(wieder)": reopened in between and closed again
+        CLOSED[key]['closures'].append(date); CLOSED[key]['closed']=date; continue
+    hit=locate(gems,ort)
+    g=hit[1] if hit else gems[0]
+    if hit: lon,lat=hit[2][1],hit[2][2]
+    else:
+        k=sum(1 for c in CLOSED.values() if c['approx'] and c['gem'] is g); ang=k*2.4
+        lon,lat=g['c'][0]+0.006*math.cos(ang)*(1+k*0.25), g['c'][1]+0.004*math.sin(ang)*(1+k*0.25); unplaced.append(f'{gname}/{ort}')
+    CLOSED[key]={'gem':g,'name':f'Grundschule {ort}','ll':(lon,lat),'closed':date,'closures':[date],'classes':info if 'klassig' in info else '','approx':not hit,'defacto':star}
+print('closed schools',len(CLOSED),'| placed by name',sum(1 for c in CLOSED.values() if not c['approx']),'| only at municipality centre',len(unplaced),'| municipality unknown',nogem,file=sys.stderr)
+print('unplaced:',', '.join(unplaced),file=sys.stderr)
 KIND={'school':'school','college':'college','university':'university','music_school':'music'}
 LEVEL={'0':'school','1':'primary','2':'middle','3':'upper'}
 lost=0; noname=0
@@ -119,6 +172,19 @@ for s in json.load(open(f'{src}/schools.json'))['elements']:
     lv=(t.get('isced:level') or '').split(';')[0]
     addr=' '.join(x for x in [t.get('addr:street'),t.get('addr:housenumber')] if x)
     g['schools'].append({'name':name,'names':names(t),'ll':(lon,lat),'uv':uv(lon,lat),'type':kind(name,LEVEL.get(lv,KIND[t['amenity']])),'addr':addr,'web':t.get('website') or t.get('contact:website') or '',**extras(t),**shape(s,lon,lat)})
+for c in CLOSED.values():
+    lon,lat=c['ll']
+    e={'name':c['name'],'names':{},'ll':(lon,lat),'uv':uv(lon,lat),'type':'primary','addr':'','web':'','closed':c['closed']}
+    if len(c['closures'])>1: e['closures']=c['closures']
+    if c['classes']: e['classes']=c['classes']
+    if c['approx']: e['approx']=1
+    if c['defacto']: e['defacto']=1
+    c['gem']['schools'].append(e)
+for date,gname,ort,info in founded_rows:
+    words=[w for w in (x.replace('schule','') for x in re.findall(r'[a-zäöüß]+',ort.lower())) if len(w)>3]
+    hits=[sc for g in gem_for(gname) for sc in g['schools'] if 'closed' not in sc and words and all(norm(w) in norm(sc['name']) for w in words)]
+    for sc in hits: sc.setdefault('founded',date[:4])
+    print('founded',date[:4],f'{gname}/{ort}','->',[sc['name'] for sc in hits] or 'no match',file=sys.stderr)
 def box(b): a=uv(b[0],b[3]); c=uv(b[2],b[1]); return a+c
 def merc(lon,lat): return (lon*O/180, math.log(math.tan(math.pi/4+math.radians(lat)/2))*O/math.pi)
 def rect(bb): return [round((bb[0]-BB[0])/(BB[2]-BB[0]),5), round((BB[3]-bb[3])/(BB[3]-BB[1]),5), round((bb[2]-BB[0])/(BB[2]-BB[0]),5), round((BB[3]-bb[1])/(BB[3]-BB[1]),5)]
