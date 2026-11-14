@@ -165,6 +165,22 @@
   :root[data-ui='museum'] .pin span { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18); }
 
   @media (max-width: 1100px) { footer span:first-child { display: none; } }
+  /* the timeline: a year slider under a small chart of closures per year */
+  .timeline { position: fixed; left: 24px; bottom: calc(44px + var(--bottom)); z-index: 5; width: min(440px, calc(100vw - 48px)); padding: 10px 12px 8px;
+    background: var(--tag-bg); color: var(--tag-fg); font-size: var(--label-size); letter-spacing: var(--label-track); text-transform: var(--label-case); }
+  .tl-head { display: flex; align-items: baseline; gap: 10px; }
+  .tl-head b { font: var(--display-weight) 26px/1 var(--f-display); letter-spacing: 0; }
+  .tl-head > span { flex: 1; min-width: 0; opacity: 0.75; }
+  .tl-head label { display: flex; align-items: center; gap: 5px; white-space: nowrap; cursor: pointer; }
+  .tl-bars { display: flex; align-items: flex-end; gap: 1px; height: 24px; margin-top: 6px; }
+  .tl-bars i { flex: 1; min-height: 1px; background: currentColor; opacity: 0.22; }
+  .tl-bars i.past { background: var(--mark); opacity: 0.85; }
+  .timeline input[type='range'] { display: block; width: 100%; margin: 4px 0 2px; accent-color: var(--mark); touch-action: pan-x; }
+  .tl-ticks { display: flex; justify-content: space-between; opacity: 0.6; font-size: 9px; }
+  :root:is([data-ui='chronicle'], [data-ui='register']) .timeline { border: 1px solid var(--ink); }
+  /* a school that is closed in the chosen year */
+  .pin.gone i { background: transparent; box-shadow: 0 0 0 2px var(--tag-fg) inset, 0 0 0 2px var(--tag-bg); }
+  .pin.gone span { text-decoration: line-through; opacity: 0.75; }
   /* map type and look are chosen on the top level only */
   body[data-mode='focus'] :is(#style, #look) { display: none; }
   /* a switch shows only its current choice; a tap opens the other options */
@@ -191,7 +207,10 @@
     nav .list button.on { background: var(--on-bg); color: var(--on-fg); }
     nav .list button.on span:first-child::before { content: none; }
     nav .list button em { color: inherit; opacity: 0.6; }
-    .card { right: 12px; left: 12px; width: auto; bottom: calc(12px + var(--bottom)); padding: 14px 14px 12px; }
+    .timeline { left: 12px; right: 12px; width: auto; bottom: calc(10px + var(--bottom)); padding: 6px 10px 4px; }
+    .tl-head b { font-size: 20px; }
+    .tl-head label, .tl-bars, .tl-ticks { display: none; }
+    .card { right: 12px; left: 12px; width: auto; bottom: calc(74px + var(--bottom)); padding: 14px 14px 12px; }
     :root[data-ui='register'] .card { transform: none; }
     .card h1 { margin: 6px 0 8px; font-size: 22px; }
     :root[data-ui='chalk'] .card h1 { font-size: 28px; }
@@ -200,8 +219,7 @@
     .pin[data-kind='district'] span { padding: 3px 6px 2px; font-size: 13px; }
     .pin.sib[data-kind='district'] span { font-size: 11px; }
     .pin[data-kind='district'] em { display: none; }
-    footer { left: 12px; right: 12px; bottom: calc(8px + var(--bottom)); font-size: 8px; }
-    body[data-mode='focus'] footer { display: none; }
+    footer { display: none; }
   }
 </style>
 </head>
@@ -219,6 +237,13 @@
 <button class="up-btn" id="up"></button>
 <nav><div class="crumbs" id="crumbs"></div><div id="list"></div></nav>
 
+<div class="timeline" id="timeline">
+  <div class="tl-head"><b id="tl-year"></b><span id="tl-info"></span><label><input type="checkbox" id="tl-follow"> <span data-t="followEpoch"></span></label></div>
+  <div class="tl-bars" id="tl-bars"></div>
+  <input type="range" id="tl-range" step="1" aria-label="Jahr">
+  <div class="tl-ticks" id="tl-ticks"></div>
+</div>
+
 <aside class="card" aria-live="polite">
   <div class="kicker" id="c-kicker"></div>
   <h1 id="c-title"></h1>
@@ -232,7 +257,7 @@
 <div class="loading" id="loading">…</div>
 
 <script src="data.js"></script>
-<script src="places.js"></script>
+<script src="places.js?v=20261114"></script>
 <script type="importmap">
 { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
 </script>
@@ -261,6 +286,7 @@ const T = {
     hint: 'Ziehen zum Verschieben, bei einer Schule zum Drehen · Scrollen zum Zoomen · Schule anklicken · Esc geht zurück', credits: 'Gelände: Mapzen · Luftbild: Sentinel-2 cloudless (EOX), Provinz Bozen 2023 (live) · Schulen: © OpenStreetMap',
     drawing: 'Die Karte wird gezeichnet…', unnamed: 'Schule ohne Namen',
     type_primary: 'Grundschule', type_middle: 'Mittelschule', type_upper: 'Oberschule / Berufsschule', type_music: 'Musikschule', type_university: 'Universität', type_college: 'Hochschule', type_school: 'Schule',
+    closedTag: 'aufgelassen', fClosed: 'Aufgelassen', closedOn: 'Aufgelassen', fClasses: 'Klassen', approxNote: 'Lage ungefähr: der Ort ist nur der Gemeinde zugeordnet.', defactoNote: 'Wird de facto weitergeführt.', againNote: 'Mehrfach aufgelassen: {d}', followEpoch: 'Stil folgt der Zeit', photoOf: 'Luftbild {y}', noPhoto: 'vor 1982 kein Luftbild · gezeichnete Karte', closedBy: '{n} aufgelassen seit 1958',
     lang_de: 'Deutsch', lang_it: 'Italienisch', lang_lld: 'Ladinisch' },
   it: { title: 'Alto Adige', sub: 'Atlante delle sue scuole · ieri e oggi', language: 'Lingua', map: 'Mappa', drawn: 'Disegnata', aerial: 'Foto aerea', loading: 'Carico…',
     look: 'Stile', lookModern: 'Moderno', lookChronicle: 'Cronaca', lookRegister: 'Registro', lookChalk: 'Lavagna', lookMuseum: 'Museo',
@@ -272,6 +298,7 @@ const T = {
     hint: 'Trascina per spostare, su una scuola per ruotare · scorri per lo zoom · clicca una scuola · Esc torna indietro', credits: 'Terreno: Mapzen · Foto aerea: Sentinel-2 cloudless (EOX), Provincia di Bolzano 2023 (live) · Scuole: © OpenStreetMap',
     drawing: 'Disegno la mappa…', unnamed: 'Scuola senza nome',
     type_primary: 'Scuola primaria', type_middle: 'Scuola media', type_upper: 'Scuola superiore / professionale', type_music: 'Scuola di musica', type_university: 'Università', type_college: 'Istituto superiore', type_school: 'Scuola',
+    closedTag: 'soppressa', fClosed: 'Soppresse', closedOn: 'Soppressa', fClasses: 'Classi', approxNote: 'Posizione approssimativa: la località è attribuita solo al comune.', defactoNote: 'Di fatto prosegue.', againNote: 'Soppressa più volte: {d}', followEpoch: 'Lo stile segue l’epoca', photoOf: 'Foto aerea {y}', noPhoto: 'prima del 1982 nessuna foto aerea · mappa disegnata', closedBy: '{n} soppresse dal 1958',
     lang_de: 'tedesco', lang_it: 'italiano', lang_lld: 'ladino' },
   lld: { title: 'Südtirol', sub: 'Atlant de si scoles · da zacan y da ncuei', language: 'Rujeneda', map: 'Mapa', drawn: 'Dessenieda', aerial: 'Foto dal’aria', loading: 'Ciaria…',
     look: 'Stil', lookModern: 'Modern', lookChronicle: 'Cronica', lookRegister: 'Register', lookChalk: 'Tofla', lookMuseum: 'Museum',
@@ -283,6 +310,7 @@ const T = {
     hint: 'Tré per muever, pra na scola per raidé · scroll per l zoom · tlica sun na scola · Esc va zeruch', credits: 'Raion: Mapzen · Foto dal’aria: Sentinel-2 cloudless (EOX), Provinzia de Bulsan 2023 (live) · Scoles: © OpenStreetMap',
     drawing: 'La mapa vën dessenieda…', unnamed: 'Scola zënza inuem',
     type_primary: 'Scola elementera', type_middle: 'Scola mesana', type_upper: 'Scola auta / prufesciunela', type_music: 'Scola de mujiga', type_university: 'Università', type_college: 'Scola auta', type_school: 'Scola',
+    closedTag: 'stluta', fClosed: 'Stlutes', closedOn: 'Stluta', fClasses: 'Tlasses', approxNote: 'Posizion aprossimativa: l luech ie mé assenià al chemun.', defactoNote: 'Va de fat inant.', againNote: 'Stluta plu iedesc: {d}', followEpoch: 'L stil va do l tëmp', photoOf: 'Foto dal’aria {y}', noPhoto: 'dant l 1982 deguna foto dal’aria · mapa dessenieda', closedBy: '{n} stlutes dal 1958',
     lang_de: 'tudësch', lang_it: 'talian', lang_lld: 'ladin' },
   en: { title: 'South Tyrol', sub: 'Atlas of its schools · past and present', language: 'Language', map: 'Map', drawn: 'Drawn', aerial: 'Aerial photo', loading: 'Loading…',
     look: 'Look', lookModern: 'Modern', lookChronicle: 'Chronicle', lookRegister: 'Register', lookChalk: 'Blackboard', lookMuseum: 'Museum',
@@ -294,6 +322,7 @@ const T = {
     hint: 'Drag to move, at a school to turn · scroll to zoom · click a school · Esc goes back', credits: 'Terrain: Mapzen · Imagery: Sentinel-2 cloudless (EOX), Province of Bozen 2023 (live) · Schools: © OpenStreetMap',
     drawing: 'Drawing the map…', unnamed: 'Unnamed school',
     type_primary: 'Primary school', type_middle: 'Middle school', type_upper: 'Upper secondary / vocational', type_music: 'Music school', type_university: 'University', type_college: 'College', type_school: 'School',
+    closedTag: 'closed', fClosed: 'Closed', closedOn: 'Closed', fClasses: 'Classes', approxNote: 'Position approximate: the place is only known by its municipality.', defactoNote: 'Continued in practice.', againNote: 'Closed more than once: {d}', followEpoch: 'Look follows the era', photoOf: 'Aerial photo {y}', noPhoto: 'no aerial photo before 1982 · drawn map', closedBy: '{n} closed since 1958',
     lang_de: 'German', lang_it: 'Italian', lang_lld: 'Ladin' },
 };
 let lang = 'de';
@@ -316,10 +345,8 @@ for (const d of window.PLACES) {
   for (const t of d.towns) {
     const town = { kind: 'town', name: t.name, names: t.names, parent: district, uv: t.c, ext: t.ext, children: [] };
     town.children = t.schools.map((s) => ({ kind: 'school', parent: town, ...s }));
-    town.count = town.children.length;
     district.children.push(town);
   }
-  district.count = district.children.reduce((n, t) => n + t.count, 0);
   root.children.push(district);
 }
 const allNodes = [];
@@ -387,7 +414,7 @@ const terrainMat = new THREE.ShaderMaterial({
     hmap: { value: null }, mask: { value: mask }, size: { value: new THREE.Vector2(W, DEPTH) }, ex: { value: EX },
     texel: { value: new THREE.Vector2() }, cell: { value: 1 }, bg: { value: rgb(0xe4e0d2) },
     camPos: { value: new THREE.Vector3() }, fogNear: { value: 100 }, fogFar: { value: 400 },
-    sat: { value: null }, real: { value: 0 },
+    sat: { value: null }, real: { value: 0 }, mono: { value: 0 },
     pa: { value: null }, pb: { value: null }, ra: { value: new THREE.Vector4() }, rb: { value: new THREE.Vector4() }, pOnA: { value: 0 }, pOnB: { value: 0 }, ga: { value: new THREE.Vector3(1, 1, 1) }, gb: { value: new THREE.Vector3(1, 1, 1) }, gc: { value: new THREE.Vector3(1, 1, 1) },
     pc: { value: null }, rc: { value: new THREE.Vector4() }, pOnC: { value: 0 },
   },
@@ -400,7 +427,7 @@ const terrainMat = new THREE.ShaderMaterial({
       gl_Position = projectionMatrix * viewMatrix * vec4(vW, 1.0);
     }`,
   fragmentShader: /* glsl */ `
-    uniform sampler2D hmap, mask, sat, pa, pb, pc; uniform vec2 texel; uniform float ex, cell, fogNear, fogFar, real, pOnA, pOnB, pOnC; uniform vec3 bg, camPos;
+    uniform sampler2D hmap, mask, sat, pa, pb, pc; uniform vec2 texel; uniform float ex, cell, fogNear, fogFar, real, mono, pOnA, pOnB, pOnC; uniform vec3 bg, camPos;
     uniform vec4 ra, rb, rc; uniform vec3 ga, gb, gc;
     varying vec2 vUv; varying vec3 vW;
     float rim(vec2 q) { return smoothstep(0.0, 0.2, min(min(q.x, 1.0 - q.x), min(q.y, 1.0 - q.y))); }
@@ -439,6 +466,7 @@ const terrainMat = new THREE.ShaderMaterial({
         photo = mix(photo, ortho(texture2D(pa, qa).rgb) * ga, rim(qa) * own * pOnA);
         photo = mix(photo, ortho(texture2D(pc, qc).rgb) * gc, rim(qc) * own * pOnC);
         photo = mix(photo, ortho(texture2D(pb, qb).rgb) * gb, rim(qb) * own * pOnB);
+        photo = mix(photo, vec3(dot(photo, vec3(0.3, 0.59, 0.11))) * vec3(1.05, 1.0, 0.93), mono);      // black-and-white era, slightly warm
         photo *= mix(0.8, 1.08, smoothstep(0.2, 0.95, shade));
         col = mix(col, photo, real);
       }
@@ -618,9 +646,20 @@ function styleShapes() {
 // ---- pins, list and card: only the children of the place in view -------------
 const pinsEl = $('pins');
 let current = root, visible = [], shownBox = null;
+
+// ---- time: the map shows the schools as they stood in the chosen year ---------
+const NOW = new Date().getFullYear(), FIRST = 1958;        // the list of closures starts in 1958
+let year = NOW;
+const yearOf = (text) => +(String(text).match(/\d{4}/) ?? [0])[0];
+const isClosed = (s) => !!s.closed && year >= yearOf(s.closed);               // a school closed twice counts from its last closure
+const exists = (s) => !(s.founded && yearOf(s.founded) > year);              // not founded yet in that year
+const schoolsOf = (n) => (n.kind === 'town' ? n.children : n.children.flatMap((c) => c.children));
+const count = (n) => schoolsOf(n).filter((s) => exists(s) && !isClosed(s)).length;      // open schools
+const closedCount = (n) => schoolsOf(n).filter(isClosed).length;
+const dateText = (iso) => iso.split('-').reverse().map(Number).join('.');
 const listOpen = { root: false, district: false };      // which lists are unfolded
 const container = (n) => (n.children?.length ? n : n.parent);
-const countLabel = (n) => (n.count ? `<em>${n.count}</em>` : '');
+const countLabel = (n) => (n.children ? `<em>${count(n)}</em>` : '');
 
 function makePin(n) {
   const el = document.createElement('button');
@@ -635,7 +674,11 @@ function showChildren(box) {
   // the place's own children, plus its neighbours on the same level for a direct jump
   visible = [...box.children, ...(box.parent ? box.parent.children.filter((n) => n !== box) : [])];
   pinsEl.replaceChildren(...visible.map((n) => (n.el ??= makePin(n))));
-  for (const n of visible) n.el.classList.toggle('sib', n.parent !== box);
+  for (const n of visible) {
+    n.el.classList.toggle('sib', n.parent !== box);
+    n.el.classList.toggle('gone', n.kind === 'school' && isClosed(n));
+    n.unborn = n.kind === 'school' && !exists(n);
+  }
   pinsEl.classList.toggle('many', box.children.length > 12);
   pinLines.geometry.dispose();
   pinLines.geometry = new THREE.BufferGeometry().setFromPoints(visible.flatMap((n) => [n.ground, n.top]));
@@ -671,15 +714,20 @@ function showChildren(box) {
 }
 
 function describe(n) {
-  const kinds = (list, ...types) => list.filter((s) => types.includes(s.type)).length;
+  const open = (list, ...types) => list.filter((s) => exists(s) && !isClosed(s) && (!types.length || types.includes(s.type))).length;
   if (n.kind === 'district') {
-    const schools = n.children.flatMap((c) => c.children), city = n.children.length === 1;
-    return { kicker: tr(city ? 'city' : 'valley'), text: tr(city ? 'cityText' : 'districtText', { n: n.count, t: n.children.length }),
-      facts: [[tr('fSchools'), n.count], [tr('fPrimary'), kinds(schools, 'primary')], [tr('fMiddleUpper'), kinds(schools, 'middle', 'upper')]] };
+    const schools = schoolsOf(n), city = n.children.length === 1;
+    return { kicker: tr(city ? 'city' : 'valley'), text: tr(city ? 'cityText' : 'districtText', { n: count(n), t: n.children.length }),
+      facts: [[tr('fSchools'), count(n)], [tr('fClosed'), closedCount(n)], [tr('fPrimary'), open(schools, 'primary')]] };
   }
   if (n.kind === 'town') {
-    return { kicker: `${tr('town')} · ${nameOf(n.parent)}`, text: tr(n.count === 1 ? 'townText1' : 'townText', { n: n.count }),
-      facts: [[tr('fSchools'), n.count], [tr('fPrimary'), kinds(n.children, 'primary')], [tr('fMiddleUpper'), kinds(n.children, 'middle', 'upper')]] };
+    return { kicker: `${tr('town')} · ${nameOf(n.parent)}`, text: tr(count(n) === 1 ? 'townText1' : 'townText', { n: count(n) }),
+      facts: [[tr('fSchools'), count(n)], [tr('fClosed'), closedCount(n)], [tr('fPrimary'), open(n.children, 'primary')]] };
+  }
+  if (n.closed) {          // a school from the list of closures
+    const gone = isClosed(n), notes = [n.approx && tr('approxNote'), n.defacto && tr('defactoNote'), n.closures && tr('againNote', { d: n.closures.map(dateText).join(', ') })].filter(Boolean);
+    return { kicker: gone ? `${tr('type_primary')} · ${tr('closedTag')}` : tr('type_primary'), text: [nameOf(n.parent), ...notes].join('. '),
+      facts: [[tr('closedOn'), dateText(n.closed)], [tr('fClasses'), n.classes || '–'], [tr('fTown'), nameOf(n.parent)]] };
   }
   return { kicker: tr(`type_${n.type}`), text: [n.addr, nameOf(n.parent)].filter(Boolean).join(', '), web: n.web,
     more: [[tr('operator'), n.op], [tr('langLabel'), n.lang?.split(',').map((l) => T[lang][`lang_${l}`] ?? l).join(', ')], [tr('phone'), n.phone], [tr('email'), n.email]].filter(([, v]) => v),
@@ -689,11 +737,11 @@ function describe(n) {
 // keepView: the selection follows the camera (the user dragged into another place), so the camera stays put
 function select(n, keepView = false) {
   if (keepView) {
-    const from = current.pose, x = from.focus.x + pan.x, z = from.focus.z + pan.z, dist = from.dist * zoom;
+    const from = current.pose, x = from.focus.x + pan.x, z = from.focus.z + pan.z, dist = viewDist(from) * zoom;
     current = n;
     pan.x = x - n.pose.focus.x;
     pan.z = z - n.pose.focus.z;
-    zoom = dist / n.pose.dist;
+    zoom = dist / viewDist(n.pose);
   } else {
     current = n;
     zoom = 1;
@@ -739,6 +787,7 @@ function setLang(next) {
   for (const n of allNodes) n.el = null;        // labels carry names: build them again
   showChildren(shownBox);
   renderSelection();
+  paintTimeline();
 }
 $('lang').addEventListener('click', (e) => e.target.dataset.lang && setLang(e.target.dataset.lang));
 const goUp = () => current.parent && select(current.parent);
@@ -773,9 +822,15 @@ let realTarget = 0, satReady = null;
 const MERC = 20037508.343, TILE = (2 * MERC) / 1024;
 const BB = { minX: -MERC + 541 * TILE, maxX: -MERC + 548 * TILE, minY: MERC - 364 * TILE, maxY: MERC - 359 * TILE };   // the map in Web Mercator
 const STRETCH = 1 / Math.cos((46.65 * Math.PI) / 180);        // Mercator metres per ground metre at this latitude
-const WMS = 'https://geoservices.buergernetz.bz.it/mapproxy/ows?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=p_bz-Orthoimagery:Aerial-2023-RGB' +
-  '&STYLES=&SRS=EPSG:3857&FORMAT=image/jpeg';
-const wmsUrl = (box, px) => `${WMS}&WIDTH=${px}&HEIGHT=${px}&BBOX=${box}`;
+const WMS = 'https://geoservices.buergernetz.bz.it/mapproxy/ows?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG:3857&FORMAT=image/jpeg';
+const wmsUrl = (layer, box, px) => `${WMS}&LAYERS=p_bz-Orthoimagery:${layer}&WIDTH=${px}&HEIGHT=${px}&BBOX=${box}`;
+// The province's aerial surveys, newest first: the photo shown is the latest one taken by the chosen
+// year. Before the first survey there is none, and the map is drawn instead.
+const ERAS = [[2023, 'Aerial-2023-RGB'], [2020, 'Aerial-2020-RGB'], [2017, 'Aerial-2017-RGB'], [2014, 'Aerial-2014-RGB'], [2011, 'Aerial-2011-RGB-20CM'],
+  [2006, 'Aerial-2006-RGB'], [1999, 'Aerial-1999-RGB'], [1992, 'Aerial-1992-1997-BW'], [1982, 'Aerial-1982-1985-BW']];
+const era = () => ERAS.find(([from]) => year >= from) ?? null;
+const photoOn = () => realTarget === 1 && !!era();
+const paintStyle = () => { document.body.dataset.style = photoOn() ? 'real' : 'vintage'; };
 // Colour matching: an aerial photo and the satellite image differ in tone, which shows as a tinted
 // square. Each photo is therefore scaled so its average colour equals the satellite image's average
 // over the same area. Wide photos are matched fully; close-ups keep more of their own colour.
@@ -800,7 +855,7 @@ function average(data, w, x0, y0, x1, y1) {
   }
   return n ? sum.map((v) => v / n / 255) : null;
 }
-function gainFor(tex, rect, km) {
+function gainFor(tex, rect, km, mono) {
   if (!satSmall) return [1, 1, 1];
   probeCtx.drawImage(tex.image, 0, 0, 24, 24);
   const photo = average(probeCtx.getImageData(0, 0, 24, 24).data, 24, 0, 0, 24, 24);
@@ -811,6 +866,10 @@ function gainFor(tex, rect, km) {
   const s = sat.map((v) => Math.pow(v, 0.62) * 1.12), luma = s[0] * 0.3 + s[1] * 0.59 + s[2] * 0.11;
   const satLook = s.map((v) => (luma + (v - luma) * 0.72) * 0.9), photoLook = photo.map((v) => Math.pow(v, 0.92) * 1.06);
   const strength = Math.min(1, Math.max(0.35, (km - 0.5) / 6));
+  if (mono) {              // a black-and-white survey is matched in brightness only
+    const lum = (c) => c[0] * 0.3 + c[1] * 0.59 + c[2] * 0.11, g = 1 + (Math.min(1.7, Math.max(0.55, lum(satLook) / lum(photoLook))) - 1) * strength;
+    return [g, g, g];
+  }
   return satLook.map((v, i) => 1 + (Math.min(1.7, Math.max(0.55, v / photoLook[i])) - 1) * strength);
 }
 const rings = ['a', 'c', 'b'].map((k) => ({ gain: `g${k}`, tex: `p${k}`, rect: `r${k}`, on: `pOn${k.toUpperCase()}`, key: null, target: 0, timer: 0 }));
@@ -820,18 +879,20 @@ function updateRings() {
   const ladder = (km) => 0.25 * 2 ** Math.round(Math.log2(km / 0.25));
   // the inner photo fits the view; the outer one never gets smaller than 16 km, so zooming in keeps
   // the distant background sharp; the middle one sits halfway between them
-  const inner = ladder(p.dist * zoom * 0.9), outer = Math.min(32, Math.max(16, ladder(p.dist * zoom * 0.9 * 16)));
+  const near = viewDist(p) * zoom * 0.9, inner = ladder(near), outer = Math.min(32, Math.max(16, ladder(near * 16)));
   const sizes = [outer, ladder(Math.sqrt(inner * outer)), inner];
   rings.forEach((r, i) => {
-    let key = null, box = null;
-    if (realTarget === 1 && current !== root) {
+    let key = null, box = null, bbox = '';
+    const e = era(), layer = e?.[1], mono = !!layer?.endsWith('BW');
+    if (photoOn() && current !== root) {
       const km = sizes[i];
       if (km <= 40) {
         const size = km * 1000 * STRETCH, grid = size / 4;
         const x = BB.minX + ((p.focus.x + pan.x) / W + 0.5) * (BB.maxX - BB.minX), y = BB.maxY - ((p.focus.z + pan.z) / DEPTH + 0.5) * (BB.maxY - BB.minY);
         const cx = Math.round(x / grid) * grid, cy = Math.round(y / grid) * grid;
         box = [cx - size / 2, cy - size / 2, cx + size / 2, cy + size / 2];
-        key = box.map(Math.round).join(',');
+        bbox = box.map(Math.round).join(',');
+        key = `${layer}|${bbox}`;
       }
     }
     if (key === r.key) return;
@@ -845,14 +906,14 @@ function updateRings() {
       const rect = [(box[0] - BB.minX) / (BB.maxX - BB.minX), (BB.maxY - box[3]) / (BB.maxY - BB.minY),
         (box[2] - BB.minX) / (BB.maxX - BB.minX), (BB.maxY - box[1]) / (BB.maxY - BB.minY)];
       u[r.rect].value.set(...rect);
-      u[r.gain].value.set(...gainFor(tex, rect, sizes[i]));
+      u[r.gain].value.set(...gainFor(tex, rect, sizes[i], mono));
       r.target = 1;
       return true;
     };
     // A short wait, so a zoom gesture does not fire a request per step. Then a small photo, which the
     // server returns in a fraction of the time, and the full one to replace it.
-    r.timer = setTimeout(() => loadPhoto(wmsUrl(key, 500)).then(show, () => true)
-      .then((ok) => ok && loadPhoto(wmsUrl(key, 2000)).then(show, () => {})), 120);
+    r.timer = setTimeout(() => loadPhoto(wmsUrl(layer, bbox, 500)).then(show, () => true)
+      .then((ok) => ok && loadPhoto(wmsUrl(layer, bbox, 2000)).then(show, () => {})), 120);
   });
 }
 // A switch is collapsed to its current choice: the first tap opens it, the next one chooses.
@@ -883,7 +944,8 @@ async function setStyle(style) {
     btn.classList.remove('busy');
   }
   realTarget = style === 'real' ? 1 : 0;
-  document.body.dataset.style = style;
+  paintStyle();
+  paintTimeline();
   for (const b of styleEl.querySelectorAll('button')) b.classList.toggle('on', b === btn);
   try { localStorage.setItem('mapStyle', style); history.replaceState(null, '', `#${style}`); } catch {}
 }
@@ -903,6 +965,34 @@ function setLook(look) {
   try { localStorage.setItem('uiLook', look); } catch {}
 }
 lookEl.addEventListener('click', (e) => e.target.dataset.look && setLook(e.target.dataset.look));
+
+// ---- timeline: choose the year; schools, counts, photo and (optionally) the look follow ----
+const range = $('tl-range'), bars = $('tl-bars');
+range.min = FIRST; range.max = NOW; range.value = year;
+const closures = {};
+for (const n of allNodes) if (n.closed) for (const d of n.closures ?? [n.closed]) closures[yearOf(d)] = (closures[yearOf(d)] ?? 0) + 1;
+const most = Math.max(1, ...Object.values(closures));
+for (let y = FIRST; y <= NOW; y++) bars.append(Object.assign(document.createElement('i'), { title: `${y}: ${closures[y] ?? 0}` }));
+[...bars.children].forEach((b, i) => { b.style.height = `${((closures[FIRST + i] ?? 0) / most) * 100}%`; });
+$('tl-ticks').innerHTML = [FIRST, 1970, 1980, 1990, 2000, 2010, NOW].map((y) => `<span>${y}</span>`).join('');
+const eraLook = (y) => (y < 1970 ? 'register' : y < 1990 ? 'chronicle' : y < 2010 ? 'museum' : 'modern');
+function paintTimeline() {
+  $('tl-year').textContent = year;
+  const e = era(), photo = realTarget !== 1 ? '' : ` · ${e ? tr('photoOf', { y: e[1].match(/\d{4}(-\d{4})?/)[0] }) : tr('noPhoto')}`;
+  $('tl-info').textContent = tr('closedBy', { n: allNodes.filter((n) => n.kind === 'school' && isClosed(n)).length }) + photo;
+  [...bars.children].forEach((b, i) => b.classList.toggle('past', FIRST + i <= year));
+}
+function setYear(next) {
+  year = next;
+  if ($('tl-follow').checked) setLook(eraLook(year));
+  paintStyle();
+  paintTimeline();
+  for (const n of allNodes) n.el = null;        // counts on the labels change with the year
+  showChildren(shownBox);
+  renderSelection();
+}
+range.addEventListener('input', () => setYear(+range.value));
+$('tl-follow').addEventListener('change', () => { if ($('tl-follow').checked) setLook(eraLook(year)); });
 
 // ---- the led camera ------------------------------------------------------------
 // The camera always chases a target: the pose of the selected place, shifted by the mouse
@@ -927,7 +1017,40 @@ function zoomBy(factor) {
   if (next > ZOOM.max && factor > 1 && current.parent && performance.now() > navLock) {
     if (++zoomOutAt > 6) { zoomOutAt = 0; navLock = performance.now() + 1300; return goUp(); }
   } else zoomOutAt = 0;
-  zoom = Math.min(current === root ? 1.25 : ZOOM.max, Math.max(ZOOM.min, next));
+  // only a school view has a closest zoom; the levels above hand over to the next level before that
+  zoom = Math.min(current === root ? 1.25 : ZOOM.max, Math.max(current.kind === 'school' ? ZOOM.min : 0.3 / viewDist(current.pose), next));      // never closer than 300 m
+  if (factor < 1) enterOnZoom();
+}
+// How far the camera stands from a place's focus when zoom is 1. Wide views (province, valley) sit
+// far enough away to show their whole width.
+function viewDist(p) {
+  if (!p.span) return p.dist;
+  const kmPerPxAt1 = (2 * Math.tan((camera.fov * Math.PI) / 360)) / innerHeight;
+  return Math.max(p.dist, p.span / (kmPerPxAt1 * innerWidth * (innerWidth < 720 ? 0.98 : 0.9)));
+}
+// the map point in the middle of the view, and the town nearest to it
+const viewCentre = () => { const f = current.pose.focus; return [(f.x + pan.x) / W + 0.5, (f.z + pan.z) / DEPTH + 0.5]; };
+// The place nearest to a map point, but only if it is within reach: roughly on screen. Looking at
+// open mountains far from any town or school therefore selects nothing.
+function nearest(nodes, [u, v]) {
+  let best = null, bestKm = viewDist(current.pose) * zoom * 0.4;
+  for (const n of nodes) {
+    const km = Math.hypot((u - n.uv[0]) * W, (v - n.uv[1]) * DEPTH);
+    if (km < bestKm) { bestKm = km; best = n; }
+  }
+  return best;
+}
+const allTowns = root.children.flatMap((d) => d.children);
+// Zooming in far enough enters the next level: the valley, town or school in the middle of the view,
+// once the camera is about as close as that level's own view.
+function enterOnZoom() {
+  if (!current.children?.length) return;
+  const town = current.kind === 'town' ? null : nearest(allTowns, viewCentre());
+  const child = current.kind === 'town' ? nearest(current.children, viewCentre()) : !town ? null : current === root ? town.parent : town.parent === current ? town : null;
+  if (!child || viewDist(current.pose) * zoom > viewDist(child.pose) * 1.5) return;
+  if (child.kind !== 'school') return select(child, true);      // the camera stays where the user put it
+  navLock = performance.now() + 1300;                            // a school is flown to: let that flight ease
+  select(child);
 }
 const touchInput = () => { lastInput = lastHands = performance.now(); };
 canvas.addEventListener('wheel', (e) => {
@@ -1026,12 +1149,8 @@ function schoolAt(px, py) {
 // and pins replace the ones of the place left behind.
 function followView() {
   if (current.kind !== 'district' && current.kind !== 'town') return;
-  const f = current.pose.focus, u = (f.x + pan.x) / W + 0.5, v = (f.z + pan.z) / DEPTH + 0.5;
-  let best = null, bestKm = Infinity;
-  for (const d of root.children) for (const c of d.children) {
-    const km = Math.hypot((u - c.uv[0]) * W, (v - c.uv[1]) * DEPTH);
-    if (km < bestKm) { bestKm = km; best = c; }
-  }
+  const best = nearest(allTowns, viewCentre());
+  if (!best) return;
   const next = current.kind === 'district' ? best.parent : best;
   if (next !== current) select(next, true);
 }
@@ -1074,8 +1193,7 @@ function frame() {
   const speed = reduced ? 0.02 : direct ? 0.07 : 0.5, turnSpeed = direct ? 0.07 : 0.3;
   const northSpeed = reduced ? 0.02 : direct && current.kind === 'school' ? 0.07 : 0.6;      // swinging back to north is unhurried
   // Wide views (province, valley) sit in the middle of the page, far enough away to show their whole width.
-  const kmPerPxAt1 = (2 * Math.tan((camera.fov * Math.PI) / 360)) / innerHeight;
-  const base = p.span ? Math.max(p.dist, p.span / (kmPerPxAt1 * innerWidth * (innerWidth < 720 ? 0.98 : 0.9))) : p.dist;
+  const base = viewDist(p);
   damp('x', f.x + pan.x, speed, dt);
   damp('y', f.y, speed, dt);
   damp('z', f.z + pan.z, speed, dt);
@@ -1099,8 +1217,10 @@ function frame() {
   camera.lookAt(cam.x, cam.y, cam.z);
 
   const u = terrainMat.uniforms;
-  u.real.value += (realTarget - u.real.value) * Math.min(1, dt * 3.5);
-  if (Math.abs(realTarget - u.real.value) < 0.002) u.real.value = realTarget;
+  const realWanted = photoOn() ? 1 : 0, monoWanted = era()?.[1].endsWith('BW') ? 1 : 0;
+  u.real.value += (realWanted - u.real.value) * Math.min(1, dt * 3.5);
+  if (Math.abs(realWanted - u.real.value) < 0.002) u.real.value = realWanted;
+  u.mono.value += (monoWanted - u.mono.value) * Math.min(1, dt * 3.5);
   updateRings();
   for (const r of rings) u[r.on].value += (r.target - u[r.on].value) * Math.min(1, dt * 3);
   u.camPos.value.copy(camera.position);
@@ -1110,7 +1230,7 @@ function frame() {
 
   for (const n of visible) {
     v.copy(n.top).project(camera);
-    const shown = v.z < 1 && Math.abs(v.x) < 1.15 && Math.abs(v.y) < 1.15;
+    const shown = v.z < 1 && Math.abs(v.x) < 1.15 && Math.abs(v.y) < 1.15 && !n.unborn;
     n.el.style.display = shown ? '' : 'none';
     n.sx = ((v.x + 1) / 2) * innerWidth; n.sy = ((1 - v.y) / 2) * innerHeight; n.shown = shown;
   }
@@ -1134,6 +1254,7 @@ let saved = null, savedLook = null;
 try { saved = localStorage.getItem('mapStyle'); savedLook = localStorage.getItem('uiLook'); } catch {}
 setLook(savedLook in LOOKS ? savedLook : 'register');      // first visit: the Register look on the aerial photo
 if (({ '#real': 'real', '#vintage': 'vintage' }[location.hash] ?? saved ?? 'real') === 'real') setStyle('real');      // …#vintage opens the drawn map
+paintTimeline();
 frame();
 $('loading').classList.add('done');
 addSurroundings().catch(() => {});
