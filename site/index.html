@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Südtirol Atlas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@400;500&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=UnifrakturCook:wght@700&family=Special+Elite&family=Caveat:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@400;500&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Special+Elite&family=Caveat:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
   /* Five selectable looks share one layout. Each look only sets the tokens below (on the root
      element, via data-ui) plus a few rules of its own at the end of this sheet. */
@@ -27,12 +27,12 @@
     --accent: #b5351f; --on-bg: #2a221b; --on-fg: #f4eedd; --tag-bg: rgba(244, 238, 221, 0.9); --tag-fg: #2a221b; --mark: #2a221b;
     --f-display: 'Old Standard TT', 'Times New Roman', Georgia, serif; --display-weight: 700; --display-case: none; --logo-size: 36px;
   }
-  :root[data-ui='register'] {   /* the full school register: Fraktur, typewriter, ruled index card */
+  :root[data-ui='register'] {   /* the full school register: textbook serif, typewriter, ruled index card */
     --paper: #e6dcc3; --ink: #2b2118; --ink-soft: rgba(43, 33, 24, 0.62);
     --card-bg: #f3ead3; --card-fg: #2b2118; --card-soft: rgba(43, 33, 24, 0.62); --card-line: rgba(43, 33, 24, 0.5);
     --accent: #b5351f; --on-bg: #2b2118; --on-fg: #f3ead3; --tag-bg: #f3ead3; --tag-fg: #2b2118; --mark: #b5351f;
     --f-display: 'Old Standard TT', 'Times New Roman', Georgia, serif; --f-body: 'Special Elite', 'Courier New', monospace;
-    --display-weight: 700; --display-case: none; --logo-size: 46px; --label-size: 12px; --label-track: 0; --label-case: none;
+    --display-weight: 700; --display-case: none; --logo-size: 40px; --label-size: 12px; --label-track: 0; --label-case: none;
   }
   :root[data-ui='chalk'] {      /* the blackboard: slate, chalk white, chalk yellow, handwriting */
     --paper: #22302b; --ink: #ece6d4; --ink-soft: rgba(236, 230, 212, 0.62);
@@ -140,7 +140,6 @@
   :root:is([data-ui='chronicle'], [data-ui='register'], [data-ui='museum']) nav .list button.on { color: var(--accent); }
   :root:is([data-ui='chronicle'], [data-ui='register'], [data-ui='museum']) .pin[data-kind='school'] i { box-shadow: 0 0 0 2px var(--card-bg); }
 
-  :root[data-ui='register'] :is(.logo b, .pin[data-kind='district'] span) { font-family: 'UnifrakturCook', var(--f-display); }
   :root[data-ui='register'] .logo span { display: inline-block; padding-top: 5px; border-top: 3px double currentColor; }
   :root[data-ui='register'] .card { border-top: 4px solid var(--accent); box-shadow: 3px 4px 0 rgba(43, 33, 24, 0.28); transform: rotate(-0.6deg);
     background: var(--card-bg) repeating-linear-gradient(to bottom, transparent 0 23px, rgba(72, 104, 140, 0.28) 23px 24px); }
@@ -414,7 +413,7 @@ const terrainMat = new THREE.ShaderMaterial({
     hmap: { value: null }, mask: { value: mask }, size: { value: new THREE.Vector2(W, DEPTH) }, ex: { value: EX },
     texel: { value: new THREE.Vector2() }, cell: { value: 1 }, bg: { value: rgb(0xe4e0d2) },
     camPos: { value: new THREE.Vector3() }, fogNear: { value: 100 }, fogFar: { value: 400 },
-    sat: { value: null }, real: { value: 0 },
+    sat: { value: null }, real: { value: 0 }, past: { value: 0 },
     pa: { value: null }, pb: { value: null }, ra: { value: new THREE.Vector4() }, rb: { value: new THREE.Vector4() }, pOnA: { value: 0 }, pOnB: { value: 0 }, ga: { value: new THREE.Vector3(1, 1, 1) }, gb: { value: new THREE.Vector3(1, 1, 1) }, gc: { value: new THREE.Vector3(1, 1, 1) },
     pc: { value: null }, rc: { value: new THREE.Vector4() }, pOnC: { value: 0 },
   },
@@ -427,7 +426,7 @@ const terrainMat = new THREE.ShaderMaterial({
       gl_Position = projectionMatrix * viewMatrix * vec4(vW, 1.0);
     }`,
   fragmentShader: /* glsl */ `
-    uniform sampler2D hmap, mask, sat, pa, pb, pc; uniform vec2 texel; uniform float ex, cell, fogNear, fogFar, real, pOnA, pOnB, pOnC; uniform vec3 bg, camPos;
+    uniform sampler2D hmap, mask, sat, pa, pb, pc; uniform vec2 texel; uniform float ex, cell, fogNear, fogFar, real, past, pOnA, pOnB, pOnC; uniform vec3 bg, camPos;
     uniform vec4 ra, rb, rc; uniform vec3 ga, gb, gc;
     varying vec2 vUv; varying vec3 vW;
     float rim(vec2 q) { return smoothstep(0.0, 0.2, min(min(q.x, 1.0 - q.x), min(q.y, 1.0 - q.y))); }
@@ -470,6 +469,7 @@ const terrainMat = new THREE.ShaderMaterial({
         col = mix(col, photo, real);
       }
 
+      col = mix(col, vec3(dot(col, vec3(0.3, 0.59, 0.11))) * vec3(1.04, 1.0, 0.94), past);      // the further back in time, the paler the colours
       col = mix(mix(bg, col, 0.3), col, smoothstep(0.42, 0.58, k));          // neighbours are ghosted
       col = mix(col, vec3(0.55, 0.2, 0.12), (1.0 - smoothstep(0.0, mix(0.22, 0.07, real), abs(k - 0.5))) * mix(0.6, 0.45, real));
       float edge = min(min(vUv.x, 1.0 - vUv.x), min(vUv.y, 1.0 - vUv.y));
@@ -1203,6 +1203,8 @@ function frame() {
   camera.lookAt(cam.x, cam.y, cam.z);
 
   const u = terrainMat.uniforms;
+  // colours fade a little towards black and white with the years: none today, about half in 1958
+  u.past.value += (((NOW - year) / (NOW - FIRST)) * 0.5 - u.past.value) * Math.min(1, dt * 3.5);
   u.real.value += (realTarget - u.real.value) * Math.min(1, dt * 3.5);
   if (Math.abs(realTarget - u.real.value) < 0.002) u.real.value = realTarget;
   updateRings();
