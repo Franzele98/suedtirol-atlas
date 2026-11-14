@@ -1073,9 +1073,10 @@ canvas.addEventListener('pointermove', (e) => {
       turn.az -= (dx / innerWidth) * 3.2;
       turn.pitch = Math.min(0.7, Math.max(-0.7, turn.pitch + (dy / innerHeight) * 1.6));
     } else {                                // on the levels above, north stays up and the drag moves the map
-      const dist = Math.exp(cam.ld), kmPerPx = (2 * dist * Math.tan((camera.fov * Math.PI) / 360)) / innerHeight, reach = current.pose.dist;
-      pan.x = Math.min(reach, Math.max(-reach, pan.x - dx * kmPerPx));
-      pan.z = Math.min(reach, Math.max(-reach, pan.z - (dy * kmPerPx) / Math.sin(cam.pitch)));
+      // the view can be moved anywhere on the detailed map; its edges are the only limit
+      const dist = Math.exp(cam.ld), kmPerPx = (2 * dist * Math.tan((camera.fov * Math.PI) / 360)) / innerHeight, f = current.pose.focus;
+      pan.x = Math.min(W / 2, Math.max(-W / 2, f.x + pan.x - dx * kmPerPx)) - f.x;
+      pan.z = Math.min(DEPTH / 2, Math.max(-DEPTH / 2, f.z + pan.z - (dy * kmPerPx) / Math.sin(cam.pitch))) - f.z;
       followView();
     }
   } else if (touches.size === 2) {
